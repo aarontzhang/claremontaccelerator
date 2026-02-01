@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="bg-[var(--surface)] border-t border-[var(--border)]">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="text-center">
-          <h4 className="font-black text-xl text-white mb-3 bubble-text">
+          <h4 className="font-black text-xl text-white mb-3">
             Get in Touch
           </h4>
           <a

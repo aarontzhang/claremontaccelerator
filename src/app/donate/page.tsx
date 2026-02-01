@@ -1,4 +1,5 @@
 import CTAButton from "@/components/CTAButton";
+import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 
 const DONATION_URL = "https://www.cmc.edu/giving/institutes/rlcie";
@@ -11,10 +12,10 @@ export default function Donate() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/levy.jpg"
+            src="/acceleratormeeting-18.jpg"
             alt=""
             fill
-            className="object-cover object-top brightness-110 saturate-110 blur-[2px]"
+            className="object-cover object-center"
             priority
           />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)' }} />
@@ -22,7 +23,7 @@ export default function Donate() {
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-4xl md:text-5xl text-white mb-4">
+          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4">
             Invest in the Next Generation
           </h1>
           <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 mb-8 max-w-xl mx-auto">
@@ -39,9 +40,11 @@ export default function Donate() {
       {/* Where Funds Go */}
       <section className="py-16 bg-[var(--surface)]">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="font-black text-2xl md:text-3xl text-white mb-12 text-center">
-            Where Your Donation Goes
-          </h2>
+          <ScrollReveal>
+            <h2 className="font-black text-2xl md:text-3xl text-white mb-12 text-center">
+              Where Your Donation Goes
+            </h2>
+          </ScrollReveal>
 
           {/* Horizontal Layout */}
           <div className="relative">
@@ -50,37 +53,45 @@ export default function Donate() {
 
             {/* Items */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
-              <div className="relative flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
-                  <span className="font-black text-sm">70%</span>
+              <ScrollReveal delay={0}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
+                    <span className="font-black text-sm">70%</span>
+                  </div>
+                  <h3 className="font-black text-white mt-4 mb-1">Startup Grants</h3>
+                  <p className="text-[var(--muted)] text-sm">Direct funding for early-stage expenses</p>
                 </div>
-                <h3 className="font-black text-white mt-4 mb-1">Startup Grants</h3>
-                <p className="text-[var(--muted)] text-sm">Direct funding for early-stage expenses</p>
-              </div>
+              </ScrollReveal>
 
-              <div className="relative flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle" style={{ animationDelay: '1s' }}>
-                  <span className="font-black text-sm">10%</span>
+              <ScrollReveal delay={100}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
+                    <span className="font-black text-sm">10%</span>
+                  </div>
+                  <h3 className="font-black text-white mt-4 mb-1">Resources</h3>
+                  <p className="text-[var(--muted)] text-sm">Software, cloud credits, and tools</p>
                 </div>
-                <h3 className="font-black text-white mt-4 mb-1">Resources</h3>
-                <p className="text-[var(--muted)] text-sm">Software, cloud credits, and tools</p>
-              </div>
+              </ScrollReveal>
 
-              <div className="relative flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle" style={{ animationDelay: '2s' }}>
-                  <span className="font-black text-sm">10%</span>
+              <ScrollReveal delay={200}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
+                    <span className="font-black text-sm">10%</span>
+                  </div>
+                  <h3 className="font-black text-white mt-4 mb-1">Events</h3>
+                  <p className="text-[var(--muted)] text-sm">Workshops, networking, and Demo Day</p>
                 </div>
-                <h3 className="font-black text-white mt-4 mb-1">Events</h3>
-                <p className="text-[var(--muted)] text-sm">Workshops, networking, and Demo Day</p>
-              </div>
+              </ScrollReveal>
 
-              <div className="relative flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle" style={{ animationDelay: '3s' }}>
-                  <span className="font-black text-sm">10%</span>
+              <ScrollReveal delay={300}>
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
+                    <span className="font-black text-sm">10%</span>
+                  </div>
+                  <h3 className="font-black text-white mt-4 mb-1">Operations</h3>
+                  <p className="text-[var(--muted)] text-sm">Running the accelerator program</p>
                 </div>
-                <h3 className="font-black text-white mt-4 mb-1">Operations</h3>
-                <p className="text-[var(--muted)] text-sm">Running the accelerator program</p>
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -89,13 +100,15 @@ export default function Donate() {
       {/* About Blurb */}
       <section className="py-10 bg-[var(--background)]">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-white font-bold text-xl mb-4">Your Impact</h3>
-          <p className="text-[var(--muted-light)] text-lg leading-relaxed mb-4">
-            Student founders often have the skills and ambition to build great companies, but lack the capital to get started. Your donation changes that. We give <span className="text-white font-medium">grants directly to startups</span> so they can afford their first prototype, hire their first teammate, or reach their first customers.
-          </p>
-          <p className="text-[var(--muted)] text-lg leading-relaxed">
-            We also invest in the infrastructure that makes entrepreneurship accessible: cloud credits so students can build without worrying about server costs, software subscriptions for design and development tools, and events that bring founders, mentors, and investors together in one room.
-          </p>
+          <ScrollReveal>
+            <h3 className="text-white font-bold text-xl mb-4">Your Impact</h3>
+            <p className="text-[var(--muted-light)] text-lg leading-relaxed mb-4">
+              Student founders often have the skills and ambition to build great companies, but lack the capital to get started. Your donation changes that. We give <span className="text-white font-medium">grants directly to startups</span> so they can afford their first prototype, hire their first teammate, or reach their first customers.
+            </p>
+            <p className="text-[var(--muted)] text-lg leading-relaxed">
+              We also invest in the infrastructure that makes entrepreneurship accessible: cloud credits so students can build without worrying about server costs, software subscriptions for design and development tools, and events that bring founders, mentors, and investors together in one room.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
     </div>

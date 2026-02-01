@@ -177,37 +177,10 @@ body {
   animation-delay: 0.9s;
 }
 
-/* Bubble effect - white center with subtle moving iridescent edges */
+/* Bubble effect - clean gradient without glow */
 @keyframes bubble {
-  0% {
-    box-shadow:
-      inset 0 0 15px rgba(255, 255, 255, 0.3),
-      -4px -2px 12px rgba(59, 130, 246, 0.3),
-      4px 2px 14px rgba(167, 139, 250, 0.25);
-  }
-  25% {
-    box-shadow:
-      inset 0 0 16px rgba(255, 255, 255, 0.32),
-      4px -3px 13px rgba(192, 132, 252, 0.3),
-      -3px 4px 15px rgba(34, 211, 238, 0.28);
-  }
-  50% {
-    box-shadow:
-      inset 0 0 17px rgba(255, 255, 255, 0.3),
-      3px 4px 14px rgba(96, 165, 250, 0.3),
-      -4px -3px 14px rgba(167, 139, 250, 0.28);
-  }
-  75% {
-    box-shadow:
-      inset 0 0 16px rgba(255, 255, 255, 0.32),
-      -3px 3px 13px rgba(34, 211, 238, 0.3),
-      4px -4px 15px rgba(192, 132, 252, 0.28);
-  }
-  100% {
-    box-shadow:
-      inset 0 0 15px rgba(255, 255, 255, 0.3),
-      -4px -2px 12px rgba(59, 130, 246, 0.3),
-      4px 2px 14px rgba(167, 139, 250, 0.25);
+  0%, 100% {
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
   }
 }
 
@@ -247,7 +220,6 @@ body {
 
 .pulse-circle {
   background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
-  animation: bubble-circle 8s ease-in-out infinite;
 }
 
 /* Bubble text effect for headings/labels */

@@ -6,11 +6,11 @@ interface CTAButtonProps {
   variant?: "primary" | "secondary" | "outline";
   size?: "default" | "large";
   external?: boolean;
+  disabled?: boolean;
 }
 
 const bubbleStyle = {
   background: "linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-  animation: "bubble 8s ease-in-out infinite",
 };
 
 export default function CTAButton({
@@ -19,9 +19,11 @@ export default function CTAButton({
   variant = "primary",
   size = "default",
   external = false,
+  disabled = false,
 }: CTAButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all hover:scale-105";
+    "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all" +
+    (disabled ? " opacity-60 cursor-not-allowed" : " hover:scale-105");
 
   const variants = {
     primary:
@@ -39,6 +41,14 @@ export default function CTAButton({
 
   const className = `${baseStyles} ${variants[variant]} ${sizes[size]}`;
   const inlineStyle = variant === "primary" ? bubbleStyle : undefined;
+
+  if (disabled) {
+    return (
+      <span className={className} style={inlineStyle}>
+        {children}
+      </span>
+    );
+  }
 
   if (external) {
     return (

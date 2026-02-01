@@ -30,7 +30,7 @@ export default function Navbar() {
               alt="Claremont Accelerator"
               width={40}
               height={40}
-              className="w-10 h-10 object-contain bubble-logo"
+              className="w-10 h-10 object-contain"
             />
             <span
               className="text-xl font-black tracking-tight text-white"
@@ -108,7 +108,7 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className={`block font-medium py-2 ${
                         isActive
-                          ? "text-[var(--accent)]"
+                          ? "text-[#a5b4fc]"
                           : "text-white"
                       }`}
                     >

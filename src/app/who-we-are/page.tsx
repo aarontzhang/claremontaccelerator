@@ -1,4 +1,6 @@
 import TeamMember from "@/components/TeamMember";
+import ScrollReveal from "@/components/ScrollReveal";
+import Image from "next/image";
 
 const team = [
   {
@@ -59,40 +61,42 @@ const team = [
 
 export default function WhoWeAre() {
   return (
-    <div className="min-h-screen pt-24">
-      {/* Hero Section */}
-      <section className="py-6">
-        <div className="max-w-6xl mx-auto px-6">
-          <h1 className="animate-fade-up opacity-0 font-black text-4xl md:text-5xl text-white mb-2">
+    <div className="min-h-screen">
+      {/* Hero Section with Background Image */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden mt-[72px]">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/acceleratormeeting-12.jpg"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)' }} />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
+          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4">
             Meet the Team
           </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-[var(--muted)] max-w-xl">
+          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 max-w-xl mx-auto">
             Students across the 5Cs building the future of entrepreneurship.
           </p>
         </div>
       </section>
 
       {/* Team Grid */}
-      <section className="pb-16 bg-[var(--surface)]">
-        <div className="max-w-6xl mx-auto px-6 pt-6">
-          <div className="animate-fade-up opacity-0 animation-delay-200 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-            {team.map((member) => (
-              <TeamMember key={member.name} {...member} />
+      <section className="py-16 bg-[var(--surface)]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            {team.map((member, index) => (
+              <ScrollReveal key={member.name} delay={index * 50}>
+                <TeamMember {...member} />
+              </ScrollReveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* About Blurb */}
-      <section className="py-10 bg-[var(--background)]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-white font-bold text-xl mb-4">About Our Team</h3>
-          <p className="text-[var(--muted-light)] text-lg leading-relaxed mb-4">
-            We&apos;re students who have worked at startups, launched our own projects, and experienced firsthand the challenges of building something from scratch. That&apos;s why we started the <span className="text-white font-medium">Claremont Accelerator</span>.
-          </p>
-          <p className="text-[var(--muted)] text-lg leading-relaxed">
-            Our team spans all five Claremont Colleges, bringing together perspectives from engineering, business, design, and the liberal arts. We handle everything from recruiting and operations to marketing and founder support, so startups in our program can focus on what matters most: building great products.
-          </p>
         </div>
       </section>
     </div>

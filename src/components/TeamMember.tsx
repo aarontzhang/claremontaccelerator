@@ -44,7 +44,7 @@ export default function TeamMember({
       {/* Info */}
       <div>
         <h3 className="font-black text-base text-white">{name}</h3>
-        <p className="text-white text-sm font-medium bubble-text">{role}</p>
+        <p className="text-[#a5b4fc] text-sm font-medium">{role}</p>
         <p className="text-[var(--muted)] text-xs">{school}</p>
       </div>
     </div>
