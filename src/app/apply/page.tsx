@@ -152,8 +152,8 @@ export default function Apply() {
               </div>
 
               <div className="mt-6">
-                <CTAButton href={FOUNDER_APPLICATION_URL} external>
-                  Apply as a Founder
+                <CTAButton href={FOUNDER_APPLICATION_URL} disabled>
+                  Applications Closed
                 </CTAButton>
               </div>
             </div>
@@ -196,8 +196,8 @@ export default function Apply() {
               </div>
 
               <div className="mt-6">
-                <CTAButton href={STUDIO_APPLICATION_URL} external>
-                  Apply to CA Studio
+                <CTAButton href={STUDIO_APPLICATION_URL} disabled>
+                  Applications Closed
                 </CTAButton>
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function Apply() {
 
               <div className="mt-6">
                 <CTAButton href="#" disabled>
-                  Coming Soon
+                  Applications Closed
                 </CTAButton>
               </div>
             </div>
