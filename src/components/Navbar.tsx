@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/who-we-are", label: "Team" },
   { href: "/apply", label: "Apply" },
   { href: "/donate", label: "Donate" },
+  { href: "/cohort-4", label: "Cohort 4" },
 ];
 
 export default function Navbar() {
@@ -108,7 +109,7 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className={`block font-medium py-2 ${
                         isActive
-                          ? "text-[#a5b4fc]"
+                          ? "text-[#3385fd]"
                           : "text-white"
                       }`}
                     >

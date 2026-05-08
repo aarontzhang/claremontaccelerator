@@ -10,7 +10,7 @@ interface CTAButtonProps {
 }
 
 const bubbleStyle = {
-  background: "linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)",
+  background: "#0165fc",
 };
 
 export default function CTAButton({
@@ -27,7 +27,7 @@ export default function CTAButton({
 
   const variants = {
     primary:
-      "text-slate-800 font-bold",
+      "text-white font-bold",
     secondary:
       "bg-white text-black hover:bg-white/90",
     outline:

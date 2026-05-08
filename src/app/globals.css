@@ -1,21 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Typography - Aileron with Arial fallback */
+  /* Typography */
   --font-display: 'Aileron', Arial, sans-serif;
   --font-body: 'Aileron', Arial, sans-serif;
 
-  /* Dark theme - black background, white text */
+  /* Accent */
+  --accent: #0165fc;
+  --accent-light: #3385fd;
+  --accent-dark: #0050ca;
+
+  /* Dark theme */
   --primary: #ffffff;
   --primary-light: #f8fafc;
   --primary-dark: #e2e8f0;
-
-  /* Accent - Blue for trust and professionalism */
-  --accent: #3b82f6;
-  --accent-light: #60a5fa;
-  --accent-dark: #2563eb;
-
-  /* Dark neutrals */
   --background: #000000;
   --foreground: #ffffff;
   --muted: rgba(255, 255, 255, 0.6);
@@ -23,8 +21,6 @@
   --surface: #0a0a0a;
   --surface-elevated: #171717;
   --border: #262626;
-
-  /* Text hierarchy - white with different saturations */
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.85);
   --text-tertiary: rgba(255, 255, 255, 0.6);
@@ -59,6 +55,14 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+  letter-spacing: -0.035em;
 }
 
 /* Animation utilities */
@@ -180,7 +184,7 @@ body {
 /* Bubble effect - clean gradient without glow */
 @keyframes bubble {
   0%, 100% {
-    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
+    background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 50%, #0165fc 100%);
   }
 }
 
@@ -189,65 +193,65 @@ body {
   0% {
     box-shadow:
       inset 0 0 8px rgba(255, 255, 255, 0.4),
-      -3px -2px 10px rgba(59, 130, 246, 0.35),
-      3px 2px 12px rgba(167, 139, 250, 0.3);
+      -3px -2px 10px rgba(1, 101, 252, 0.35),
+      3px 2px 12px rgba(51, 133, 253, 0.3);
   }
   25% {
     box-shadow:
       inset 0 0 9px rgba(255, 255, 255, 0.42),
-      3px -2px 11px rgba(192, 132, 252, 0.35),
-      -2px 3px 13px rgba(34, 211, 238, 0.32);
+      3px -2px 11px rgba(1, 101, 252, 0.35),
+      -2px 3px 13px rgba(147, 197, 253, 0.32);
   }
   50% {
     box-shadow:
       inset 0 0 10px rgba(255, 255, 255, 0.4),
-      2px 3px 12px rgba(96, 165, 250, 0.35),
-      -3px -2px 12px rgba(167, 139, 250, 0.32);
+      2px 3px 12px rgba(51, 133, 253, 0.35),
+      -3px -2px 12px rgba(1, 101, 252, 0.32);
   }
   75% {
     box-shadow:
       inset 0 0 9px rgba(255, 255, 255, 0.42),
-      -2px 2px 11px rgba(34, 211, 238, 0.35),
-      3px -3px 13px rgba(192, 132, 252, 0.32);
+      -2px 2px 11px rgba(147, 197, 253, 0.35),
+      3px -3px 13px rgba(1, 101, 252, 0.32);
   }
   100% {
     box-shadow:
       inset 0 0 8px rgba(255, 255, 255, 0.4),
-      -3px -2px 10px rgba(59, 130, 246, 0.35),
-      3px 2px 12px rgba(167, 139, 250, 0.3);
+      -3px -2px 10px rgba(1, 101, 252, 0.35),
+      3px 2px 12px rgba(51, 133, 253, 0.3);
   }
 }
 
 .pulse-circle {
-  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
+  background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 50%, #0165fc 100%);
 }
 
 /* Bubble text effect for headings/labels */
 @keyframes bubble-text {
   0% {
     text-shadow:
-      -2px -1px 8px rgba(59, 130, 246, 0.4),
-      2px 1px 10px rgba(167, 139, 250, 0.35);
+      -2px -1px 8px rgba(1, 101, 252, 0.4),
+      2px 1px 10px rgba(51, 133, 253, 0.35);
   }
   25% {
     text-shadow:
-      2px -2px 9px rgba(192, 132, 252, 0.4),
-      -2px 2px 11px rgba(34, 211, 238, 0.38);
+      2px -2px 9px rgba(1, 101, 252, 0.4),
+      -2px 2px 11px rgba(147, 197, 253, 0.38);
   }
   50% {
     text-shadow:
-      2px 2px 10px rgba(96, 165, 250, 0.4),
-      -2px -2px 10px rgba(167, 139, 250, 0.38);
+      2px 2px 10px rgba(51, 133, 253, 0.4),
+      -2px -2px 10px rgba(1, 101, 252, 0.38);
   }
   75% {
     text-shadow:
-      -2px 2px 9px rgba(34, 211, 238, 0.4),
-      2px -2px 11px rgba(192, 132, 252, 0.38);
+      -2px 2px 9px rgba(147, 197, 253, 0.4),
+      2px -2px 11px rgba(1, 101, 252, 0.38);
   }
   100% {
     text-shadow:
-      -2px -1px 8px rgba(59, 130, 246, 0.4),
-      2px 1px 10px rgba(167, 139, 250, 0.35);
+      -2px -1px 8px rgba(1, 101, 252, 0.4),
+      2px 1px 10px rgba(51, 133, 253, 0.35);
   }
 }
 
@@ -258,19 +262,19 @@ body {
 /* Logo bubble glow effect */
 @keyframes bubble-logo {
   0% {
-    filter: drop-shadow(-2px -1px 4px rgba(59, 130, 246, 0.4)) drop-shadow(2px 1px 5px rgba(167, 139, 250, 0.35));
+    filter: drop-shadow(-2px -1px 4px rgba(1, 101, 252, 0.4)) drop-shadow(2px 1px 5px rgba(51, 133, 253, 0.35));
   }
   25% {
-    filter: drop-shadow(2px -2px 4px rgba(192, 132, 252, 0.4)) drop-shadow(-2px 2px 5px rgba(34, 211, 238, 0.38));
+    filter: drop-shadow(2px -2px 4px rgba(1, 101, 252, 0.4)) drop-shadow(-2px 2px 5px rgba(147, 197, 253, 0.38));
   }
   50% {
-    filter: drop-shadow(2px 2px 5px rgba(96, 165, 250, 0.4)) drop-shadow(-2px -2px 5px rgba(167, 139, 250, 0.38));
+    filter: drop-shadow(2px 2px 5px rgba(51, 133, 253, 0.4)) drop-shadow(-2px -2px 5px rgba(1, 101, 252, 0.38));
   }
   75% {
-    filter: drop-shadow(-2px 2px 4px rgba(34, 211, 238, 0.4)) drop-shadow(2px -2px 5px rgba(192, 132, 252, 0.38));
+    filter: drop-shadow(-2px 2px 4px rgba(147, 197, 253, 0.4)) drop-shadow(2px -2px 5px rgba(1, 101, 252, 0.38));
   }
   100% {
-    filter: drop-shadow(-2px -1px 4px rgba(59, 130, 246, 0.4)) drop-shadow(2px 1px 5px rgba(167, 139, 250, 0.35));
+    filter: drop-shadow(-2px -1px 4px rgba(1, 101, 252, 0.4)) drop-shadow(2px 1px 5px rgba(51, 133, 253, 0.35));
   }
 }
 
@@ -290,6 +294,6 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, #e0e7ff, #c7d2fe, #a5b4fc);
+  background: #0165fc;
   border-radius: 1px;
 }
