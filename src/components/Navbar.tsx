@@ -8,10 +8,11 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/team", label: "Team" },
-  { href: "/blog", label: "Blog" },
   { href: "/donate", label: "Donate" },
   { href: "/cohort-5", label: "Cohort 5" },
 ];
+
+const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +64,17 @@ export default function Navbar() {
                 </li>
               );
             })}
+            <li>
+              <a
+                href={SUBSTACK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold tracking-tight transition-colors relative group text-[var(--muted)] hover:text-white"
+              >
+                Blog
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full" />
+              </a>
+            </li>
           </ul>
 
           {/* Mobile Menu Button */}
@@ -118,6 +130,17 @@ export default function Navbar() {
                   </li>
                 );
               })}
+              <li>
+                <a
+                  href={SUBSTACK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="block font-bold tracking-tight py-2 text-white"
+                >
+                  Blog
+                </a>
+              </li>
             </ul>
           </div>
         )}
