@@ -8,7 +8,7 @@ export default function Donate() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image

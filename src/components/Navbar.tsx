@@ -7,10 +7,10 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/who-we-are", label: "Team" },
-  { href: "/apply", label: "Apply" },
+  { href: "/team", label: "Team" },
+  { href: "/blog", label: "Blog" },
   { href: "/donate", label: "Donate" },
-  { href: "/cohort-4", label: "Cohort 4" },
+  { href: "/cohort-5", label: "Cohort 5" },
 ];
 
 export default function Navbar() {
@@ -35,7 +35,7 @@ export default function Navbar() {
             />
             <span
               className="text-xl font-black tracking-tight text-white"
-              style={{ fontFamily: 'var(--font-display)' }}
+              style={{ fontFamily: 'Aileron, Arial, sans-serif' }}
             >
               Claremont Accelerator
             </span>
@@ -49,7 +49,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`font-medium transition-colors relative group ${
+                    className={`font-bold tracking-tight transition-colors relative group ${
                       isActive
                         ? "text-white nav-link-active"
                         : "text-[var(--muted)] hover:text-white"
@@ -107,7 +107,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`block font-medium py-2 ${
+                      className={`block font-bold tracking-tight py-2 ${
                         isActive
                           ? "text-[#3385fd]"
                           : "text-white"
