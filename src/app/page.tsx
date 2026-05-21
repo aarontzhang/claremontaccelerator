@@ -24,7 +24,7 @@ export default function Home() {
       <section className="relative min-h-screen bg-black overflow-hidden">
 
         {/* Team cutout — desktop only */}
-        <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center">
+        <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center translate-y-24">
           <Image
             src="/betterbg.png"
             alt="Claremont Accelerator team"
@@ -48,7 +48,30 @@ export default function Home() {
             <span className="text-white font-semibold">manpower</span>.
           </p>
 
-          <div className="animate-fade-up opacity-0 animation-delay-200">
+          {/* Backed by */}
+          <div className="animate-fade-up opacity-0 animation-delay-200 flex items-center gap-6 mb-11 flex-wrap justify-center">
+            <p className="text-white/40 text-xs uppercase tracking-widest font-medium whitespace-nowrap">CA founders backed by</p>
+            <div className="flex items-center gap-7 flex-wrap justify-center">
+              {/* YC — square mark, keep orange */}
+              <div className="relative w-7 h-7 opacity-80 hover:opacity-100 transition-opacity">
+                <Image src="/logos/partners/y-combinator2.png" alt="Y Combinator" fill className="object-contain grayscale opacity-60 hover:opacity-90 transition-opacity" />
+              </div>
+              {/* Afore — horizontal wordmark */}
+              <div className="relative w-20 h-6 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/afore.webp" alt="Afore Capital" fill className="object-contain brightness-0 invert" />
+              </div>
+              {/* 1517 — horizontal wordmark, dark red → invert to white */}
+              <div className="relative w-14 h-6 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/1517.svg" alt="1517 Fund" fill className="object-contain brightness-0 invert" />
+              </div>
+              {/* Z Fellows — very wide raster logo */}
+              <div className="relative w-28 h-6 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/zfellows.svg" alt="Z Fellows" fill className="object-contain brightness-0 invert" />
+              </div>
+            </div>
+          </div>
+
+          <div className="animate-fade-up opacity-0 animation-delay-300">
             <CTAButton href="/apply" size="large">
               Join us today
             </CTAButton>

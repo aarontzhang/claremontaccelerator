@@ -50,7 +50,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`font-bold tracking-tight transition-colors relative group ${
+                    className={`tracking-tight transition-colors relative group ${
                       isActive
                         ? "text-white nav-link-active"
                         : "text-[var(--muted)] hover:text-white"
@@ -69,7 +69,7 @@ export default function Navbar() {
                 href={SUBSTACK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold tracking-tight transition-colors relative group text-[var(--muted)] hover:text-white"
+                className="tracking-tight transition-colors relative group text-[var(--muted)] hover:text-white"
               >
                 Blog
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full" />
@@ -119,7 +119,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`block font-bold tracking-tight py-2 ${
+                      className={`block tracking-tight py-2 ${
                         isActive
                           ? "text-[#3385fd]"
                           : "text-white"
@@ -136,7 +136,7 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="block font-bold tracking-tight py-2 text-white"
+                  className="block tracking-tight py-2 text-white"
                 >
                   Blog
                 </a>
