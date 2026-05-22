@@ -62,7 +62,7 @@ function StartupCard({
       }`}
     >
       {/* Logo */}
-      <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden bg-white">
+      <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
         {startup.logoExists ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-1" />
@@ -139,7 +139,7 @@ function DetailPanel({ startup, onClose }: { startup: Startup; onClose: () => vo
       <div className="px-6 pb-8 pt-4 flex flex-col gap-6">
         {/* Header */}
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-white">
+          <div className={`w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
             {startup.logoExists ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-1.5" />
