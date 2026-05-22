@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { loadAllStartups, COHORT_ORDER, LATEST_COHORT } from "@/lib/startups";
 import StartupsClient from "./StartupsClient";
 
@@ -9,10 +10,12 @@ export const metadata = {
 export default function StartupsPage() {
   const startups = loadAllStartups();
   return (
-    <StartupsClient
-      startups={startups}
-      latestCohort={LATEST_COHORT}
-      allCohorts={COHORT_ORDER}
-    />
+    <Suspense>
+      <StartupsClient
+        startups={startups}
+        latestCohort={LATEST_COHORT}
+        allCohorts={COHORT_ORDER}
+      />
+    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { Startup, Job } from "@/lib/startups";
 
 interface Props {
@@ -256,9 +257,45 @@ function DetailPanel({ startup, onClose }: { startup: Startup; onClose: () => vo
 }
 
 export default function StartupsClient({ startups, latestCohort, allCohorts }: Props) {
-  const [activeCohort, setActiveCohort] = useState<number>(latestCohort);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const initialCohort = Number(searchParams.get("cohort") ?? latestCohort);
+  const initialSlug = searchParams.get("s");
+
+  const [activeCohort, setActiveCohort] = useState<number>(initialCohort);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Startup | null>(null);
+  const [selected, setSelected] = useState<Startup | null>(
+    () => (initialSlug ? startups.find((s) => s.slug === initialSlug) ?? null : null)
+  );
+
+  const updateParams = useCallback(
+    (cohort: number, slug: string | null) => {
+      const params = new URLSearchParams();
+      if (cohort !== latestCohort) params.set("cohort", String(cohort));
+      if (slug) params.set("s", slug);
+      const qs = params.toString();
+      router.replace(`/startups${qs ? `?${qs}` : ""}`, { scroll: false });
+    },
+    [router, latestCohort]
+  );
+
+  const handleSetCohort = useCallback(
+    (c: number) => {
+      setActiveCohort(c);
+      setSelected(null);
+      updateParams(c, null);
+    },
+    [updateParams]
+  );
+
+  const handleSelect = useCallback(
+    (startup: Startup | null) => {
+      setSelected(startup);
+      updateParams(activeCohort, startup?.slug ?? null);
+    },
+    [activeCohort, updateParams]
+  );
 
   const filtered = useMemo(() => {
     const results = startups.filter((s) => {
@@ -277,7 +314,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
     });
   }, [activeCohort, query, startups]);
 
-  const handleClose = useCallback(() => setSelected(null), []);
+  const handleClose = useCallback(() => handleSelect(null), [handleSelect]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -327,7 +364,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
             {cohortTabs.map((c) => (
               <button
                 key={c}
-                onClick={() => { setActiveCohort(c); setSelected(null); }}
+                onClick={() => handleSetCohort(c)}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                   activeCohort === c
                     ? "bg-[#0165fc] text-white"
@@ -359,7 +396,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
                 startup={startup}
                 selected={selected?.slug === startup.slug}
                 onClick={() =>
-                  setSelected((prev) => (prev?.slug === startup.slug ? null : startup))
+                  handleSelect(selected?.slug === startup.slug ? null : startup)
                 }
               />
             ))}
