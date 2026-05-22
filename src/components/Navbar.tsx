@@ -8,8 +8,8 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/team", label: "Team" },
-  { href: "/donate", label: "Donate" },
-  { href: "/cohort-5", label: "Cohort 5" },
+  { href: "/support", label: "Support Us" },
+  { href: "/startups", label: "Startups" },
 ];
 
 const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
