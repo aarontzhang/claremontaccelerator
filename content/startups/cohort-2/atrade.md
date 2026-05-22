@@ -5,7 +5,7 @@ cohort: 2
 logo:
 website:
 founders:
-status: active
+status: inactive
 ---
 
 ATrade is a peer-to-peer e-commerce marketplace targeting the Nigerian market. The platform combines proprietary shipping and logistics solutions with integrated payment infrastructure to create a seamless buying and selling environment for individual sellers and buyers.

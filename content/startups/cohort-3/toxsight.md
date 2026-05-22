@@ -5,7 +5,7 @@ cohort: 3
 logo:
 website:
 founders: Kevin Xia
-status: active
+status: inactive
 ---
 
 Toxsight is a biotechnology startup specializing in imaging systems designed to rapidly assess the toxicity of chemicals in real time. The approach uses imaging-based technology to deliver fast, quantitative toxicity measurements, with applications in drug development and chemical safety screening.

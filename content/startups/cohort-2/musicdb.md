@@ -5,7 +5,7 @@ cohort: 2
 logo:
 website:
 founders:
-status: active
+status: inactive
 ---
 
 MusicDB is a data-driven analytics platform built for A&R professionals at record labels and music companies. It aggregates streaming, social, and engagement data to help scouts identify emerging talent and make investment-style decisions on signing artists.

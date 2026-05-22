@@ -14,5 +14,5 @@ By replacing outdated workflows with intelligent automation, Kandor gives clinic
 
 ## Jobs
 
-Software Engineer | Part-time | Remote | https://kandorlabs.com/careers
-Growth & Marketing Intern | Part-time | Claremont, CA | https://kandorlabs.com/careers
+Software Engineer | Part-time | Remote | https://kandorlabs.com
+Growth & Marketing Intern | Part-time | Claremont, CA | https://kandorlabs.com
