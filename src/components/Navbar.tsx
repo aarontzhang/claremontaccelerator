@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/team", label: "Team" },
   { href: "/support", label: "Support Us" },
   { href: "/startups", label: "Startups" },
+  { href: "/joinca", label: "Join" },
 ];
 
 const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";

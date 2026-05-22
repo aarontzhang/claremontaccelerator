@@ -2,6 +2,10 @@ import CTAButton from "@/components/CTAButton";
 import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Joining Claremont Accelerator",
+};
+
 // Application form URLs
 const FOUNDER_APPLICATION_URL = "https://docs.google.com/forms/d/1ODnyqt-Y0f1UXhx-2BRLloTDYEwGQIL-UJDZOqmDgA4/edit";
 const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/1BWg-0runr2VRAaaMXf554R0jLM80_S2Bj1qWApXZBps/edit";
@@ -34,84 +38,12 @@ export default function Apply() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-16 bg-[var(--surface)]">
-        <div className="max-w-5xl mx-auto px-6">
-          <ScrollReveal>
-            <h2 className="font-black text-2xl md:text-3xl text-white mb-12 text-center">
-              How It Works
-            </h2>
-          </ScrollReveal>
-
-          {/* Horizontal Timeline */}
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="hidden md:block absolute top-6 left-0 right-0 h-0.5 bg-[var(--border)]" />
-
-            {/* Timeline Items */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
-              {/* Step 1 - Info Session */}
-              <ScrollReveal delay={0}>
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-black text-white mt-4 mb-1">Info Session</h3>
-                  <p className="text-[var(--muted)] text-sm">Learn about our programs</p>
-                </div>
-              </ScrollReveal>
-
-              {/* Step 2 - Application */}
-              <ScrollReveal delay={100}>
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-black text-white mt-4 mb-1">Application</h3>
-                  <p className="text-[var(--muted)] text-sm">Submit your application</p>
-                </div>
-              </ScrollReveal>
-
-              {/* Step 3 - Interviews */}
-              <ScrollReveal delay={200}>
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-black text-white mt-4 mb-1">Interviews</h3>
-                  <p className="text-[var(--muted)] text-sm">Meet the team</p>
-                </div>
-              </ScrollReveal>
-
-              {/* Step 4 - Start Building */}
-              <ScrollReveal delay={300}>
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-700 z-10 pulse-circle">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-black text-white mt-4 mb-1">Start Building</h3>
-                  <p className="text-[var(--muted)] text-sm">Join the program</p>
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Program Sections */}
       <section className="py-16 bg-[var(--background)]">
         <div className="max-w-5xl mx-auto px-6">
           <ScrollReveal>
             <h2 className="font-black text-3xl md:text-4xl text-white mb-12 text-center">
-              Our Programs
+              Three ways to get involved
             </h2>
           </ScrollReveal>
 

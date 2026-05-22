@@ -72,7 +72,7 @@ export default function Home() {
           </div>
 
           <div className="animate-fade-up opacity-0 animation-delay-300">
-            <CTAButton href="/apply" size="large">
+            <CTAButton href="/joinca" size="large">
               Join us today
             </CTAButton>
           </div>
@@ -214,7 +214,7 @@ export default function Home() {
           {/* CTA */}
           <ScrollReveal>
             <div className="text-center mt-10">
-              <CTAButton href="/apply" size="large">
+              <CTAButton href="/joinca" size="large">
                 Learn More & Apply
               </CTAButton>
             </div>
