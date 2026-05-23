@@ -260,7 +260,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const initialCohort = Number(searchParams.get("cohort") ?? latestCohort);
+  const initialCohort = Number(searchParams.get("cohort") ?? 0);
   const initialSlug = searchParams.get("s");
 
   const [activeCohort, setActiveCohort] = useState<number>(initialCohort);
@@ -272,7 +272,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
   const updateParams = useCallback(
     (cohort: number, slug: string | null) => {
       const params = new URLSearchParams();
-      if (cohort !== latestCohort) params.set("cohort", String(cohort));
+      if (cohort !== 0) params.set("cohort", String(cohort));
       if (slug) params.set("s", slug);
       const qs = params.toString();
       router.replace(`/startups${qs ? `?${qs}` : ""}`, { scroll: false });
