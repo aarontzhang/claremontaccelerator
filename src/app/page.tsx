@@ -56,6 +56,14 @@ export default function Home() {
               <div className="relative w-7 h-7 opacity-80 hover:opacity-100 transition-opacity">
                 <Image src="/logos/partners/y-combinator2.png" alt="Y Combinator" fill className="object-contain grayscale opacity-60 hover:opacity-90 transition-opacity" />
               </div>
+              {/* a16z — wide emblem */}
+              <div className="relative w-16 h-9 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/a16z.png" alt="Andreessen Horowitz" fill className="object-contain brightness-0 invert" />
+              </div>
+              {/* Z Fellows — very wide raster logo */}
+              <div className="relative w-28 h-6 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/zfellows.svg" alt="Z Fellows" fill className="object-contain brightness-0 invert" />
+              </div>
               {/* Afore — horizontal wordmark */}
               <div className="relative w-20 h-6 opacity-60 hover:opacity-90 transition-opacity">
                 <Image src="/logos/partners/afore.webp" alt="Afore Capital" fill className="object-contain brightness-0 invert" />
@@ -63,10 +71,6 @@ export default function Home() {
               {/* 1517 — horizontal wordmark, dark red → invert to white */}
               <div className="relative w-14 h-6 opacity-60 hover:opacity-90 transition-opacity">
                 <Image src="/logos/partners/1517.svg" alt="1517 Fund" fill className="object-contain brightness-0 invert" />
-              </div>
-              {/* Z Fellows — very wide raster logo */}
-              <div className="relative w-28 h-6 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/zfellows.svg" alt="Z Fellows" fill className="object-contain brightness-0 invert" />
               </div>
             </div>
           </div>
