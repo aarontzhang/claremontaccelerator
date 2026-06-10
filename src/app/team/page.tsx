@@ -41,18 +41,21 @@ const exOfficio = [
     role: "Former Co-President",
     school: "HMC '28",
     image: "/team/felix.png",
+    showYC: true,
   },
   {
     name: "Devansh Taliyan",
     role: "Former Co-President",
     school: "Pomona '27",
     image: "/team/devansh.webp",
+    showYC: true,
   },
   {
     name: "Aaron Zhang",
     role: "Former Vice President",
     school: "CMC '28",
     image: "/team/aaron.jpg",
+    showYC: true,
   },
   {
     name: "Joseph Santhosh",

@@ -9,6 +9,7 @@ interface TeamMemberProps {
   school: string;
   image: string;
   muted?: boolean;
+  showYC?: boolean;
 }
 
 export default function TeamMember({
@@ -17,6 +18,7 @@ export default function TeamMember({
   school,
   image,
   muted = false,
+  showYC = false,
 }: TeamMemberProps) {
   const [imageError, setImageError] = useState(false);
 
@@ -44,7 +46,18 @@ export default function TeamMember({
 
       {/* Info */}
       <div>
-        <h3 className={`font-black text-base ${muted ? "text-[var(--muted)]" : "text-white"}`}>{name}</h3>
+        <h3 className={`font-black text-base flex items-center gap-1.5 ${muted ? "text-[var(--muted)]" : "text-white"}`}>
+          {name}
+          {showYC && (
+            <Image
+              src="/logos/partners/y-combinator2.png"
+              alt="Y Combinator"
+              width={13}
+              height={13}
+              className="inline-block flex-shrink-0 opacity-60"
+            />
+          )}
+        </h3>
         <p className={`text-sm font-medium ${muted ? "text-[var(--muted)]" : "text-[#a5b4fc]"}`}>{role}</p>
         <p className="text-[var(--muted)] text-xs">{school}</p>
       </div>
