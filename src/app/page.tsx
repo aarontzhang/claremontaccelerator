@@ -60,6 +60,10 @@ export default function Home() {
               <div className="relative w-16 h-9 opacity-60 hover:opacity-90 transition-opacity">
                 <Image src="/logos/partners/a16z.png" alt="Andreessen Horowitz" fill className="object-contain brightness-0 invert" />
               </div>
+              {/* Entrepreneurs First — stacked wordmark */}
+              <div className="relative w-16 h-9 opacity-60 hover:opacity-90 transition-opacity">
+                <Image src="/logos/partners/ef_v4.png" alt="Entrepreneurs First" fill className="object-contain brightness-0 invert" />
+              </div>
 {/* Z Fellows — very wide raster logo */}
               <div className="relative w-28 h-6 opacity-60 hover:opacity-90 transition-opacity">
                 <Image src="/logos/partners/zfellows.svg" alt="Z Fellows" fill className="object-contain brightness-0 invert" />
