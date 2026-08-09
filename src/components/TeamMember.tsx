@@ -10,6 +10,7 @@ interface TeamMemberProps {
   image: string;
   muted?: boolean;
   showYC?: boolean;
+  showSIF?: boolean;
 }
 
 export default function TeamMember({
@@ -19,6 +20,7 @@ export default function TeamMember({
   image,
   muted = false,
   showYC = false,
+  showSIF = false,
 }: TeamMemberProps) {
   const [imageError, setImageError] = useState(false);
 
@@ -55,6 +57,15 @@ export default function TeamMember({
               width={13}
               height={13}
               className="inline-block flex-shrink-0 opacity-60"
+            />
+          )}
+          {showSIF && (
+            <Image
+              src="/logos/partners/cmc-sif.png"
+              alt="CMC SIF"
+              width={30}
+              height={5}
+              className="inline-block flex-shrink-0 opacity-60 brightness-0 invert"
             />
           )}
         </h3>

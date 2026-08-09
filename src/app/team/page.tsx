@@ -17,21 +17,21 @@ const team = [
   },
   {
     name: "Maélie Abt",
-    role: "Co-Director, Studio",
+    role: "CA Studio Director",
     school: "Pomona '29",
     image: "/team/Maelie.JPG",
-  },
-  {
-    name: "Stanley Lo",
-    role: "Co-Director, Studio",
-    school: "CMC '27",
-    image: "/team/stanley.jpeg",
   },
   {
     name: "Daniel Lo",
     role: "Marketing",
     school: "CMC '29",
     image: "/team/daniel.jpg",
+  },
+  {
+    name: "Stanley Lo",
+    role: "Member-at-large",
+    school: "CMC '27",
+    image: "/team/stanley.jpeg",
   },
 ];
 
@@ -62,6 +62,7 @@ const exOfficio = [
     role: "Former Operations",
     school: "CMC '29",
     image: "/team/joseph.jpg",
+    showSIF: true,
   },
 ];
 
