@@ -13,8 +13,8 @@ const startups = [
 
 const stats = [
   { value: "18", label: "Startups Supported" },
-  { value: "$2.6M+", label: "Funding Raised" },
-  { value: "41", label: "Mentors & VCs" },
+  { value: "$2,500,000+", label: "Funding Raised" },
+  { value: "100+", label: "Mentors & VCs" },
 ];
 
 export default function Home() {
@@ -231,7 +231,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio Section */}
-      <section className="pt-8 pb-16 bg-[var(--surface)] overflow-hidden">
+      <section className="pt-8 pb-8 bg-[var(--surface)] overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-10">
@@ -247,7 +247,7 @@ export default function Home() {
 
         {/* Scrolling Logo Marquee */}
         <ScrollReveal>
-          <div className="relative w-full overflow-hidden">
+          <div className="relative w-full overflow-hidden py-4">
             <div
               className="flex w-max"
               style={{
@@ -258,7 +258,7 @@ export default function Home() {
               {startups.map((startup, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 px-2 md:px-4 flex items-center justify-center"
+                  className="flex-shrink-0 px-0.5 md:px-1 flex items-center justify-center"
                 >
                   <Image
                     src={startup.logo}
@@ -266,7 +266,7 @@ export default function Home() {
                     width={startup.size === "large" ? 360 : 280}
                     height={startup.size === "large" ? 180 : 140}
                     className={`object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity ${
-                      startup.size === "large" ? "max-h-[90px] md:max-h-[180px]" : "max-h-[70px] md:max-h-[140px]"
+                      startup.size === "large" ? "max-h-[45px] md:max-h-[90px]" : "max-h-[35px] md:max-h-[70px]"
                     }`}
                   />
                 </div>
@@ -275,7 +275,7 @@ export default function Home() {
               {startups.map((startup, index) => (
                 <div
                   key={`dup-${index}`}
-                  className="flex-shrink-0 px-2 md:px-4 flex items-center justify-center"
+                  className="flex-shrink-0 px-0.5 md:px-1 flex items-center justify-center"
                 >
                   <Image
                     src={startup.logo}
@@ -283,7 +283,7 @@ export default function Home() {
                     width={startup.size === "large" ? 360 : 280}
                     height={startup.size === "large" ? 180 : 140}
                     className={`object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity ${
-                      startup.size === "large" ? "max-h-[90px] md:max-h-[180px]" : "max-h-[70px] md:max-h-[140px]"
+                      startup.size === "large" ? "max-h-[45px] md:max-h-[90px]" : "max-h-[35px] md:max-h-[70px]"
                     }`}
                   />
                 </div>
