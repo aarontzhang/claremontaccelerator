@@ -13,7 +13,7 @@ const startups = [
 
 const stats = [
   { value: "18", label: "Startups Supported" },
-  { value: "$2,500,000+", label: "Funding Raised" },
+  { value: "$40,000,000+", label: "Combined Enterprise Value" },
   { value: "100+", label: "Mentors & VCs" },
 ];
 
@@ -80,7 +80,7 @@ export default function Home() {
           </div>
 
           <div className="animate-fade-up opacity-0 animation-delay-300">
-            <CTAButton href="/joinca" size="large">
+            <CTAButton href="/intern" size="large">
               Join us today
             </CTAButton>
           </div>
@@ -222,7 +222,7 @@ export default function Home() {
           {/* CTA */}
           <ScrollReveal>
             <div className="text-center mt-10">
-              <CTAButton href="/joinca" size="large">
+              <CTAButton href="/intern" size="large">
                 Learn More & Apply
               </CTAButton>
             </div>

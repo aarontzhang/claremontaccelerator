@@ -2,7 +2,7 @@
 name: Openflow
 tagline: Turn your API endpoints into MCP tools
 cohort: 3
-logo:
+logo: /startups/logos/preman.png
 website: https://www.opentest.live
 founders: Alspencer Omondi, Ethan Sandoval
 status: active

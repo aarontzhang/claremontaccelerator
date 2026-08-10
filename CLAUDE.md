@@ -33,7 +33,8 @@ src/
         page.tsx            # Individual startup detail page (statically generated)
     team/page.tsx
     mentor/page.tsx
-    joinca/page.tsx
+    intern/page.tsx           # Intern landing — server component, pulls open roles from startup jobs
+    found/page.tsx            # Founder landing — programs (Accelerator + CA Studio) + outcomes cards
     support/page.tsx
     l/[slug]/page.tsx       # Short link redirects (config in /links.json)
   components/
@@ -92,6 +93,8 @@ Job Title | Full-time | Location | https://apply-url.com
 
 The `/startups/[slug]` route uses `generateStaticParams()` to pre-render one page per startup at build time.
 
+The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" section aggregated from every startup's `## Jobs` block, and falls back to a portfolio grid when no jobs exist yet.
+
 ## Theme / Styling
 
 Dark theme only. Key CSS variables (defined in `globals.css`):
@@ -115,3 +118,12 @@ Blue tones used directly as hex: `#0165fc` (solid), `#3385fd` (hover/highlight),
 ## Cohort 5
 
 Cohort 5 is configured but has no startups yet. The empty state on the startups page reads "Cohort 5 is coming soon. Check back in August 2026."
+
+## Hero Section Convention
+
+Sub-pages (e.g. `/team`, `/intern`, `/found`) share a hero pattern for visual consistency:
+
+- Section: `relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]`
+- Content wrapper: `max-w-4xl mx-auto px-6 py-16 text-center`
+- Overlay gradient: `radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)`
+- h1: `font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]`

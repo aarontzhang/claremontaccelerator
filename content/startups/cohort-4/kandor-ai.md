@@ -1,5 +1,5 @@
 ---
-name: Kandor AI
+name: Kandor
 tagline: Reimagining operations for specialty medical clinics
 cohort: 4
 logo: /startups/logos/kandor-ai.png

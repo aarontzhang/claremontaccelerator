@@ -8,9 +8,9 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/team", label: "Team" },
-  { href: "/support", label: "Support Us" },
-  { href: "/startups", label: "Startups" },
-  { href: "/joinca", label: "Join" },
+  { href: "/startups", label: "Our Startups" },
+  { href: "/found", label: "Become a founder" },
+  { href: "/intern", label: "Become an intern" },
 ];
 
 const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
@@ -48,7 +48,7 @@ export default function Navbar() {
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className={`tracking-tight transition-colors relative group ${
@@ -116,7 +116,7 @@ export default function Navbar() {
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}

@@ -54,7 +54,7 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
       <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
         {startup.logoExists ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-1" />
+          <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-0.5 rounded-md" />
         ) : (
           <div className="w-full h-full bg-[var(--surface-elevated)] flex items-center justify-center">
             <span className="text-white font-black text-lg">{startup.name.charAt(0)}</span>
