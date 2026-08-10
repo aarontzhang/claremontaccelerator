@@ -215,23 +215,23 @@ export default function InternPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {activeStartups.map((s, i) => (
+              {activeStartups.filter((s) => ["kandor-ai", "flash-biometrics", "openflow", "lintel"].includes(s.slug)).map((s, i) => (
                 <ScrollReveal key={s.slug} delay={i * 30}>
                   <Link
                     href={`/startups/${s.slug}`}
                     className="group block h-full bg-[var(--surface-elevated)] rounded-xl p-5 border border-[var(--border)] hover:border-[var(--accent)]/40 transition-all"
                   >
-                    <div className="h-14 flex items-center mb-4">
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden mb-4 ${s.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
                       {s.logoExists ? (
                         <Image
                           src={s.logo}
                           alt={s.name}
-                          width={140}
-                          height={56}
-                          className="object-contain max-h-14 w-auto brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-contain p-0.5 rounded-md"
                         />
                       ) : (
-                        <span className="text-white font-black text-2xl">{s.name}</span>
+                        <span className="text-white font-black text-lg">{s.name.charAt(0)}</span>
                       )}
                     </div>
                     <p className="text-white font-semibold text-sm mb-1">{s.name}</p>
@@ -243,59 +243,6 @@ export default function InternPage() {
               ))}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="py-20 bg-[var(--background)]">
-        <div className="max-w-5xl mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center mb-14">
-              <h2 className="font-black text-4xl md:text-5xl text-white mb-4">
-                How it works
-              </h2>
-              <p className="text-[var(--muted-light)] text-lg max-w-2xl mx-auto">
-                One application. We handle the matching.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                step: "01",
-                title: "Apply once",
-                body: "Tell us your skills, interests, and what kind of startup you'd want to build at. Takes about 15 minutes.",
-              },
-              {
-                step: "02",
-                title: "Get matched",
-                body: "We introduce you to founders whose roles fit. You interview with the teams you're excited about.",
-              },
-              {
-                step: "03",
-                title: "Sign & start",
-                body: "Compensation and terms are handled between you and the startup. We stay hands-off after intros.",
-              },
-              {
-                step: "04",
-                title: "Ship",
-                body: "Nights, weekends, or full-time. Some interns turn into founding engineers by graduation.",
-              },
-            ].map((s, i) => (
-              <ScrollReveal key={s.step} delay={i * 80}>
-                <div className="relative h-full">
-                  <div className="text-[#0165fc]/40 font-black text-5xl mb-3 leading-none">
-                    {s.step}
-                  </div>
-                  <h3 className="font-bold text-lg text-white mb-2">{s.title}</h3>
-                  <p className="text-[var(--muted-light)] text-sm leading-relaxed">
-                    {s.body}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
 

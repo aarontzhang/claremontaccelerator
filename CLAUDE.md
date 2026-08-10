@@ -93,7 +93,7 @@ Job Title | Full-time | Location | https://apply-url.com
 
 The `/startups/[slug]` route uses `generateStaticParams()` to pre-render one page per startup at build time.
 
-The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" section aggregated from every startup's `## Jobs` block, and falls back to a portfolio grid when no jobs exist yet.
+The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" section aggregated from every startup's `## Jobs` block, and falls back to a portfolio snapshot grid when no jobs exist yet. The snapshot is hardcoded to show only: `kandor-ai`, `flash-biometrics`, `openflow`, `lintel`.
 
 ## Theme / Styling
 

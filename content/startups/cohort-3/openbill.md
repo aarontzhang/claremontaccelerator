@@ -5,7 +5,7 @@ cohort: 3
 logo:
 website: https://openbill.app
 founders:
-status: active
+status: inactive
 ---
 
 Openbill turns raw government data into something readable and actionable. Users can read bills and public records, track legislation as it moves through Congress, receive updates when bill status changes, and compare candidates' stated positions to their actual legislative activity.

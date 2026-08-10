@@ -5,7 +5,7 @@ cohort: 3
 logo:
 website: https://cashbff.com
 founders: Daksh Khanna
-status: active
+status: inactive
 ---
 
 CashBFF is a personal finance AI tool built as a Model Context Protocol (MCP) server, enabling users to talk to an AI financial coach directly inside Claude and other MCP-compatible interfaces — rather than through a separate app.

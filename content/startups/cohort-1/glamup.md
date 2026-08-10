@@ -5,7 +5,7 @@ cohort: 1
 logo: /startups/logos/glamup.webp
 website: https://www.glamup.ai
 founders: Nicole Cheung
-status: active
+status: inactive
 ---
 
 GlamUp is an AI-powered beauty app that lets users upload a photo to receive facial analysis, color season analysis, makeup guides, and personalized product recommendations. It launched in April 2024 and scaled to over 1 million users and $150K monthly recurring revenue within six months — entirely without paid ads or VC funding, relying on viral referral loops and behavioral psychology.
