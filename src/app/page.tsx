@@ -113,7 +113,7 @@ export default function Home() {
       {/* Stats Section - Full Width Band */}
       <section className="py-8 bg-white/[0.025] border-y border-white/[0.07]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {stats.map((stat, index) => (
               <ScrollReveal key={stat.label} delay={index * 100}>
                 <div className="text-center">
