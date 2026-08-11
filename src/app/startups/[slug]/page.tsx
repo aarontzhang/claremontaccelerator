@@ -50,7 +50,7 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
     .filter(Boolean);
 
   return (
-    <div className="min-h-screen pt-36 pb-20 bg-[var(--background)]">
+    <div className="min-h-screen pt-36 pb-20 bg-[var(--background)] flat-cards">
       <div className="max-w-3xl mx-auto px-6">
         {/* Back link */}
         <Link

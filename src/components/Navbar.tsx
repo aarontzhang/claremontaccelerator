@@ -16,72 +16,97 @@ const navLinks = [
 
 const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
 
-const DOCK_AT = 90; // px scrolled before the pill docks flush
-const BAR_H = 68; // capsule height (py-3.5 + 40px logo)
-const RADIUS = BAR_H / 2; // a true pill. NOT 9999px (`rounded-full`) — the
-// transition from 9999→0 spends almost all its time above 34px, where the
-// corners already look fully round, so the change appears to snap at the end.
-const EDGE = "rgba(255, 255, 255, 0.13)";
+const FADE_END = 80; // px of scroll over which the frost fades fully in
+
+// Interpolate a→b by the scroll progress t (0..1).
+const mix = (a: number, b: number, t: number) => a + (b - a) * t;
 
 // .glass draws its top specular edge as an inset box-shadow, not a border, so
-// it survives borderTopColor:transparent. Restate the whole stack per state —
-// same shadow count and order — so it interpolates instead of snapping.
-const SHADOW = (topEdge: number) =>
+// it survives borderTopColor:transparent. Restate the whole stack here so every
+// alpha can be scrubbed by scroll rather than toggled.
+const SHADOW = (topEdge: number, botEdge: number, cast: number) =>
   `inset 0 1px 0 0 rgba(255, 255, 255, ${topEdge}),` +
-  ` inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),` +
-  ` 0 24px 56px -16px rgba(0, 0, 0, 0.75)`;
+  ` inset 0 -1px 0 0 rgba(255, 255, 255, ${botEdge}),` +
+  ` 0 24px 56px -16px rgba(0, 0, 0, ${cast})`;
+
+// The glass fill + backdrop-filter are normally set by .glass-nav in CSS. We
+// restate both here so they track scroll: at the very top the bar is fully
+// transparent with no blur; by FADE_END the frosted material is fully in.
+const FILL = (a1: number, a2: number) =>
+  `linear-gradient(to bottom, rgba(255, 255, 255, ${a1}) 0%, rgba(255, 255, 255, ${a2}) 100%)`;
+const BLUR = (px: number, bright: number) =>
+  `blur(${px}px) saturate(100%) brightness(${bright})`;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [docked, setDocked] = useState(false);
+  const [progress, setProgress] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setDocked(window.scrollY > DOCK_AT);
+    // rAF-throttle so the material tracks scroll 1:1 without a render per event.
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setProgress(Math.min(1, Math.max(0, window.scrollY / FADE_END)));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
+
+  // The open mobile menu forces the material fully on, so the dropdown isn't
+  // floating over a transparent bar.
+  const t = isOpen ? 1 : progress;
 
   return (
     // Plain fixed shell — no transform/opacity here, or the capsule's
     // backdrop-filter would have nothing to sample.
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-[padding] duration-500 ease-out ${
-        docked ? "px-0 pt-0" : "px-4 pt-7"
-      }`}
-    >
+    <header className="fixed top-0 inset-x-0 z-50">
       <nav
-        className="glass glass-nav mx-auto transition-[border-radius,max-width,border-color,box-shadow] duration-500 ease-out"
+        className="glass glass-nav"
         style={{
-          maxWidth: docked ? "100%" : "80rem",
-          borderRadius: isOpen ? "24px" : docked ? "0px" : `${RADIUS}px`,
-          // Fade the top and side edges out instead of removing border-width,
-          // so the bar never shifts a pixel. Bottom hairline stays.
-          borderTopColor: docked ? "transparent" : EDGE,
-          borderLeftColor: docked ? "transparent" : EDGE,
-          borderRightColor: docked ? "transparent" : EDGE,
-          borderBottomColor: EDGE,
-          boxShadow: SHADOW(docked ? 0 : 0.16),
+          maxWidth: "100%",
+          borderRadius: "0px",
+          // No CSS transition — the scroll position itself scrubs each value.
+          // Standard + WebKit set together here (React inline styles, so no
+          // Lightning CSS to collapse the pair) — otherwise the class's
+          // -webkit- value would linger on Safari and never un-blur.
+          background: FILL(mix(0, 0.1, t), mix(0, 0.045, t)),
+          backdropFilter: BLUR(mix(0, 5, t), mix(1, 0.65, t)),
+          WebkitBackdropFilter: BLUR(mix(0, 5, t), mix(1, 0.65, t)),
+          // Full-width bar: only the bottom hairline; top/side edges transparent.
+          borderTopColor: "transparent",
+          borderLeftColor: "transparent",
+          borderRightColor: "transparent",
+          borderBottomColor: `rgba(255, 255, 255, ${mix(0, 0.13, t)})`,
+          boxShadow: SHADOW(mix(0, 0.16, t), mix(0, 0.03, t), mix(0, 0.75, t)),
+          // Drives the ::before dome highlight opacity (see globals.css).
+          ["--nav-frost" as string]: t,
         }}
       >
         {/* z-10 keeps content above .glass::before's specular sheen */}
-        <div className="relative z-10 px-5 py-3.5">
+        <div className="relative z-10 px-[42px] py-[23px]">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-[11px] hover:opacity-80 transition-opacity"
             >
               <Image
                 src="/logo.png"
                 alt="Claremont Accelerator"
-                width={40}
-                height={40}
-                className="w-10 h-10 object-contain"
+                width={42}
+                height={42}
+                className="w-[42px] h-[42px] object-contain"
               />
               <span
-                className="text-xl font-black tracking-tight text-white"
+                className="text-[21px] font-black tracking-tight text-white"
                 style={{ fontFamily: 'Aileron, Arial, sans-serif' }}
               >
                 Claremont Accelerator
@@ -89,7 +114,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex items-center gap-8 pr-2">
+            <ul className="hidden md:flex items-center gap-[34px] pr-2 text-[17px]">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (

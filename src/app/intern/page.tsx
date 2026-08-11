@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import { loadAllStartups } from "@/lib/startups";
 import {
   IconArrowNarrowRight,
@@ -25,12 +24,10 @@ export default function InternPage() {
   const totalOpenRoles = startupsWithJobs.reduce((n, s) => n + s.jobs.length, 0);
 
   return (
-    <div className="relative min-h-screen bg-[#06070c]">
-      <PageAtmosphere />
-
+    <div className="relative min-h-screen bg-black flat-cards">
       <div className="relative z-10">
       {/* Hero */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[79px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/acceleratormeeting-18.jpg"

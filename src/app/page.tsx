@@ -1,5 +1,4 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight } from "@tabler/icons-react";
@@ -21,12 +20,10 @@ const stats = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#06070c]">
-      <PageAtmosphere />
-
+    <div className="relative min-h-screen bg-black flat-cards">
       {/* pt here nudges every section down together; the navbar is a sibling
           of this wrapper (in layout.tsx) so it stays put. */}
-      <div className="relative z-10 pt-[35px]">
+      <div className="relative z-10 pt-0">
       {/* Hero Section */}
       <section className="relative min-h-screen overflow-hidden">
 
