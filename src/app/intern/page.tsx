@@ -1,7 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageAtmosphere from "@/components/PageAtmosphere";
 import { loadAllStartups } from "@/lib/startups";
+import {
+  IconArrowNarrowRight,
+  IconChevronDown,
+  IconCurrencyDollar,
+  IconExternalLink,
+  IconShieldCheck,
+  IconUsers,
+} from "@tabler/icons-react";
 
 export const metadata = {
   title: "Intern at a CA Startup",
@@ -16,9 +25,12 @@ export default function InternPage() {
   const totalOpenRoles = startupsWithJobs.reduce((n, s) => n + s.jobs.length, 0);
 
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen bg-[#06070c]">
+      <PageAtmosphere />
+
+      <div className="relative z-10">
       {/* Hero */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/acceleratormeeting-18.jpg"
@@ -48,7 +60,7 @@ export default function InternPage() {
       </section>
 
       {/* Why intern */}
-      <section className="py-20 bg-[var(--background)]">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-14">
@@ -68,52 +80,23 @@ export default function InternPage() {
               {
                 title: "Get real experience",
                 body: "Own features end-to-end, talk to users, and ship work that goes live the same week. The kind of story you can actually tell in an interview.",
-                icon: (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                ),
+                Icon: IconShieldCheck,
               },
               {
                 title: "Network with ambitious people",
                 body: "Work alongside 5C founders backed by YC, a16z, Afore, 1517, EF, and Z Fellows. The intros compound long after the role ends.",
-                icon: (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                ),
+                Icon: IconUsers,
               },
               {
                 title: "Earn money",
                 body: "All roles are paid.",
-                icon: (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 3v18M17 7H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H7"
-                  />
-                ),
+                Icon: IconCurrencyDollar,
               },
             ].map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 60}>
-                <div className="h-full bg-[var(--surface-elevated)] rounded-2xl p-6 border border-[var(--border)] hover:border-[var(--accent)]/40 transition-all">
-                  <div className="w-11 h-11 rounded-lg bg-[#0165fc]/15 border border-[#0165fc]/30 flex items-center justify-center mb-4">
-                    <svg
-                      className="w-5 h-5"
-                      style={{ color: "#3385fd" }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      {item.icon}
-                    </svg>
+                <div className="glass glass-hover h-full rounded-2xl p-6">
+                  <div className="w-11 h-11 rounded-lg bg-white flex items-center justify-center mb-4">
+                    <item.Icon className="w-5 h-5 text-slate-700" stroke={2} />
                   </div>
                   <h3 className="font-bold text-lg text-white mb-2">{item.title}</h3>
                   <p className="text-[var(--muted-light)] text-sm leading-relaxed">
@@ -127,7 +110,7 @@ export default function InternPage() {
       </section>
 
       {/* Open roles / hiring startups */}
-      <section id="roles" className="py-20 bg-[var(--surface)] border-y border-[var(--border)]">
+      <section id="roles" className="py-20 border-y border-white/[0.07]">
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
@@ -146,9 +129,7 @@ export default function InternPage() {
                 className="text-[#3385fd] hover:text-white text-sm font-semibold flex items-center gap-1 transition-colors"
               >
                 Browse the full portfolio
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
               </Link>
             </div>
           </ScrollReveal>
@@ -157,10 +138,10 @@ export default function InternPage() {
             <div className="space-y-8">
               {startupsWithJobs.map((s) => (
                 <ScrollReveal key={s.slug}>
-                  <div className="bg-[var(--surface-elevated)] rounded-2xl border border-[var(--border)] overflow-hidden">
-                    <div className="flex items-center gap-4 p-6 border-b border-[var(--border)]">
+                  <div className="glass rounded-2xl overflow-hidden">
+                    <div className="relative z-10 flex items-center gap-4 p-6 border-b border-white/[0.07]">
                       {s.logoExists ? (
-                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-[var(--border)] flex items-center justify-center flex-shrink-0 p-2">
+                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 p-2">
                           <Image
                             src={s.logo}
                             alt={s.name}
@@ -170,7 +151,7 @@ export default function InternPage() {
                           />
                         </div>
                       ) : (
-                        <div className="w-14 h-14 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
                           <span className="text-white font-black text-lg">
                             {s.name.charAt(0)}
                           </span>
@@ -186,9 +167,9 @@ export default function InternPage() {
                         <p className="text-[var(--muted-light)] text-sm truncate">{s.tagline}</p>
                       </div>
                     </div>
-                    <ul className="divide-y divide-[var(--border)]">
+                    <ul className="relative z-10 divide-y divide-white/[0.07]">
                       {s.jobs.map((job, idx) => (
-                        <li key={idx} className="flex items-center justify-between gap-4 p-5 hover:bg-white/[0.02] transition-colors">
+                        <li key={idx} className="flex items-center justify-between gap-4 p-5 hover:bg-white/[0.04] transition-colors">
                           <div className="min-w-0">
                             <p className="text-white font-semibold">{job.title}</p>
                             <p className="text-[var(--muted)] text-sm mt-0.5">
@@ -202,9 +183,7 @@ export default function InternPage() {
                             className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#3385fd] hover:text-white transition-colors flex-shrink-0"
                           >
                             Apply
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
+                            <IconExternalLink className="w-4 h-4" stroke={2} />
                           </a>
                         </li>
                       ))}
@@ -219,9 +198,9 @@ export default function InternPage() {
                 <ScrollReveal key={s.slug} delay={i * 30}>
                   <Link
                     href={`/startups/${s.slug}`}
-                    className="group block h-full bg-[var(--surface-elevated)] rounded-xl p-5 border border-[var(--border)] hover:border-[var(--accent)]/40 transition-all"
+                    className="glass glass-flat glass-hover group block h-full rounded-xl p-5"
                   >
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden mb-4 ${s.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
+                    <div className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden mb-4 ${s.cohort >= 4 ? "bg-white" : "bg-white/5"}`}>
                       {s.logoExists ? (
                         <Image
                           src={s.logo}
@@ -247,7 +226,7 @@ export default function InternPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-[var(--surface)] border-t border-[var(--border)]">
+      <section className="py-20 border-t border-white/[0.07]">
         <div className="max-w-3xl mx-auto px-6">
           <ScrollReveal>
             <h2 className="font-black text-4xl md:text-5xl text-white mb-10 text-center">
@@ -287,19 +266,15 @@ export default function InternPage() {
               },
             ].map((item) => (
               <ScrollReveal key={item.q}>
-                <details className="group bg-[var(--surface-elevated)] rounded-xl border border-[var(--border)] overflow-hidden">
-                  <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer list-none">
+                <details className="glass glass-flat group rounded-xl overflow-hidden">
+                  <summary className="relative z-10 flex items-center justify-between gap-4 p-5 cursor-pointer list-none">
                     <span className="font-semibold text-white">{item.q}</span>
-                    <svg
+                    <IconChevronDown
                       className="w-5 h-5 text-[var(--muted)] transition-transform group-open:rotate-180 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                      stroke={2}
+                    />
                   </summary>
-                  <div className="px-5 pb-5 text-[var(--muted-light)] leading-relaxed">
+                  <div className="relative z-10 px-5 pb-5 text-[var(--muted-light)] leading-relaxed">
                     {item.a}
                   </div>
                 </details>
@@ -310,7 +285,7 @@ export default function InternPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 bg-[var(--background)]">
+      <section className="py-24">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="font-black text-4xl md:text-5xl text-white mb-4 leading-tight">
@@ -325,13 +300,12 @@ export default function InternPage() {
               className="inline-flex items-center gap-2 text-white text-lg font-semibold border-b border-white/30 hover:border-white pb-1 transition-colors"
             >
               Browse the portfolio
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <IconArrowNarrowRight className="w-5 h-5" stroke={2} />
             </Link>
           </ScrollReveal>
         </div>
       </section>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { Startup } from "@/lib/startups";
+import { IconExternalLink, IconSearch } from "@tabler/icons-react";
 
 interface Props {
   startups: Startup[];
@@ -17,7 +18,7 @@ function StatusBadge({ status }: { status: string }) {
       className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest rounded px-2 py-0.5 border ${
         active
           ? "text-emerald-400 border-emerald-500/40"
-          : "text-[var(--muted)] border-[var(--border)]"
+          : "text-[var(--muted)] border-white/15"
       }`}
     >
       <span
@@ -30,16 +31,11 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+// Only rendered when count > 0 — StartupCard omits the badge entirely at zero.
 function JobCount({ count }: { count: number }) {
   return (
-    <span
-      className={`text-[10px] font-bold uppercase tracking-widest rounded px-2 py-0.5 self-start border ${
-        count > 0
-          ? "text-[#3385fd] border-[#0165fc]/40"
-          : "text-[var(--muted)] border-[var(--border)]"
-      }`}
-    >
-      {count === 0 ? "0 jobs" : count === 1 ? "1 job" : `${count} jobs`}
+    <span className="text-[10px] font-bold uppercase tracking-widest rounded px-2 py-0.5 self-start border text-[#3385fd] border-[#0165fc]/40">
+      {count === 1 ? "1 job" : `${count} jobs`}
     </span>
   );
 }
@@ -48,21 +44,21 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
   return (
     <button
       onClick={onClick}
-      className="group text-left w-full bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 flex flex-col gap-3 transition-all hover:border-white/25 hover:bg-[var(--surface-elevated)]"
+      className="glass glass-flat glass-hover group text-left w-full rounded-xl p-5 flex flex-col gap-3"
     >
       {/* Logo */}
-      <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"}`}>
+      <div className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-white/[0.07]"}`}>
         {startup.logoExists ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-0.5 rounded-md" />
         ) : (
-          <div className="w-full h-full bg-[var(--surface-elevated)] flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center">
             <span className="text-white font-black text-lg">{startup.name.charAt(0)}</span>
           </div>
         )}
       </div>
 
-      <div className="flex-1 min-w-0">
+      <div className="relative z-10 flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
           <h2 className="font-black text-base leading-tight text-white group-hover:text-[#3385fd] transition-colors">
             {startup.name}
@@ -76,9 +72,7 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
               className="flex-shrink-0 text-[var(--muted)] hover:text-white transition-colors"
               aria-label={`Visit ${startup.name} website`}
             >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <IconExternalLink className="w-3 h-3" stroke={2} />
             </a>
           )}
         </div>
@@ -89,12 +83,12 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
         )}
       </div>
 
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] border border-[var(--border)] rounded px-2 py-0.5">
+      <div className="relative z-10 flex items-center gap-2 flex-wrap">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] border border-white/15 rounded px-2 py-0.5">
           Cohort {startup.cohort}
         </span>
         <StatusBadge status={startup.status} />
-        <JobCount count={startup.jobs.length} />
+        {startup.jobs.length > 0 && <JobCount count={startup.jobs.length} />}
       </div>
     </button>
   );
@@ -147,36 +141,22 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
   const cohortTabs = [0, ...allCohorts];
 
   return (
-    <div className="min-h-screen pt-36 pb-20 bg-[var(--background)]">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-10">
-          <p className="text-[#3385fd] font-semibold text-sm uppercase tracking-widest mb-3">
-            Portfolio
-          </p>
-          <h1 className="font-black text-5xl md:text-7xl text-white mb-4">Our Startups</h1>
-          <p className="text-[var(--muted-light)] text-lg max-w-2xl">
-            {startups.length} companies across {allCohorts.length} cohorts — all built by students at the Claremont Colleges.
-          </p>
-        </div>
-
+    // Page wrapper, atmosphere and header live in page.tsx so they render
+    // statically; this component owns only the interactive list.
+    <>
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1 max-w-sm">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <IconSearch
+              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 w-4 h-4 text-[var(--muted)]"
+              stroke={2}
+            />
             <input
               type="text"
               placeholder="Search startups…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg pl-9 pr-4 py-2.5 text-white placeholder:text-[var(--muted)] text-sm focus:outline-none focus:border-white/30 transition-colors"
+              className="glass glass-flat w-full rounded-lg pl-9 pr-4 py-2.5 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-white/30 transition-colors"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -187,8 +167,16 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                   activeCohort === c
                     ? "bg-[#0165fc] text-white"
-                    : "bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:text-white hover:border-white/30"
+                    : "glass glass-flat text-white/60 hover:text-white"
                 }`}
+                style={
+                  activeCohort === c
+                    ? {
+                        boxShadow:
+                          "inset 0 1px 0 0 rgba(255,255,255,0.3), 0 8px 20px -8px rgba(1,101,252,0.65)",
+                      }
+                    : undefined
+                }
               >
                 {c === 0 ? "All" : `Cohort ${c}`}
               </button>
@@ -222,7 +210,6 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
             </div>
           )}
         </div>
-      </div>
-    </div>
+    </>
   );
 }

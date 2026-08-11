@@ -283,6 +283,156 @@ h1, h2, h3, h4, h5, h6 {
   animation: bubble-logo 8s ease-in-out infinite;
 }
 
+/* ==========================================================================
+   Glass buttons — used by the homepage hero CTAs
+   ========================================================================== */
+
+/* --- The glass primitive -------------------------------------------------
+   Three stacked cues make glass read as glass: a translucent gradient body,
+   a blurred+saturated backdrop, and a bright 1px specular edge on top. */
+.glass {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.075) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  /* Standard property only — Lightning CSS adds the -webkit- prefix itself.
+     Hand-writing the prefix makes it collapse the pair and drop this one. */
+  backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),
+    0 24px 56px -16px rgba(0, 0, 0, 0.75);
+}
+
+/* Top-lit dome highlight */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    130% 85% at 50% -25%,
+    rgba(255, 255, 255, 0.13),
+    transparent 62%
+  );
+  pointer-events: none;
+}
+
+/* Navbar capsule: content scrolls *underneath* it, so it needs to sit further
+   back than a card resting on the page ground. More blur, a denser body, and
+   a brightness knock-down on the backdrop so nothing bleeds through hot. */
+.glass-nav {
+  /* Two layers: a dark tint keyed to the page ground for actual opacity, plus
+     a white gradient on top for the frost highlight. Piling on white alone
+     would just turn the pill milky grey. */
+  /* No tint layer — the frost gradient is the only fill, and brightness() on
+     the backdrop does all the darkening. Border colors are set per-side from
+     Navbar.tsx so the top/side edges can fade out when it docks full-width. */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.045) 100%
+  );
+  backdrop-filter: blur(5px) saturate(100%) brightness(0.65);
+  border-color: rgba(255, 255, 255, 0.13);
+}
+
+/* Dense grids: same material, minus the heavy cast shadow. At 4-up with a
+   16px gap those shadows pile into each other and the grid goes muddy. */
+.glass-flat {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),
+    0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+.glass-flat.glass-hover:hover {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+    0 16px 34px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(1, 101, 252, 0.15);
+}
+
+.glass-hover {
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.55s ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.26),
+    0 36px 72px -16px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(1, 101, 252, 0.16);
+}
+
+/* --- Page atmosphere -----------------------------------------------------
+   Glass only reads as glass when there is something behind it to blur.
+   A fixed layer of slow-drifting blue light + film grain gives every pane
+   real gradient and texture to sample, at any scroll position. */
+@keyframes bloom-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.14);
+  }
+}
+
+.bloom {
+  animation: bloom-drift 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.bloom-slow {
+  animation-duration: 38s;
+  animation-direction: reverse;
+}
+
+.grain-layer {
+  opacity: 0.28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom {
+    animation: none;
+  }
+}
+
+/* Specular sweep across a button on hover */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.3) 48%,
+    transparent 64%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.sheen:hover::after {
+  transform: translateX(130%);
+}
+
 /* Active nav link */
 .nav-link-active {
   color: white !important;

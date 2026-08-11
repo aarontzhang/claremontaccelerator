@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IconArrowRight, IconExternalLink } from "@tabler/icons-react";
 
 interface CTAButtonProps {
   href: string;
@@ -60,14 +61,7 @@ export default function CTAButton({
         style={inlineStyle}
       >
         {children}
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-          />
-        </svg>
+        <IconExternalLink className="w-4 h-4" stroke={2} />
       </a>
     );
   }
@@ -75,14 +69,7 @@ export default function CTAButton({
   return (
     <Link href={href} className={className} style={inlineStyle}>
       {children}
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M17 8l4 4m0 0l-4 4m4-4H3"
-        />
-      </svg>
+      <IconArrowRight className="w-4 h-4" stroke={2} />
     </Link>
   );
 }

@@ -1,6 +1,7 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 const MENTOR_FORM_URL = "mailto:claremontaccelerator@gmail.com?subject=Mentor%20Interest";
 
@@ -30,7 +31,7 @@ export default function Mentor() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/acceleratormeeting-11.jpg"
@@ -62,9 +63,7 @@ export default function Mentor() {
               style={{ background: "#0165fc" }}
             >
               Get Involved
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
             </a>
           </div>
         </div>
@@ -125,9 +124,7 @@ export default function Mentor() {
               style={{ background: "#0165fc" }}
             >
               Get Involved
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
             </a>
             <p className="mt-6 text-[var(--muted)] text-sm">
               Prefer to support financially?{" "}

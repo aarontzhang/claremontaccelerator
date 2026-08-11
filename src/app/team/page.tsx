@@ -1,5 +1,6 @@
 import TeamMember from "@/components/TeamMember";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 
 const team = [
@@ -8,30 +9,35 @@ const team = [
     role: "Co-President",
     school: "CMC '29",
     image: "/team/chase.webp",
+    linkedin: "https://linkedin.com/in/chase-witzansky",
   },
   {
     name: "Melanie Haro-Cortes",
     role: "Co-President",
     school: "CMC '28",
     image: "/team/melanie.jpg",
+    linkedin: "https://linkedin.com/in/melanie-haro-cortes",
   },
   {
     name: "Maélie Abt",
     role: "CA Studio Director",
     school: "Pomona '29",
     image: "/team/Maelie.JPG",
+    linkedin: "https://linkedin.com/in/maelie-abt",
   },
   {
     name: "Daniel Lo",
     role: "Marketing",
     school: "CMC '29",
     image: "/team/daniel.jpg",
+    linkedin: "https://linkedin.com/in/daniel-lo-a137532a7",
   },
   {
     name: "Stanley Lo",
     role: "Member-at-large",
     school: "CMC '27",
     image: "/team/stanley.jpeg",
+    linkedin: "https://linkedin.com/in/stanleylo4",
   },
 ];
 
@@ -68,9 +74,11 @@ const exOfficio = [
 
 export default function WhoWeAre() {
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen bg-[#06070c]">
+      <PageAtmosphere />
+      <div className="relative z-10">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[116px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/acceleratormeeting-12.jpg"
@@ -93,12 +101,12 @@ export default function WhoWeAre() {
       </section>
 
       {/* Team Grid */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[var(--muted)] text-sm font-bold tracking-widest uppercase mb-6">
             Active Leadership Team Members
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {team.map((member, index) => (
               <ScrollReveal key={member.name} delay={index * 50}>
                 <TeamMember {...member} />
@@ -107,7 +115,7 @@ export default function WhoWeAre() {
           </div>
 
           {/* Ex Officio */}
-          <div className="mt-16">
+          <div className="mt-16 pt-16 border-t border-white/[0.07]">
             <h2 className="text-[var(--muted)] text-sm font-bold tracking-widest uppercase mb-6">
               Ex Officio
             </h2>
@@ -121,6 +129,7 @@ export default function WhoWeAre() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

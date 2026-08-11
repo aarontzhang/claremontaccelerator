@@ -2,6 +2,7 @@ import CTAButton from "@/components/CTAButton";
 import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { IconArrowNarrowRight } from "@tabler/icons-react";
 
 const DONATION_URL = "https://www.cmc.edu/giving/institutes/rlcie";
 
@@ -9,7 +10,7 @@ export default function Donate() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -39,9 +40,7 @@ export default function Donate() {
               className="inline-flex items-center gap-1 text-white/50 text-sm hover:text-white/80 transition-colors"
             >
               I&apos;d like to donate my time
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <IconArrowNarrowRight className="w-3 h-3" stroke={2} />
             </Link>
           </div>
         </div>

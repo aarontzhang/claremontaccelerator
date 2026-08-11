@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { loadAllStartups } from "@/lib/startups";
 import type { Job } from "@/lib/startups";
+import { IconChevronLeft, IconExternalLink } from "@tabler/icons-react";
 
 export async function generateStaticParams() {
   const startups = loadAllStartups();
@@ -56,14 +57,10 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
           href="/startups"
           className="inline-flex items-center gap-2 text-[var(--muted)] hover:text-white text-sm font-medium transition-colors mb-10 group"
         >
-          <svg
+          <IconChevronLeft
             className="w-4 h-4 transition-transform group-hover:-translate-x-0.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+            stroke={2}
+          />
           All Startups
         </Link>
 
@@ -159,14 +156,10 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
                       </p>
                     </div>
                     {job.url && (
-                      <svg
+                      <IconExternalLink
                         className="w-3.5 h-3.5 text-[var(--muted)] group-hover/job:text-white flex-shrink-0 ml-3 transition-colors"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
+                        stroke={2}
+                      />
                     )}
                   </a>
                 ))}
@@ -183,9 +176,7 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
               className="inline-flex items-center gap-2 bg-[#0165fc] text-white font-semibold px-5 py-2.5 rounded-full text-sm hover:scale-105 transition-transform self-start"
             >
               Visit Website
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <IconExternalLink className="w-3.5 h-3.5" stroke={2} />
             </a>
           )}
         </div>

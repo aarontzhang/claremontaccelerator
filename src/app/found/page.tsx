@@ -1,15 +1,19 @@
-import CTAButton from "@/components/CTAButton";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 import Link from "next/link";
+import { IconArrowRight, IconBolt, IconBulb } from "@tabler/icons-react";
 
 export const metadata = {
   title: "Found a CA Startup",
 };
 
-// Application form URLs
+// Application form URLs. Both buttons are disabled placeholders right now, so
+// these are intentionally unreferenced — kept for when applications reopen.
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const FOUNDER_APPLICATION_URL = "https://docs.google.com/forms/d/1ODnyqt-Y0f1UXhx-2BRLloTDYEwGQIL-UJDZOqmDgA4/edit";
 const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/1BWg-0runr2VRAaaMXf554R0jLM80_S2Bj1qWApXZBps/edit";
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 type Outcome = {
   name: string;
@@ -61,9 +65,11 @@ const outcomes: Outcome[] = [
 
 export default function Apply() {
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen bg-[#06070c]">
+      <PageAtmosphere />
+      <div className="relative z-10">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden mt-[72px]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -88,7 +94,7 @@ export default function Apply() {
       </section>
 
       {/* Program Sections */}
-      <section className="py-16 bg-[var(--background)]">
+      <section className="py-16">
         <div className="max-w-5xl mx-auto px-6">
           <ScrollReveal>
             <h2 className="font-black text-3xl md:text-4xl text-white mb-12 text-center">
@@ -99,12 +105,10 @@ export default function Apply() {
           <div className="grid md:grid-cols-2 gap-8">
           {/* Program 1: Claremont Accelerator (Main) */}
           <ScrollReveal>
-            <div className="h-full bg-[var(--surface-elevated)] rounded-2xl p-6 border border-[var(--border)]">
+            <div className="glass h-full rounded-2xl p-6 flex flex-col">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full pulse-circle flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                  <IconBolt className="w-6 h-6 text-slate-700" stroke={2} />
                 </div>
                 <div>
                   <h3 className="font-black text-2xl text-white">Claremont Accelerator</h3>
@@ -116,7 +120,6 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">What You Get</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• Year-long cohort of dedicated support</li>
                     <li>• <span className="text-white font-medium">$5,000 - $15,000</span> in non-dilutive funding</li>
                     <li>• Mentorship from 40+ VCs and founders</li>
                     <li>• Paid interns matched to your startup</li>
@@ -133,22 +136,22 @@ export default function Apply() {
                 </div>
               </div>
 
-              <div className="mt-6">
-                <CTAButton href={FOUNDER_APPLICATION_URL} disabled>
+              {/* mt-auto pins this to the card bottom so both cards' buttons
+                  line up regardless of how long the lists above them are. */}
+              <div className="mt-auto pt-6">
+                <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
                   Applications Closed
-                </CTAButton>
+                </span>
               </div>
             </div>
           </ScrollReveal>
 
           {/* Program 2: CA Studio */}
           <ScrollReveal>
-            <div className="h-full bg-[var(--surface-elevated)] rounded-2xl p-6 border border-[var(--border)]">
+            <div className="glass h-full rounded-2xl p-6 flex flex-col">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full pulse-circle flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                  <IconBulb className="w-6 h-6 text-slate-700" stroke={2} />
                 </div>
                 <div>
                   <h3 className="font-black text-2xl text-white">CA Studio</h3>
@@ -177,10 +180,10 @@ export default function Apply() {
                 </div>
               </div>
 
-              <div className="mt-6">
-                <CTAButton href={STUDIO_APPLICATION_URL} disabled>
+              <div className="mt-auto pt-6">
+                <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
                   Applications Closed
-                </CTAButton>
+                </span>
               </div>
             </div>
           </ScrollReveal>
@@ -189,7 +192,7 @@ export default function Apply() {
       </section>
 
       {/* Outcomes Section */}
-      <section className="py-20 bg-[var(--surface)] border-t border-[var(--border)]">
+      <section className="py-20 border-t border-white/[0.07]">
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-14">
@@ -208,10 +211,10 @@ export default function Apply() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {outcomes.map((o, i) => {
               const CardInner = (
-                <div className="h-full bg-[var(--surface-elevated)] rounded-2xl p-6 border border-[var(--border)] hover:border-[var(--accent)]/40 transition-all">
-                  <div className="flex items-center gap-4 mb-5">
+                <div className="glass glass-hover h-full rounded-2xl p-6">
+                  <div className="relative z-10 flex items-center gap-4 mb-5">
                     {o.logo ? (
-                      <div className={`w-14 h-14 rounded-xl border border-[var(--border)] flex items-center justify-center flex-shrink-0 ${o.tileBg ?? "bg-white/5"} ${o.tilePadding ?? "p-0.5"}`}>
+                      <div className={`w-14 h-14 rounded-xl border border-white/12 flex items-center justify-center flex-shrink-0 ${o.tileBg ?? "bg-white/[0.07]"} ${o.tilePadding ?? "p-0.5"}`}>
                         <Image
                           src={o.logo}
                           alt={o.name}
@@ -221,7 +224,7 @@ export default function Apply() {
                         />
                       </div>
                     ) : (
-                      <div className="w-14 h-14 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                      <div className="w-14 h-14 rounded-xl bg-white/[0.07] border border-white/12 flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-black text-lg">
                           {o.name.charAt(0)}
                         </span>
@@ -264,14 +267,13 @@ export default function Apply() {
                 className="inline-flex items-center gap-1.5 text-[#3385fd] hover:text-white text-sm font-semibold transition-colors"
               >
                 Browse the full portfolio
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <IconArrowRight className="w-4 h-4" stroke={2} />
               </Link>
             </div>
           </ScrollReveal>
         </div>
       </section>
+      </div>
     </div>
   );
 }
