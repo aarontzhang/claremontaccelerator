@@ -29,7 +29,7 @@ const whatYouBring = [
 
 export default function Mentor() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flat-cards">
       {/* Hero */}
       <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">

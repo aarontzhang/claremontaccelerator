@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { loadAllStartups, COHORT_ORDER, LATEST_COHORT } from "@/lib/startups";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import StartupsClient from "./StartupsClient";
 import StartupsSkeleton from "./StartupsSkeleton";
 
@@ -17,8 +16,7 @@ export default function StartupsPage() {
   // — StartupsClient calls useSearchParams(), which would otherwise defer this
   // entire page to client render and leave a blank screen on a cold cache.
   return (
-    <div className="relative min-h-screen pt-[179px] pb-20 bg-[#06070c]">
-      <PageAtmosphere />
+    <div className="relative min-h-screen pt-[151px] pb-20 bg-black flat-cards">
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="mb-10">
           <h1 className="font-black text-5xl md:text-7xl text-white mb-4">Our Startups</h1>

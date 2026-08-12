@@ -1,5 +1,4 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight, IconBolt, IconBulb } from "@tabler/icons-react";
@@ -65,11 +64,10 @@ const outcomes: Outcome[] = [
 
 export default function Apply() {
   return (
-    <div className="relative min-h-screen bg-[#06070c]">
-      <PageAtmosphere />
+    <div className="relative min-h-screen bg-black flat-cards">
       <div className="relative z-10">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[79px] border-b border-white/[0.13]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image

@@ -1,5 +1,4 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight } from "@tabler/icons-react";
@@ -21,22 +20,20 @@ const stats = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#06070c]">
-      <PageAtmosphere />
-
+    <div className="relative min-h-screen bg-black flat-cards">
       {/* pt here nudges every section down together; the navbar is a sibling
           of this wrapper (in layout.tsx) so it stays put. */}
-      <div className="relative z-10 pt-[35px]">
+      <div className="relative z-10 pt-0">
       {/* Hero Section */}
       <section className="relative min-h-screen overflow-hidden">
 
         {/* Team cutout — desktop only */}
         <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center translate-y-24">
           <Image
-            src="/betterbg-transparent.png"
+            src="/betterbg-transparent.webp"
             alt="Claremont Accelerator team"
-            width={6003}
-            height={4131}
+            width={1600}
+            height={1101}
             className="w-[80%] h-auto"
             priority
           />
@@ -116,7 +113,7 @@ export default function Home() {
       {/* Stats Section - Full Width Band */}
       <section className="py-8 bg-white/[0.025] border-y border-white/[0.07]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {stats.map((stat, index) => (
               <ScrollReveal key={stat.label} delay={index * 100}>
                 <div className="text-center">

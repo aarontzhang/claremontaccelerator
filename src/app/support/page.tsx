@@ -8,7 +8,7 @@ const DONATION_URL = "https://www.cmc.edu/giving/institutes/rlcie";
 
 export default function Donate() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flat-cards">
       {/* Hero Section */}
       <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
         {/* Background Image */}

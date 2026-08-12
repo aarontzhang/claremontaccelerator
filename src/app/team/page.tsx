@@ -1,6 +1,5 @@
 import TeamMember from "@/components/TeamMember";
 import ScrollReveal from "@/components/ScrollReveal";
-import PageAtmosphere from "@/components/PageAtmosphere";
 import Image from "next/image";
 
 const team = [
@@ -74,11 +73,10 @@ const exOfficio = [
 
 export default function WhoWeAre() {
   return (
-    <div className="relative min-h-screen bg-[#06070c]">
-      <PageAtmosphere />
+    <div className="relative min-h-screen bg-black">
       <div className="relative z-10">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[116px] border-b border-white/[0.13]">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[64px] border-b border-white/[0.13]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/acceleratormeeting-12.jpg"

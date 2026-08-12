@@ -40,10 +40,10 @@ src/
     support/page.tsx
     l/[slug]/page.tsx       # Short link redirects (config in /links.json)
   components/
-    Navbar.tsx              # Floating glass pill; docks flush on scroll
+    Navbar.tsx              # Full-width flush bar; glass fades in scroll-scrubbed
     Footer.tsx
     CTAButton.tsx
-    PageAtmosphere.tsx      # Shared fixed background (blooms + grain) — required for glass
+    PageAtmosphere.tsx      # Blooms + grain background — currently unmounted (pages use flat bg-black)
     ScrollReveal.tsx
     StartupLogo.tsx
     TeamMember.tsx
@@ -101,7 +101,7 @@ The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" s
 ### /startups render split
 
 `StartupsClient` calls `useSearchParams()`, which opts its whole subtree out of prerendering.
-So the page wrapper, `PageAtmosphere`, `<h1>` and the company-count line live in the **server**
+So the page wrapper, `<h1>` and the company-count line live in the **server**
 component (`page.tsx`) and ship in static HTML; only the filters and grid sit behind `<Suspense>`
 with `StartupsSkeleton` as the fallback. Keep it that way — moving the header back into the client
 component reintroduces a blank page on a cold cache.
@@ -138,19 +138,21 @@ Cards, inputs, and secondary buttons use a frosted-glass material defined in `gl
 | `.glass-flat` | Same material, lighter cast shadow. For DENSE grids (3+ cols / tight gaps) where full shadows pile up |
 | `.glass-hover` | Lift + brighten on hover. Only for cards that are actually clickable |
 | `.glass-nav` | Navbar-only override (denser tint, `brightness()` knock-down) |
+| `.flat-cards` | Page-wrapper opt-in: recolors any descendant `.glass` to a flat, uniform frost — kills the top-lit gradient body, `::before` dome, and specular top edge. On every page **except `/team`** (which keeps the graded glass). The navbar is unaffected because it renders in `layout.tsx`, outside these wrappers. |
 | `.sheen` | Specular sweep across a button on hover |
-| `.bloom` / `.grain-layer` | Used by `PageAtmosphere` |
+| `.bloom` / `.grain-layer` | Used by `PageAtmosphere` (currently unmounted — see below) |
 
-**Glass needs a ground.** `backdrop-filter` has nothing to blur on a flat fill, so a page
-using glass must be structured:
+**Glass needs a ground.** `backdrop-filter` has nothing to blur, but a solid fill is fine —
+it blurs to that flat color. Pages now use pure black and no atmosphere layer:
 
 ```tsx
-<div className="relative min-h-screen bg-[#06070c]">
-  <PageAtmosphere />
+<div className="relative min-h-screen bg-black flat-cards">
   <div className="relative z-10">{/* content */}</div>
 </div>
 ```
 
+`PageAtmosphere` (blooms + grain) is no longer mounted on any page — it was removed in favor of
+flat black backgrounds. The component still exists if you want to bring the texture back.
 Sections inside must NOT have opaque fills (`bg-[var(--surface)]` etc.) or the ground is hidden.
 
 ### Gotchas
@@ -181,15 +183,22 @@ There are no hand-written inline `<svg>` icons left in `src/`.
 
 ## Navbar
 
-`Navbar.tsx` is a floating glass pill that docks flush to the top past 90px of scroll
-(`border-radius`, `max-width`, `border-color`, `box-shadow` transition together).
+`Navbar.tsx` is a **full-width bar flush to the top** at all times — no pill, no docking, no
+width/radius animation. (It used to be a floating pill that docked on scroll; that's gone.)
 
-- **Total footprint at rest is 96px** (28px top inset + 68px capsule). Pages that need to clear
-  it hardcode this number — change one, change the other.
-- Resting corner radius is `34px` (half the bar height), NOT `rounded-full`. `rounded-full`
-  compiles to `9999px`, and animating 9999→0 looks like it snaps at the very end.
-- When docked, the top/side borders fade to `transparent` and the top specular inset goes to 0,
-  rather than dropping `border-width`, so the bar never shifts a pixel.
+- **Footprint is ~88px** (`py-[23px]` × 2 + 42px logo, flush at `top-0`, no inset). Pages that
+  need to clear it hardcode a `pt` derived from this — change the padding, revisit those.
+- **The glass material is scroll-scrubbed, not toggled.** A rAF-throttled scroll listener maps
+  `window.scrollY / 80` → `t` (0..1), and every material property is interpolated inline by `t`:
+  fill alpha, `backdrop-filter` blur+brightness, bottom border alpha, the inset specular shadows,
+  and the `::before` dome opacity (driven by the `--nav-frost` CSS var). So at the very top the bar
+  is fully transparent with no blur, and the frost fades in over the first 80px of scroll.
+- `backdropFilter` **and** `WebkitBackdropFilter` are both set inline (React inline styles, no
+  Lightning CSS to collapse them) — otherwise the class's `-webkit-` value lingers on Safari and
+  the bar never un-blurs at the top.
+- An open mobile menu (`isOpen`) forces `t = 1` so the dropdown never floats over a transparent bar.
+- Active-link underline (`.nav-link-active::after`) uses `#0050ca` (the darker `--accent-dark`),
+  not `#0165fc` — a 2px hairline of the brighter blue anti-aliases to periwinkle over the glass.
 
 ## Short Links
 
@@ -203,12 +212,29 @@ Cohort 5 is configured but has no startups yet. The empty state on the startups 
 
 Sub-pages (e.g. `/team`, `/intern`, `/found`) share a hero pattern for visual consistency:
 
-- Section: `relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px]` — `pt`, not `mt`, so the full-bleed `absolute inset-0` background image starts at the top of the viewport and only the text clears the navbar. 131px = the navbar's 96px floating footprint (28px top inset + 68px capsule) + a 35px breathing gap. All five photo-header pages (`/team`, `/found`, `/intern`, `/mentor`, `/support`) use this.
+- Section: `relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[...] border-b border-white/[0.13]` — `pt`, not `mt`, so the full-bleed `absolute inset-0` background image starts at the top of the viewport and only the text clears the navbar.
+- `pt` values are **per page and hand-tuned** (the text is `flex items-center`-centered, so shrinking `pt` mostly nudges the block up rather than closing a fixed gap). Current values after the flush-navbar switch: `/found` & `/intern` `pt-[79px]`, `/team` `pt-[64px]`, `/startups` `pt-[151px]`. `/mentor` & `/support` still carry the old `pt-[131px]` — not yet retuned.
 - Content wrapper: `max-w-4xl mx-auto px-6 py-16 text-center`
 - Overlay gradient: `radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)`
 - h1: `font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]`
-- Bottom edge: `border-b border-white/[0.13]` — same value as the navbar pill's border
-- Exception: `/team` uses `pt-[116px]` (a 20px gap) rather than 131px, on purpose
+- Bottom edge: `border-b border-white/[0.13]` — same value as the navbar's bottom hairline
+- The homepage has no photo hero; its `relative z-10` content wrapper sits at `pt-0`.
+
+## Assets
+
+Keep image assets small — the site had a **15 MB** hero PNG that tanked load times. The hero
+cutout is now `public/betterbg-transparent.webp` (1600px, ~88 KB), generated with `sharp`
+(bundled via Next). To resize/convert a heavy asset:
+
+```js
+require('sharp')(src).resize({ width: 1600, withoutEnlargement: true })
+  .webp({ quality: 82, alphaQuality: 90 }).toFile(out)
+```
+
+Known remaining weight (not yet optimized): `logos/partners/ef_v4.png` (544 KB),
+`zfellows.svg` (292 KB, SVGs bypass next/image), and `/team` photos (1.6–1.8 MB each). Also
+`layout.tsx` loads the Aileron heading font from `fonts.cdnfonts.com` via a render-blocking
+`<link>` — worth self-hosting with `next/font/local`.
 
 The homepage has no photo hero; it nudges all sections down together with `pt-[35px]` on its
 `relative z-10` content wrapper.
