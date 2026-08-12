@@ -30,10 +30,10 @@ export default function Home() {
         {/* Team cutout — desktop only */}
         <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center translate-y-24">
           <Image
-            src="/betterbg-transparent.png"
+            src="/betterbg-transparent.webp"
             alt="Claremont Accelerator team"
-            width={6003}
-            height={4131}
+            width={1600}
+            height={1101}
             className="w-[80%] h-auto"
             priority
           />
