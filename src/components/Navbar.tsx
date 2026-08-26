@@ -15,6 +15,7 @@ const navLinks = [
 ];
 
 const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
+const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
 
 const FADE_END = 80; // px of scroll over which the frost fades fully in
 
@@ -146,6 +147,17 @@ export default function Navbar() {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full" />
                 </a>
               </li>
+              <li>
+                <a
+                  href={MAILING_LIST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-full px-4 py-2 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                  style={{ background: "#0165fc" }}
+                >
+                  Join our mailing list!
+                </a>
+              </li>
             </ul>
 
             {/* Mobile Menu Button */}
@@ -191,6 +203,18 @@ export default function Navbar() {
                     className="block tracking-tight py-1.5 text-white"
                   >
                     Blog
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={MAILING_LIST_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                    className="inline-flex items-center rounded-full px-4 py-2 text-[15px] font-semibold text-white mt-1"
+                    style={{ background: "#0165fc" }}
+                  >
+                    Join our mailing list!
                   </a>
                 </li>
               </ul>

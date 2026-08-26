@@ -17,6 +17,8 @@ export const metadata = {
     "Get paid to build alongside student founders. Real ownership, real users, real equity in your resume.",
 };
 
+const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
+
 export default function InternPage() {
   const startups = loadAllStartups().filter((s) => s.status !== "acquired");
   const activeStartups = startups.filter((s) => s.status === "active");
@@ -121,13 +123,26 @@ export default function InternPage() {
                     : "Roles for the coming cycle aren't posted yet. Here are the portfolio startups you'd be matched with."}
                 </p>
               </div>
-              <Link
-                href="/startups"
-                className="text-[#3385fd] hover:text-white text-sm font-semibold flex items-center gap-1 transition-colors"
-              >
-                Browse the full portfolio
-                <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
-              </Link>
+              <div className="flex flex-wrap items-center gap-4">
+                {totalOpenRoles === 0 && (
+                  <a
+                    href={MAILING_LIST_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                    style={{ background: "#0165fc" }}
+                  >
+                    Get notified when applications open
+                  </a>
+                )}
+                <Link
+                  href="/startups"
+                  className="text-[#3385fd] hover:text-white text-sm font-semibold flex items-center gap-1 transition-colors"
+                >
+                  Browse the full portfolio
+                  <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
+                </Link>
+              </div>
             </div>
           </ScrollReveal>
 

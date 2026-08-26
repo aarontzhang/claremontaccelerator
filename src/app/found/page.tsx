@@ -14,6 +14,8 @@ const FOUNDER_APPLICATION_URL = "https://docs.google.com/forms/d/1ODnyqt-Y0f1UXh
 const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/1BWg-0runr2VRAaaMXf554R0jLM80_S2Bj1qWApXZBps/edit";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
+const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
+
 type Outcome = {
   name: string;
   slug: string | null;
@@ -136,10 +138,19 @@ export default function Apply() {
 
               {/* mt-auto pins this to the card bottom so both cards' buttons
                   line up regardless of how long the lists above them are. */}
-              <div className="mt-auto pt-6">
+              <div className="mt-auto pt-6 flex flex-wrap items-center gap-3">
                 <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
                   Applications Closed
                 </span>
+                <a
+                  href={MAILING_LIST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                  style={{ background: "#0165fc" }}
+                >
+                  Get notified when applications open
+                </a>
               </div>
             </div>
           </ScrollReveal>
@@ -178,10 +189,19 @@ export default function Apply() {
                 </div>
               </div>
 
-              <div className="mt-auto pt-6">
+              <div className="mt-auto pt-6 flex flex-wrap items-center gap-3">
                 <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
                   Applications Closed
                 </span>
+                <a
+                  href={MAILING_LIST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                  style={{ background: "#0165fc" }}
+                >
+                  Get notified when applications open
+                </a>
               </div>
             </div>
           </ScrollReveal>
