@@ -37,6 +37,8 @@ src/
     mentor/page.tsx
     intern/page.tsx           # Intern landing — server component, pulls open roles from startup jobs
     found/page.tsx            # Founder landing — programs (Accelerator + CA Studio) + outcomes cards
+    found/cohort/page.tsx      # "Apply here" target for the Claremont Accelerator card — mail-client
+                                # mockup of Chase's cohort-recruitment email, not a real form
     support/page.tsx
     l/[slug]/page.tsx       # Short link redirects (config in /links.json)
   components/
@@ -107,6 +109,19 @@ with `StartupsSkeleton` as the fallback. Keep it that way — moving the header 
 component reintroduces a blank page on a cold cache.
 
 On the portfolio cards, the jobs badge is only rendered when `startup.jobs.length > 0`.
+
+### /found apply flow
+
+The two program cards on `/found` intentionally use different CTA states right now:
+
+- **Claremont Accelerator (main program)** — "Apply here" links to `/found/cohort`, a
+  standalone page styled as a mail-client window showing Chase's cohort-recruitment email
+  (subject, sender, body). It's a static mockup, not a real form — the reply button is a
+  `mailto:` to `cwitzansky29@cmc.edu` with the subject pre-filled. `FOUNDER_APPLICATION_URL`
+  in `found/page.tsx` (the real Google Form) stays commented out until there's an actual
+  in-site application flow.
+- **CA Studio** — still the disabled `Applications Closed` span + `MAILING_LIST_URL` signup
+  link. Update this one the same way once Studio applications open.
 
 ## Theme / Styling
 

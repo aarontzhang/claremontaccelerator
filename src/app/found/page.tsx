@@ -139,18 +139,13 @@ export default function Apply() {
               {/* mt-auto pins this to the card bottom so both cards' buttons
                   line up regardless of how long the lists above them are. */}
               <div className="mt-auto pt-6 flex flex-wrap items-center gap-3">
-                <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
-                  Applications Closed
-                </span>
-                <a
-                  href={MAILING_LIST_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/found/cohort"
                   className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
                   style={{ background: "#0165fc" }}
                 >
-                  Get notified when applications open
-                </a>
+                  Apply here
+                </Link>
               </div>
             </div>
           </ScrollReveal>
