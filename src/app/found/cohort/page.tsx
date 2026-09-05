@@ -95,8 +95,11 @@ export default function CohortApply() {
               </div>
 
               <p className="font-bold">
-                If you&rsquo;re thinking about building now, please email me ASAP with your
-                name, graduation year, and a brief overview of what you&rsquo;re
+                If you&rsquo;re thinking about building now, please{" "}
+                <a href={REPLY_MAILTO} className="underline decoration-1 underline-offset-2 hover:text-[#0165fc]">
+                  email me ASAP
+                </a>{" "}
+                with your name, graduation year, and a brief overview of what you&rsquo;re
                 building/where you&rsquo;re at in the process. Please make the subject line
                 &ldquo;I&rsquo;m interested in being a CA founder&rdquo;
               </p>
