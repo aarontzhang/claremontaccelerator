@@ -147,7 +147,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Claremont Accelerator (Main Program) */}
             <ScrollReveal delay={0}>
-              <div className="glass glass-hover rounded-2xl p-6 h-full">
+              <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">Claremont Accelerator</h3>
                 <p className="text-[#3385fd] text-sm font-medium mb-3">Main Program</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
@@ -157,7 +157,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span><span className="text-white font-medium">$5K - $15K</span> in funding</span>
+                    <span>Up to <span className="text-white font-medium">$15K</span> in funding</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -168,12 +168,21 @@ export default function Home() {
                     <span>Matched with paid interns</span>
                   </li>
                 </ul>
+                <div className="mt-auto pt-6">
+                  <Link
+                    href="/found/cohort"
+                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                    style={{ background: "#0165fc" }}
+                  >
+                    Apply
+                  </Link>
+                </div>
               </div>
             </ScrollReveal>
 
             {/* CA Studio */}
             <ScrollReveal delay={100}>
-              <div className="glass glass-hover rounded-2xl p-6 h-full">
+              <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">CA Studio</h3>
                 <p className="text-[#3385fd] text-sm font-medium mb-3">Pre-Accelerator</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
@@ -183,23 +192,34 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span><span className="text-white font-medium">$1K</span> funding</span>
+                    <span>Up to <span className="text-white font-medium">$1K</span> in funding</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span>Individual-level (not teams)</span>
+                    <span>Teams of 2 and solo participants welcome</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
                     <span>Early-stage / idea-stage founders</span>
                   </li>
                 </ul>
+                <div className="mt-auto pt-6">
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSeg2lSHEbIUKTTvpywkVSm-A_GKXojY0z3jSTLk5ASCzPBt1w/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                    style={{ background: "#0165fc" }}
+                  >
+                    Apply
+                  </a>
+                </div>
               </div>
             </ScrollReveal>
 
             {/* Intern Program */}
             <ScrollReveal delay={200}>
-              <div className="glass glass-hover rounded-2xl p-6 h-full">
+              <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">Intern Program</h3>
                 <p className="text-[#3385fd] text-sm font-medium mb-3">Work at a Startup</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
@@ -220,29 +240,18 @@ export default function Home() {
                     <span>Build your portfolio</span>
                   </li>
                 </ul>
+                <div className="mt-auto pt-6">
+                  <Link
+                    href="/intern"
+                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
+                    style={{ background: "#0165fc" }}
+                  >
+                    Learn more
+                  </Link>
+                </div>
               </div>
             </ScrollReveal>
           </div>
-
-          {/* CTA */}
-          <ScrollReveal>
-            <div className="text-center mt-10">
-              <Link
-                href="/intern"
-                className="sheen group inline-flex items-center gap-2 rounded-full bg-[#0165fc] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
-                style={{
-                  boxShadow:
-                    "inset 0 1px 0 0 rgba(255,255,255,0.32), 0 12px 32px -8px rgba(1,101,252,0.7)",
-                }}
-              >
-                Learn More &amp; Apply
-                <IconArrowRight
-                  className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-                  stroke={2.2}
-                />
-              </Link>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 

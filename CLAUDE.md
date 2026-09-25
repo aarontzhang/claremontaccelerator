@@ -120,8 +120,29 @@ The two program cards on `/found` intentionally use different CTA states right n
   `mailto:` to `cwitzansky29@cmc.edu` with the subject pre-filled. `FOUNDER_APPLICATION_URL`
   in `found/page.tsx` (the real Google Form) stays commented out until there's an actual
   in-site application flow.
-- **CA Studio** — still the disabled `Applications Closed` span + `MAILING_LIST_URL` signup
-  link. Update this one the same way once Studio applications open.
+- **CA Studio** — applications are open. "Apply here" is a plain `<a>` (external, `target="_blank"`)
+  to `STUDIO_APPLICATION_URL` in `found/page.tsx`, the live Studio Google Form viewform link.
+  The old disabled `Applications Closed` span + mailing-list signup CTA has been removed.
+
+### Homepage "Our Programs" cards
+
+The 3-card grid on `/` (Accelerator, CA Studio, Intern) used to share a single CTA button
+below the grid linking to `/intern`. Each card is now `flex flex-col` with its own
+`mt-auto`-pinned button instead, so all three buttons stay aligned across the row regardless
+of list length:
+
+- **Claremont Accelerator** — `Link` "Apply" → `/found/cohort` (same mockup page as the
+  `/found` card).
+- **CA Studio** — external `<a>` "Apply" → the live Studio Google Form (same URL as
+  `STUDIO_APPLICATION_URL` on `/found`).
+- **Intern Program** — `Link` "Learn more" → `/intern`. This replaced the old shared
+  bottom CTA ("Learn More & Apply"), which has been deleted.
+
+Funding figures are phrased as "Up to $X" (not a range) on both the homepage cards and the
+`/found` cards, e.g. "Up to $15K in funding" (Accelerator) and "Up to $1K in funding" (Studio).
+CA Studio's team-eligibility copy reads "Teams of 2 and solo participants welcome" (was
+"Individual-level (not teams)" / "Individual founders (not teams)") — Studio now accepts small
+teams, not just solo founders.
 
 ## Theme / Styling
 

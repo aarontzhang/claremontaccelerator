@@ -19,14 +19,21 @@ const team = [
   },
   {
     name: "Maélie Abt",
-    role: "CA Studio Director",
+    role: "CA Studio Co-Director",
     school: "Pomona '29",
     image: "/team/Maelie.JPG",
     linkedin: "https://linkedin.com/in/maelie-abt",
   },
   {
+    name: "Ethan Vicknair",
+    role: "CA Studio Co-Director",
+    school: "Pomona '28",
+    image: "/team/ethan.jpg",
+    linkedin: "https://www.linkedin.com/in/ethan-vicknair-111614268/",
+  },
+  {
     name: "Daniel Lo",
-    role: "Marketing",
+    role: "Head of Growth",
     school: "CMC '29",
     image: "/team/daniel.jpg",
     linkedin: "https://linkedin.com/in/daniel-lo-a137532a7",
@@ -37,6 +44,13 @@ const team = [
     school: "CMC '27",
     image: "/team/stanley.jpeg",
     linkedin: "https://linkedin.com/in/stanleylo4",
+  },
+  {
+    name: "Michelle Lu",
+    role: "Operations",
+    school: "HMC '29",
+    image: "/team/michelle.jpg",
+    linkedin: "https://www.linkedin.com/in/michelle-lu8/",
   },
 ];
 

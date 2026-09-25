@@ -7,14 +7,13 @@ export const metadata = {
   title: "Found a CA Startup",
 };
 
-// Application form URLs. Both buttons are disabled placeholders right now, so
-// these are intentionally unreferenced — kept for when applications reopen.
+// FOUNDER_APPLICATION_URL is an intentionally unreferenced placeholder — kept
+// for when the main-program application flow moves in-site.
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const FOUNDER_APPLICATION_URL = "https://docs.google.com/forms/d/1ODnyqt-Y0f1UXhx-2BRLloTDYEwGQIL-UJDZOqmDgA4/edit";
-const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/1BWg-0runr2VRAaaMXf554R0jLM80_S2Bj1qWApXZBps/edit";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
-const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
+const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeg2lSHEbIUKTTvpywkVSm-A_GKXojY0z3jSTLk5ASCzPBt1w/viewform";
 
 type Outcome = {
   name: string;
@@ -120,7 +119,7 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">What You Get</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• <span className="text-white font-medium">$5,000 - $15,000</span> in non-dilutive funding</li>
+                    <li>• Up to <span className="text-white font-medium">$15,000</span> in non-dilutive funding</li>
                     <li>• Mentorship from 40+ VCs and founders</li>
                     <li>• Paid interns matched to your startup</li>
                     <li>• Demo Day presentation to investors</li>
@@ -167,8 +166,8 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">What You Get</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
+                    <li>• Up to <span className="text-white font-medium">$1,000</span> in funding</li>
                     <li>• Semester-long structured program</li>
-                    <li>• <span className="text-white font-medium">$1,000</span> in funding</li>
                     <li>• Workshops and mentorship sessions</li>
                     <li>• Automatic final-round interview for main program</li>
                   </ul>
@@ -176,7 +175,7 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">Who Should Apply</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• Individual founders (not teams)</li>
+                    <li>• Teams of 2 or solo participants welcome</li>
                     <li>• Early-stage or idea-stage</li>
                     <li>• Looking to validate and build your first MVP</li>
                     <li>• Want a pathway to the main accelerator</li>
@@ -185,17 +184,14 @@ export default function Apply() {
               </div>
 
               <div className="mt-auto pt-6 flex flex-wrap items-center gap-3">
-                <span className="glass glass-flat inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white/45 cursor-not-allowed">
-                  Applications Closed
-                </span>
                 <a
-                  href={MAILING_LIST_URL}
+                  href={STUDIO_APPLICATION_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
                   style={{ background: "#0165fc" }}
                 >
-                  Get notified when applications open
+                  Apply here
                 </a>
               </div>
             </div>
