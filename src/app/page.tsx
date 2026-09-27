@@ -29,7 +29,7 @@ export default function Home() {
           team-cutout image room, and it's hidden on mobile — forcing full
           viewport height there just leaves dead space below the CTAs once the
           (now top-anchored) text content doesn't fill a tall phone screen. */}
-      <section className="relative overflow-hidden md:min-h-screen">
+      <section className="relative overflow-hidden md:min-h-[max(100vh,860px)]">
 
         {/* Team cutout — desktop only */}
         <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center translate-y-24">
@@ -44,7 +44,7 @@ export default function Home() {
         </div>
 
         {/* Text — centered on mobile, top-aligned on desktop */}
-        <div className="relative z-10 flex flex-col items-center justify-start text-center px-6 pt-28 pb-16 md:min-h-screen md:pt-40 md:pb-0">
+        <div className="relative z-10 flex flex-col items-center justify-start text-center px-6 pt-28 pb-16 md:min-h-[max(100vh,860px)] md:pt-40 md:pb-0">
           <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-7xl lg:text-8xl text-white mb-5 md:whitespace-nowrap">
             Claremont Accelerator
           </h1>

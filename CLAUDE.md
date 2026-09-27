@@ -322,7 +322,7 @@ Sub-pages (e.g. `/team`, `/intern`, `/found`) share a hero pattern for visual co
 
 ### Homepage hero — mobile height & spacing
 
-The hero `<section>` and its text wrapper are `md:min-h-screen`, not unconditionally
+The hero `<section>` and its text wrapper are `md:min-h-[max(100vh,860px)]`, not unconditionally
 `min-h-screen` — that full-viewport height exists only to make room for the desktop team-cutout
 image (`hidden md:flex`), which doesn't render on mobile at all. Forcing full-screen height on
 mobile too left large dead space below the CTA buttons on taller/skinnier phones (e.g. iPhone 16,
@@ -335,6 +335,19 @@ its top **above** the transparent navbar, overlapping the logo. Top-anchoring wi
 padding guarantees clearance regardless of content height. Mobile also carries `pb-16` (`md:pb-0`)
 so the CTA row doesn't butt directly against the stats band now that the section isn't padded out
 by `min-h-screen`.
+
+### Homepage hero — short desktop viewports
+
+On desktop, the team-cutout photo is `position: absolute`, `bottom-0` (plus `translate-y-24`) —
+anchored to the hero **section's** bottom edge, not to the text content above it. The text block's
+height is fixed px (`pt-40` + fixed text sizes), so when the section's height was plain
+`md:min-h-screen`, a short-but-desktop-width viewport (browser window resized shorter, not a phone)
+would shrink the section along with `100vh`, dragging the bottom-anchored photo upward while the
+text block stayed the same height — the photo's heads would rise up behind the CTA buttons/copy.
+`md:min-h-[max(100vh,860px)]` floors the section (and its text wrapper) at 860px so it can never
+get short enough for that collision, regardless of how short the window gets. Tune the 860px value
+up if a similar overlap resurfaces; the trade-off is a bit more scroll before the stats band on
+short/wide windows.
 
 ## Assets
 
