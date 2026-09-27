@@ -58,7 +58,8 @@ content/
 
 public/
   logos/                    # Startup logos (webp/png)
-  logos/partners/           # Partner logos (a16z, YC, EF, etc.)
+  logos/partners/           # Partner/exit logos shown in the homepage hero "Backed by" row
+  logos/schools/            # The 5C college logos shown under "Who We Are" on the homepage
   team/                     # Team member photos
   links.json                # Short-link map for /l/[slug]
 ```
@@ -143,6 +144,41 @@ Funding figures are phrased as "Up to $X" (not a range) on both the homepage car
 CA Studio's team-eligibility copy reads "Teams of 2 and solo participants welcome" (was
 "Individual-level (not teams)" / "Individual founders (not teams)") — Studio now accepts small
 teams, not just solo founders.
+
+### Homepage hero "Backed by" logo row
+
+All partner marks in the hero's `CA founders backed by` row are shown **full color, at rest,
+with no hover effect** (dimming/opacity-shift on hover has been removed site-wide from this
+row). Files live in `public/logos/partners/`: `yc.png`, `ef.png`, `speedrun.png` (a16z
+Speedrun), `zfellows.png`, `afore.png`, `1517.png`. The a16z mark itself has been removed from
+the row entirely.
+
+Sizing: YC is the reference — a square `w-7 h-7` `fill` image. The wordmarks (EF, Speedrun,
+Z Fellows) use intrinsic `width`/`height` matching the real PNG dimensions plus `className="h-6
+w-auto object-contain"`, so height is pinned to match YC's mark and width scales naturally by
+aspect ratio — do not hardcode a fixed width for these, it'll distort or letterbox them.
+Afore and 1517 still use the older `relative` + `fill` wrapper-div pattern at `w-20 h-6` /
+`w-14 h-6`.
+
+Several of these PNGs are **background-removed originals**: source files had a near-solid
+background color that was chroma-keyed to transparent (with alpha feathered proportionally to
+color distance from the background color, not a hard cutoff, to avoid a fringe/halo), then
+cropped to the alpha bounding box. Speedrun's source was black artwork on white — same alpha
+derivation, but RGB was also forced to pure white on every remaining pixel (not just the fully
+opaque ones) so partial-alpha edge pixels don't read as muddy grey when composited over the
+dark page background. If you need to reprocess a partner logo, replicate this approach rather
+than a naive `Image.putalpha()` swap.
+
+### Homepage "Who We Are" — 5C school logos
+
+Below the "Who We Are" paragraph, a row of the five Claremont College logos sits in its own
+`mt-10 flex flex-wrap items-center justify-center gap-10` block, ordered **CMC, Pitzer, Mudd,
+Scripps, Pomona**. Files live in `public/logos/schools/` (`cmc.png`, `pitzer.png`,
+`harvey_mudd.png`, `scripps.png`, `pomona.png`), each `className="h-16 w-auto object-contain"`
+with `width`/`height` set to the file's real pixel dimensions (required for `w-auto` to compute
+the correct aspect ratio — update both together if a logo file is ever swapped). Like the
+partner row, several were background-removed from a near-white source via the same
+distance-feathered chroma-key approach before being cropped to their bounding box.
 
 ## Theme / Styling
 
@@ -267,10 +303,19 @@ require('sharp')(src).resize({ width: 1600, withoutEnlargement: true })
   .webp({ quality: 82, alphaQuality: 90 }).toFile(out)
 ```
 
-Known remaining weight (not yet optimized): `logos/partners/ef_v4.png` (544 KB),
-`zfellows.svg` (292 KB, SVGs bypass next/image), and `/team` photos (1.6–1.8 MB each). Also
+Known remaining weight (not yet optimized): `/team` photos (1.6–1.8 MB each). Also
 `layout.tsx` loads the Aileron heading font from `fonts.cdnfonts.com` via a render-blocking
 `<link>` — worth self-hosting with `next/font/local`.
+
+Superseded originals get deleted outright once their replacement is live and confirmed working
+— e.g. `logos/partners/ef_v4.png`, `zfellows.svg`, `a16z.png`, `1517.svg`, `afore.webp` were
+removed after the full-color partner-logo swap above. Don't leave old asset versions sitting in
+`public/` "just in case" once nothing references them; check with a repo-wide grep for the
+filename first, then delete. Raw, unprocessed source images (e.g. a temporary
+`remade_exit_logos/` or `school_logos/` staging folder dropped in `public/` for hand-processing
+into `logos/partners/` or `logos/schools/`) are also meant to be deleted once processing is
+done — they're intentionally never referenced by `src/`, so they won't show up as "used" in any
+audit, and are not meant to be kept around after their processed output is live.
 
 The homepage has no photo hero; it nudges all sections down together with `pt-[35px]` on its
 `relative z-10` content wrapper.

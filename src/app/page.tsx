@@ -45,7 +45,7 @@ export default function Home() {
             Claremont Accelerator
           </h1>
 
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-xl md:text-2xl text-white/75 max-w-2xl mx-auto mb-5 leading-snug tracking-tight">
+          <p className="animate-fade-up opacity-0 animation-delay-100 text-xl md:text-2xl text-white/75 max-w-2xl mx-auto mb-11 leading-snug tracking-tight">
             We help 5C student-founders start and scale their startups by providing them with{" "}
             <span className="text-white font-semibold">money</span>,{" "}
             <span className="text-white font-semibold">mentorship</span>, and{" "}
@@ -56,29 +56,41 @@ export default function Home() {
           <div className="animate-fade-up opacity-0 animation-delay-200 flex items-center gap-6 mb-11 flex-wrap justify-center">
             <p className="text-white/40 text-xs uppercase tracking-widest font-medium whitespace-nowrap">CA founders backed by</p>
             <div className="flex items-center gap-7 flex-wrap justify-center">
-              {/* YC — square mark, keep orange */}
-              <div className="relative w-7 h-7 opacity-80 hover:opacity-100 transition-opacity">
-                <Image src="/logos/partners/y-combinator2.png" alt="Y Combinator" fill className="object-contain grayscale opacity-60 hover:opacity-90 transition-opacity" />
+              {/* YC — square mark, full color */}
+              <div className="relative w-7 h-7 opacity-90">
+                <Image src="/logos/partners/yc.png" alt="Y Combinator" fill className="object-contain" />
               </div>
-              {/* a16z — wide emblem */}
-              <div className="relative w-16 h-9 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/a16z.png" alt="Andreessen Horowitz" fill className="object-contain brightness-0 invert" />
+              {/* Entrepreneurs First — stacked wordmark, full color, height matched to YC mark */}
+              <Image
+                src="/logos/partners/ef.png"
+                alt="Entrepreneurs First"
+                width={1081}
+                height={214}
+                className="h-6 w-auto object-contain opacity-90"
+              />
+              {/* a16z Speedrun — wordmark, pure white, height matched to YC mark */}
+              <Image
+                src="/logos/partners/speedrun.png"
+                alt="a16z Speedrun"
+                width={514}
+                height={72}
+                className="h-6 w-auto object-contain"
+              />
+              {/* Z Fellows — wordmark, full color, height matched to YC mark */}
+              <Image
+                src="/logos/partners/zfellows.png"
+                alt="Z Fellows"
+                width={787}
+                height={138}
+                className="h-6 w-auto object-contain opacity-90"
+              />
+              {/* Afore — horizontal wordmark, full color */}
+              <div className="relative w-20 h-6 opacity-90">
+                <Image src="/logos/partners/afore.png" alt="Afore Capital" fill className="object-contain" />
               </div>
-              {/* Entrepreneurs First — stacked wordmark */}
-              <div className="relative w-16 h-9 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/ef_v4.png" alt="Entrepreneurs First" fill className="object-contain brightness-0 invert" />
-              </div>
-{/* Z Fellows — very wide raster logo */}
-              <div className="relative w-28 h-6 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/zfellows.svg" alt="Z Fellows" fill className="object-contain brightness-0 invert" />
-              </div>
-              {/* Afore — horizontal wordmark */}
-              <div className="relative w-20 h-6 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/afore.webp" alt="Afore Capital" fill className="object-contain brightness-0 invert" />
-              </div>
-              {/* 1517 — horizontal wordmark, dark red → invert to white */}
-              <div className="relative w-14 h-6 opacity-60 hover:opacity-90 transition-opacity">
-                <Image src="/logos/partners/1517.svg" alt="1517 Fund" fill className="object-contain brightness-0 invert" />
+              {/* 1517 — horizontal wordmark, full color red */}
+              <div className="relative w-14 h-6 opacity-90">
+                <Image src="/logos/partners/1517.png" alt="1517 Fund" fill className="object-contain" />
               </div>
             </div>
           </div>
@@ -139,6 +151,15 @@ export default function Home() {
               <p className="text-[var(--muted-light)] text-lg max-w-2xl mx-auto">
                 Claremont Accelerator is the only school-sponsored startup accelerator supporting the five Claremont Colleges. We help student-founders start and scale their startups by providing them with mentorship, manpower, and money.
               </p>
+
+              {/* The 5Cs */}
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-10">
+                <Image src="/logos/schools/cmc.png" alt="Claremont McKenna College" width={2490} height={2489} className="h-16 w-auto object-contain" />
+                <Image src="/logos/schools/pitzer.png" alt="Pitzer College" width={479} height={405} className="h-16 w-auto object-contain" />
+                <Image src="/logos/schools/harvey_mudd.png" alt="Harvey Mudd College" width={281} height={180} className="h-16 w-auto object-contain" />
+                <Image src="/logos/schools/scripps.png" alt="Scripps College" width={250} height={223} className="h-16 w-auto object-contain" />
+                <Image src="/logos/schools/pomona.png" alt="Pomona College" width={342} height={550} className="h-16 w-auto object-contain" />
+              </div>
             </div>
           </ScrollReveal>
 
