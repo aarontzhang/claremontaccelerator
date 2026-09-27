@@ -25,7 +25,11 @@ export default function Home() {
           of this wrapper (in layout.tsx) so it stays put. */}
       <div className="relative z-10 pt-0">
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
+      {/* min-h-screen only from md up: that height exists to give the desktop
+          team-cutout image room, and it's hidden on mobile — forcing full
+          viewport height there just leaves dead space below the CTAs once the
+          (now top-anchored) text content doesn't fill a tall phone screen. */}
+      <section className="relative overflow-hidden md:min-h-screen">
 
         {/* Team cutout — desktop only */}
         <div className="hidden md:flex absolute bottom-0 left-0 right-0 z-0 justify-center translate-y-24">
@@ -40,7 +44,7 @@ export default function Home() {
         </div>
 
         {/* Text — centered on mobile, top-aligned on desktop */}
-        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center md:justify-start text-center px-6 pt-0 md:pt-40">
+        <div className="relative z-10 flex flex-col items-center justify-start text-center px-6 pt-28 pb-16 md:min-h-screen md:pt-40 md:pb-0">
           <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-7xl lg:text-8xl text-white mb-5 md:whitespace-nowrap">
             Claremont Accelerator
           </h1>
@@ -55,42 +59,51 @@ export default function Home() {
           {/* Backed by */}
           <div className="animate-fade-up opacity-0 animation-delay-200 flex items-center gap-6 mb-11 flex-wrap justify-center">
             <p className="text-white/40 text-xs uppercase tracking-widest font-medium whitespace-nowrap">CA founders backed by</p>
-            <div className="flex items-center gap-7 flex-wrap justify-center">
-              {/* YC — square mark, full color */}
-              <div className="relative w-7 h-7 opacity-90">
-                <Image src="/logos/partners/yc.png" alt="Y Combinator" fill className="object-contain" />
+            {/* Below md: two explicit flex rows of 3, each with a uniform gap between
+                marks — a 3-col grid centers each mark in an equal-width column, which
+                reads as wildly uneven spacing once mark widths vary this much (Y vs.
+                Speedrun). md:contents drops these row wrappers from the desktop layout
+                so children rejoin the single flex-wrap row unchanged. */}
+            <div className="flex flex-col gap-4 md:contents">
+              <div className="flex items-center justify-center gap-5 md:contents">
+                {/* YC — square mark, full color */}
+                <div className="relative w-5 h-5 md:w-7 md:h-7 opacity-90">
+                  <Image src="/logos/partners/yc.png" alt="Y Combinator" fill className="object-contain" />
+                </div>
+                {/* Entrepreneurs First — stacked wordmark, full color, height matched to YC mark */}
+                <Image
+                  src="/logos/partners/ef.png"
+                  alt="Entrepreneurs First"
+                  width={1081}
+                  height={214}
+                  className="h-3.5 md:h-6 w-auto object-contain opacity-90"
+                />
+                {/* a16z Speedrun — wordmark, pure white, height matched to YC mark */}
+                <Image
+                  src="/logos/partners/speedrun.png"
+                  alt="a16z Speedrun"
+                  width={514}
+                  height={72}
+                  className="h-3.5 md:h-6 w-auto object-contain"
+                />
               </div>
-              {/* Entrepreneurs First — stacked wordmark, full color, height matched to YC mark */}
-              <Image
-                src="/logos/partners/ef.png"
-                alt="Entrepreneurs First"
-                width={1081}
-                height={214}
-                className="h-6 w-auto object-contain opacity-90"
-              />
-              {/* a16z Speedrun — wordmark, pure white, height matched to YC mark */}
-              <Image
-                src="/logos/partners/speedrun.png"
-                alt="a16z Speedrun"
-                width={514}
-                height={72}
-                className="h-6 w-auto object-contain"
-              />
-              {/* Z Fellows — wordmark, full color, height matched to YC mark */}
-              <Image
-                src="/logos/partners/zfellows.png"
-                alt="Z Fellows"
-                width={787}
-                height={138}
-                className="h-6 w-auto object-contain opacity-90"
-              />
-              {/* Afore — horizontal wordmark, full color */}
-              <div className="relative w-20 h-6 opacity-90">
-                <Image src="/logos/partners/afore.png" alt="Afore Capital" fill className="object-contain" />
-              </div>
-              {/* 1517 — horizontal wordmark, full color red */}
-              <div className="relative w-14 h-6 opacity-90">
-                <Image src="/logos/partners/1517.png" alt="1517 Fund" fill className="object-contain" />
+              <div className="flex items-center justify-center gap-5 md:contents">
+                {/* Z Fellows — wordmark, full color, height matched to YC mark */}
+                <Image
+                  src="/logos/partners/zfellows.png"
+                  alt="Z Fellows"
+                  width={787}
+                  height={138}
+                  className="h-3.5 md:h-6 w-auto object-contain opacity-90"
+                />
+                {/* Afore — horizontal wordmark, full color */}
+                <div className="relative w-11 h-3.5 md:w-20 md:h-6 opacity-90">
+                  <Image src="/logos/partners/afore.png" alt="Afore Capital" fill className="object-contain" />
+                </div>
+                {/* 1517 — horizontal wordmark, full color red */}
+                <div className="relative w-8 h-3.5 md:w-14 md:h-6 opacity-90">
+                  <Image src="/logos/partners/1517.png" alt="1517 Fund" fill className="object-contain" />
+                </div>
               </div>
             </div>
           </div>
@@ -153,12 +166,21 @@ export default function Home() {
               </p>
 
               {/* The 5Cs */}
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-10">
-                <Image src="/logos/schools/cmc.png" alt="Claremont McKenna College" width={2490} height={2489} className="h-16 w-auto object-contain" />
-                <Image src="/logos/schools/pitzer.png" alt="Pitzer College" width={479} height={405} className="h-16 w-auto object-contain" />
-                <Image src="/logos/schools/harvey_mudd.png" alt="Harvey Mudd College" width={281} height={180} className="h-16 w-auto object-contain" />
-                <Image src="/logos/schools/scripps.png" alt="Scripps College" width={250} height={223} className="h-16 w-auto object-contain" />
-                <Image src="/logos/schools/pomona.png" alt="Pomona College" width={342} height={550} className="h-16 w-auto object-contain" />
+              {/* Below md: two explicit rows of 3+2, each independently centered with a
+                  uniform gap — natural flex-wrap row count depends on viewport width
+                  (it collapses to one row well before md), so row count is fixed
+                  explicitly here instead. md:contents drops the row wrappers on
+                  desktop so children rejoin the single flex-wrap row unchanged. */}
+              <div className="mt-10 flex flex-col gap-5 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-10">
+                <div className="flex items-center justify-center gap-6 md:contents">
+                  <Image src="/logos/schools/cmc.png" alt="Claremont McKenna College" width={2490} height={2489} className="h-10 md:h-16 w-auto object-contain" />
+                  <Image src="/logos/schools/pitzer.png" alt="Pitzer College" width={479} height={405} className="h-10 md:h-16 w-auto object-contain" />
+                  <Image src="/logos/schools/harvey_mudd.png" alt="Harvey Mudd College" width={281} height={180} className="h-10 md:h-16 w-auto object-contain" />
+                </div>
+                <div className="flex items-center justify-center gap-6 md:contents">
+                  <Image src="/logos/schools/scripps.png" alt="Scripps College" width={250} height={223} className="h-10 md:h-16 w-auto object-contain" />
+                  <Image src="/logos/schools/pomona.png" alt="Pomona College" width={342} height={550} className="h-10 md:h-16 w-auto object-contain" />
+                </div>
               </div>
             </div>
           </ScrollReveal>

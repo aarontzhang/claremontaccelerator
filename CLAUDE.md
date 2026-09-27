@@ -19,6 +19,10 @@ npm run build  # production build
 npm run lint   # ESLint
 ```
 
+## Git Commits
+
+Do not add a `Co-Authored-By: Claude` (or similar) trailer to commit messages on this repo.
+
 ## Project Structure
 
 ```
@@ -158,7 +162,16 @@ Z Fellows) use intrinsic `width`/`height` matching the real PNG dimensions plus 
 w-auto object-contain"`, so height is pinned to match YC's mark and width scales naturally by
 aspect ratio — do not hardcode a fixed width for these, it'll distort or letterbox them.
 Afore and 1517 still use the older `relative` + `fill` wrapper-div pattern at `w-20 h-6` /
-`w-14 h-6`.
+`w-14 h-6`. Below `md` every mark shrinks further (e.g. `h-3.5` for the wordmarks) on top of this.
+
+**Below `md`, the six marks render as two explicit flex rows of three** (`flex flex-col gap-4`
+wrapping two `flex items-center justify-center gap-5` rows), not the same `flex-wrap` used at
+`md`+. Two things broke with plain `flex-wrap` at phone widths: (1) wrap point depends on
+cumulative width, so row count isn't guaranteed — a 3-column CSS grid was tried first to force a
+2-row cap, but centering each mark in an equal-width grid column reads as wildly uneven gaps once
+mark widths vary this much (YC's ~20px square next to Speedrun's ~115px wordmark). Explicit rows
+with a uniform `gap` fixed both problems at once. `md:contents` on the row wrappers drops them
+from the desktop layout so the marks rejoin the single `md:flex md:flex-wrap` row unchanged.
 
 Several of these PNGs are **background-removed originals**: source files had a near-solid
 background color that was chroma-keyed to transparent (with alpha feathered proportionally to
@@ -171,14 +184,19 @@ than a naive `Image.putalpha()` swap.
 
 ### Homepage "Who We Are" — 5C school logos
 
-Below the "Who We Are" paragraph, a row of the five Claremont College logos sits in its own
-`mt-10 flex flex-wrap items-center justify-center gap-10` block, ordered **CMC, Pitzer, Mudd,
-Scripps, Pomona**. Files live in `public/logos/schools/` (`cmc.png`, `pitzer.png`,
-`harvey_mudd.png`, `scripps.png`, `pomona.png`), each `className="h-16 w-auto object-contain"`
-with `width`/`height` set to the file's real pixel dimensions (required for `w-auto` to compute
-the correct aspect ratio — update both together if a logo file is ever swapped). Like the
+Below the "Who We Are" paragraph, a row of the five Claremont College logos sits in a
+`mt-10 flex flex-wrap items-center justify-center gap-10` block at `md`+, ordered **CMC, Pitzer,
+Mudd, Scripps, Pomona**. Files live in `public/logos/schools/` (`cmc.png`, `pitzer.png`,
+`harvey_mudd.png`, `scripps.png`, `pomona.png`), each `className="h-16 w-auto object-contain"` at
+`md`+ with `width`/`height` set to the file's real pixel dimensions (required for `w-auto` to
+compute the correct aspect ratio — update both together if a logo file is ever swapped). Like the
 partner row, several were background-removed from a near-white source via the same
 distance-feathered chroma-key approach before being cropped to their bounding box.
+
+**Below `md`, logos shrink to `h-10`** and render as two explicit centered rows (3+2: CMC/Pitzer/
+Mudd, then Scripps/Pomona) via the same `flex-col` + `md:contents` pattern used for the partner
+row above — natural `flex-wrap` collapses to a single row well before the `md` breakpoint on wider
+phones, so the 2-row grouping is fixed explicitly rather than left to wrap based on viewport width.
 
 ## Theme / Styling
 
@@ -271,6 +289,16 @@ width/radius animation. (It used to be a floating pill that docked on scroll; th
 - An open mobile menu (`isOpen`) forces `t = 1` so the dropdown never floats over a transparent bar.
 - Active-link underline (`.nav-link-active::after`) uses `#0050ca` (the darker `--accent-dark`),
   not `#0165fc` — a 2px hairline of the brighter blue anti-aliases to periwinkle over the glass.
+- **Mobile frost floor.** Below 768px (`matchMedia("(max-width: 767px)")`, tracked in `isMobile`
+  state), `t` is floored at `MOBILE_FROST_FLOOR = 0.45` instead of starting at 0 — on short mobile
+  viewports the hero title can sit close beneath the bar, and a fully transparent bar at scroll-top
+  made the logo/menu icon illegible against it.
+- **Wordmark is fluid below `md`.** `"Claremont Accelerator"` uses
+  `text-[clamp(14px,8.75vw-14px,21px)] md:text-[21px]` plus `whitespace-nowrap` — a fixed 21px
+  wraps to two lines next to the icon + hamburger on narrow phones, and no single breakpoint step
+  fits both a 320px and a 425px phone. The clamp reaches the original 21px by ~400px wide, where
+  there's room. Horizontal padding on the content wrapper is also tighter on mobile (`px-6` vs.
+  `md:px-[42px]`) to give the wordmark more room before it has to shrink.
 
 ## Short Links
 
@@ -290,7 +318,23 @@ Sub-pages (e.g. `/team`, `/intern`, `/found`) share a hero pattern for visual co
 - Overlay gradient: `radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)`
 - h1: `font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]`
 - Bottom edge: `border-b border-white/[0.13]` — same value as the navbar's bottom hairline
-- The homepage has no photo hero; its `relative z-10` content wrapper sits at `pt-0`.
+- The homepage has no photo hero; its outer `relative z-10` page wrapper sits at `pt-0`.
+
+### Homepage hero — mobile height & spacing
+
+The hero `<section>` and its text wrapper are `md:min-h-screen`, not unconditionally
+`min-h-screen` — that full-viewport height exists only to make room for the desktop team-cutout
+image (`hidden md:flex`), which doesn't render on mobile at all. Forcing full-screen height on
+mobile too left large dead space below the CTA buttons on taller/skinnier phones (e.g. iPhone 16,
+393×852) once the text wrapper switched to `justify-start` (see below) — with no other content to
+push into that space, it just piled up at the bottom of the section.
+
+The text wrapper is `justify-start` with `pt-28 md:pt-40` (not the old mobile `justify-center`
+with `pt-0`): on short viewports (iPhone SE, 375×667) centering an overflowing flex column pushes
+its top **above** the transparent navbar, overlapping the logo. Top-anchoring with explicit
+padding guarantees clearance regardless of content height. Mobile also carries `pb-16` (`md:pb-0`)
+so the CTA row doesn't butt directly against the stats band now that the section isn't padded out
+by `min-h-screen`.
 
 ## Assets
 

@@ -38,9 +38,16 @@ const FILL = (a1: number, a2: number) =>
 const BLUR = (px: number, bright: number) =>
   `blur(${px}px) saturate(100%) brightness(${bright})`;
 
+// Below this width the hero title can sit directly under the bar (worst case:
+// short viewports like iPhone SE, where the centered hero overflows upward).
+// Floor the frost there so the logo/menu stay legible even at scroll top.
+const MOBILE_BREAKPOINT = "(max-width: 767px)";
+const MOBILE_FROST_FLOOR = 0.45;
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -61,9 +68,17 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_BREAKPOINT);
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
   // The open mobile menu forces the material fully on, so the dropdown isn't
   // floating over a transparent bar.
-  const t = isOpen ? 1 : progress;
+  const t = isOpen ? 1 : Math.max(isMobile ? MOBILE_FROST_FLOOR : 0, progress);
 
   return (
     // Plain fixed shell — no transform/opacity here, or the capsule's
@@ -92,7 +107,7 @@ export default function Navbar() {
         }}
       >
         {/* z-10 keeps content above .glass::before's specular sheen */}
-        <div className="relative z-10 px-[42px] py-[23px]">
+        <div className="relative z-10 px-6 md:px-[42px] py-[23px]">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link
@@ -107,7 +122,12 @@ export default function Navbar() {
                 className="w-[42px] h-[42px] object-contain"
               />
               <span
-                className="text-[21px] font-black tracking-tight text-white"
+                // Fluid clamp instead of a fixed size: below md there's no fixed
+                // breakpoint width that reliably fits "Claremont Accelerator" next
+                // to the icon + hamburger, so it scales continuously with the
+                // viewport (14px @ 320px wide, reaching the original 21px by ~400px)
+                // and never wraps to a second line.
+                className="whitespace-nowrap text-[clamp(14px,8.75vw-14px,21px)] md:text-[21px] font-black tracking-tight text-white"
                 style={{ fontFamily: 'Aileron, Arial, sans-serif' }}
               >
                 Claremont Accelerator
