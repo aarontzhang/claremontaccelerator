@@ -239,7 +239,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span>Teams of 2 and solo participants welcome</span>
+                    <span>Teams and solo participants welcome</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>

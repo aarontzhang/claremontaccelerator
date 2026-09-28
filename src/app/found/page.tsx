@@ -175,7 +175,7 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">Who Should Apply</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• Teams of 2 or solo participants welcome</li>
+                    <li>• Teams and solo participants welcome</li>
                     <li>• Early-stage or idea-stage</li>
                     <li>• Looking to validate and build your first MVP</li>
                     <li>• Want a pathway to the main accelerator</li>
