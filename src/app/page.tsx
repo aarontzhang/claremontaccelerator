@@ -109,20 +109,20 @@ export default function Home() {
           </div>
 
           <div className="animate-fade-up opacity-0 animation-delay-300 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/found"
+            <a
+              href="#programs"
               className="sheen group inline-flex items-center gap-2 rounded-full bg-[#0165fc] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
               style={{
                 boxShadow:
                   "inset 0 1px 0 0 rgba(255,255,255,0.32), 0 12px 32px -8px rgba(1,101,252,0.7)",
               }}
             >
-              Start a company
+              Join us
               <IconArrowRight
                 className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
                 stroke={2.2}
               />
-            </Link>
+            </a>
 
             <Link
               href="/intern"
@@ -186,7 +186,7 @@ export default function Home() {
           </ScrollReveal>
 
           {/* 3 Program Cards */}
-          <h3 className="font-bold text-2xl text-white mb-4">Our Programs</h3>
+          <h3 id="programs" className="font-bold text-2xl text-white mb-4 scroll-mt-[108px]">Our Programs</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Claremont Accelerator (Main Program) */}
             <ScrollReveal delay={0}>
