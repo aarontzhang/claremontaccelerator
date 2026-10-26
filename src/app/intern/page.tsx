@@ -262,7 +262,7 @@ export default function InternPage() {
               },
               {
                 q: "How much do interns get paid?",
-                a: "Rates are set by the individual startup, typically $20–$40/hr depending on role and stage. Some early-stage teams offer equity in addition to cash.",
+                a: "Interns are paid $17.50/hr.",
               },
               {
                 q: "What if I want to found instead of intern?",
