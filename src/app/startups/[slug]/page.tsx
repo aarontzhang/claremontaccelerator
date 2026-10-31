@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { loadAllStartups } from "@/lib/startups";
 import type { Job } from "@/lib/startups";
-import { IconChevronLeft, IconExternalLink } from "@tabler/icons-react";
+import { IconChevronLeft, IconExternalLink, IconBrandLinkedinFilled } from "@tabler/icons-react";
 
 export async function generateStaticParams() {
   const startups = loadAllStartups();
@@ -115,17 +115,35 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
                 Founders
               </p>
               <div className="flex flex-wrap gap-2">
-                {startup.founders.map((founder) => (
-                  <div
-                    key={founder}
-                    className="flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-[#0165fc]/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-[#3385fd] font-black text-xs">{founder.charAt(0)}</span>
-                    </div>
-                    <span className="text-white text-sm font-medium">{founder}</span>
-                  </div>
-                ))}
+                {startup.founders.map((founder) => {
+                  const Pill = founder.linkedin ? "a" : "div";
+                  return (
+                    <Pill
+                      key={founder.name}
+                      {...(founder.linkedin
+                        ? { href: founder.linkedin, target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className={`flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 group/founder ${
+                        founder.linkedin ? "hover:border-[#0A66C2]/40 transition-colors" : ""
+                      }`}
+                    >
+                      <div className="w-6 h-6 rounded-full bg-[#0165fc]/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        {founder.photoExists ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={founder.photo} alt={founder.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-[#3385fd] font-black text-xs">{founder.name.charAt(0)}</span>
+                        )}
+                      </div>
+                      <span className="text-white text-sm font-medium">{founder.name}</span>
+                      {founder.linkedin && (
+                        <IconBrandLinkedinFilled
+                          className="w-4 h-4 text-[var(--muted)] group-hover/founder:text-[#0A66C2] transition-colors flex-shrink-0"
+                        />
+                      )}
+                    </Pill>
+                  );
+                })}
               </div>
             </div>
           )}

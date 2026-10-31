@@ -138,7 +138,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
     });
   }, [activeCohort, query, startups]);
 
-  const cohortTabs = [0, ...allCohorts];
+  const cohortTabs = [0, ...[...allCohorts].sort((a, b) => b - a)];
 
   return (
     // Page wrapper, atmosphere and header live in page.tsx so they render

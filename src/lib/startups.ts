@@ -11,6 +11,13 @@ export interface Job {
   url: string;
 }
 
+export interface Founder {
+  name: string;
+  linkedin: string;
+  photo: string;
+  photoExists: boolean;
+}
+
 export interface Startup {
   slug: string;
   name: string;
@@ -19,10 +26,23 @@ export interface Startup {
   logo: string;
   logoExists: boolean;
   website: string;
-  founders: string[];
+  founders: Founder[];
   status: string;
   body: string;
   jobs: Job[];
+}
+
+function parseFounders(raw: string): Founder[] {
+  return raw
+    .split(",")
+    .map((f) => f.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      const [name, linkedin, photo] = entry.split("|").map((p) => p.trim());
+      const photoExists =
+        !!photo && fs.existsSync(path.join(process.cwd(), "public", photo.replace(/^\//, "")));
+      return { name: name ?? entry, linkedin: linkedin ?? "", photo: photo ?? "", photoExists };
+    });
 }
 
 function parseFrontmatter(raw: string): { data: Record<string, string>; body: string } {
@@ -60,7 +80,7 @@ const SLUG_ORDER: Record<number, string[]> = {
   2: ["atrade", "stag", "pheratech", "musicdb", "exploravist", "sokhil"],
   3: ["toxsight", "cashbff", "openflow", "openbill"],
   4: ["lintel", "vorpal", "flash-biometrics", "kandor-ai"],
-  5: [],
+  5: ["whistle-labs", "chalk", "immify-ai", "hedgehawk-industries"],
 };
 
 export function loadAllStartups(): Startup[] {
@@ -91,9 +111,7 @@ export function loadAllStartups(): Startup[] {
         logo,
         logoExists,
         website: data.website?.trim() ?? "",
-        founders: data.founders
-          ? data.founders.split(",").map((f) => f.trim()).filter(Boolean)
-          : [],
+        founders: data.founders ? parseFounders(data.founders) : [],
         status: data.status?.trim() ?? "",
         body: description,
         jobs,

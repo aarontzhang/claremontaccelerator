@@ -76,9 +76,9 @@ public/
 ---
 name: Company Name
 tagline: One-line description
-logo: /logos/filename.webp
+logo: /startups/logos/filename.webp
 website: https://...
-founders: Founder One, Founder Two
+founders: Founder One|https://linkedin.com/in/founder-one|/startups/founders/founder-one.webp, Founder Two
 status: active
 cohort: N
 ---
@@ -89,8 +89,20 @@ Description paragraphs here.
 Job Title | Full-time | Location | https://apply-url.com
 ```
 
+   Each entry in `founders` is comma-separated; within an entry, `Name|linkedinUrl|photoPath` are
+   pipe-separated and the LinkedIn URL and photo are both optional (a bare name still works, as do
+   older cohorts that only ever had names). `startups.ts` parses this into `Founder[]` (`name`,
+   `linkedin`, `photo`, `photoExists`). On the `/startups/[slug]` page, each founder renders as a
+   pill with their photo (or an initial-letter avatar if no photo), their name, and a LinkedIn
+   glyph; when `linkedin` is set the **whole pill** is an `<a>` to their profile (not just the
+   glyph), so there's a `Pill = founder.linkedin ? "a" : "div"` branch there.
+
 2. Add the slug to `SLUG_ORDER` in `src/lib/startups.ts` under the correct cohort key.
-3. Drop the logo file in `public/logos/`.
+3. Drop the startup logo in `public/startups/logos/` and any founder headshots in
+   `public/startups/founders/` (resize headshots to ~200×200 webp, e.g. via `sharp`
+   `.resize({ width: 200, height: 200, fit: "cover" })`). Note `public/logos/` (no `startups/`
+   prefix) is a different, older directory used only for the homepage partner/school logos — don't
+   confuse the two.
 
 ## Startup Data Flow
 
@@ -306,7 +318,14 @@ width/radius animation. (It used to be a floating pill that docked on scroll; th
 
 ## Cohort 5
 
-Cohort 5 is configured but has no startups yet. The empty state on the startups page reads "Cohort 5 is coming soon. Check back in August 2026."
+Cohort 5's first four startups are live: `whistle-labs`, `chalk`, `immify-ai`, `hedgehawk-industries`.
+The "Cohort N is coming soon" empty state in `StartupsClient.tsx` only renders when a cohort filter
+has zero matches, so it's dormant now but still there for whenever `SLUG_ORDER[5]` outgrows the
+cohort again (or a future cohort starts empty).
+
+On `/startups`, the cohort filter pills render **descending** — `All, Cohort 5, Cohort 4, …,
+Cohort 1` — via `[0, ...[...allCohorts].sort((a, b) => b - a)]` in `StartupsClient.tsx`, so a new
+`COHORT_ORDER` entry doesn't need manual reordering there.
 
 ## Hero Section Convention
 
