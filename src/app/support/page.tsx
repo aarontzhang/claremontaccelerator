@@ -1,53 +1,37 @@
 import CTAButton from "@/components/CTAButton";
 import ScrollReveal from "@/components/ScrollReveal";
-import Image from "next/image";
 import Link from "next/link";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
-
-const DONATION_URL = "https://www.cmc.edu/giving/institutes/rlcie";
+import { DONATION_URL } from "@/lib/links";
+import PageHero from "@/components/PageHero";
 
 export default function Donate() {
   return (
-    <div className="min-h-screen flat-cards">
+    <div className="relative min-h-screen bg-black flat-cards">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/acceleratormeeting-18.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)' }} />
+      <PageHero
+        image="/acceleratormeeting-18.webp"
+        title="Invest in the Next Generation"
+        subtitle="Your support helps student founders build companies that matter."
+        paddingTop={79}
+        spacedSubtitle
+      >
+        <div className="flex flex-col items-center gap-3">
+          <CTAButton href={DONATION_URL} external size="large">
+            Make a Donation
+          </CTAButton>
+          <Link
+            href="/mentor"
+            className="inline-flex items-center gap-1 text-white/50 text-sm hover:text-white/80 transition-colors"
+          >
+            I&apos;d like to donate my time
+            <IconArrowNarrowRight className="w-3 h-3" stroke={2} />
+          </Link>
         </div>
-
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4">
-            Invest in the Next Generation
-          </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 mb-8 max-w-xl mx-auto">
-            Your support helps student founders build companies that matter.
-          </p>
-          <div className="animate-fade-up opacity-0 animation-delay-200 flex flex-col items-center gap-3">
-            <CTAButton href={DONATION_URL} external size="large">
-              Make a Donation
-            </CTAButton>
-            <Link
-              href="/mentor"
-              className="inline-flex items-center gap-1 text-white/50 text-sm hover:text-white/80 transition-colors"
-            >
-              I&apos;d like to donate my time
-              <IconArrowNarrowRight className="w-3 h-3" stroke={2} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      </PageHero>
 
       {/* Where Funds Go */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16 bg-white/[0.02]">
         <div className="max-w-5xl mx-auto px-6">
           <ScrollReveal>
             <h2 className="font-black text-2xl md:text-3xl text-white mb-12 text-center">
@@ -59,21 +43,21 @@ export default function Donate() {
           <div>
             {/* Badge row — line centered through badges */}
             <div className="relative">
-              <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--border)] -translate-y-1/2" />
+              <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-white/[0.07] -translate-y-1/2" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
                 <ScrollReveal delay={0}>
                   <div className="flex justify-center">
-                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "#0165fc" }}>80%</span>
+                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "var(--accent)" }}>80%</span>
                   </div>
                 </ScrollReveal>
                 <ScrollReveal delay={100}>
                   <div className="flex justify-center">
-                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "#0165fc" }}>10%</span>
+                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "var(--accent)" }}>10%</span>
                   </div>
                 </ScrollReveal>
                 <ScrollReveal delay={200}>
                   <div className="flex justify-center">
-                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "#0165fc" }}>10%</span>
+                    <span className="relative z-10 inline-flex px-5 py-2 rounded-lg text-white font-black text-base" style={{ background: "var(--accent)" }}>10%</span>
                   </div>
                 </ScrollReveal>
               </div>

@@ -1,55 +1,34 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { IconArrowRight, IconExternalLink } from "@tabler/icons-react";
 
+// The solid blue pill CTA. Previously carried `variant`
+// ("primary"/"secondary"/"outline"), a `disabled` state and a `default` size
+// that no caller ever used; those branches are gone. `icon` was added so pages
+// that want a different trailing glyph can reuse this instead of hand-writing
+// the same anchor again.
 interface CTAButtonProps {
   href: string;
-  children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline";
+  children: ReactNode;
   size?: "default" | "large";
   external?: boolean;
-  disabled?: boolean;
+  /** Trailing glyph. Defaults to an external-link or arrow icon by link type. */
+  icon?: ReactNode;
 }
 
-const bubbleStyle = {
-  background: "#0165fc",
+const SIZES = {
+  default: "px-6 py-3 text-base",
+  large: "px-8 py-4 text-lg",
 };
 
 export default function CTAButton({
   href,
   children,
-  variant = "primary",
   size = "default",
   external = false,
-  disabled = false,
+  icon,
 }: CTAButtonProps) {
-  const baseStyles =
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all" +
-    (disabled ? " opacity-60 cursor-not-allowed" : " hover:scale-105");
-
-  const variants = {
-    primary:
-      "text-white font-bold",
-    secondary:
-      "bg-white text-black hover:bg-white/90",
-    outline:
-      "border-2 border-white/50 text-white hover:border-white hover:bg-white/10",
-  };
-
-  const sizes = {
-    default: "px-6 py-3 text-base",
-    large: "px-8 py-4 text-lg",
-  };
-
-  const className = `${baseStyles} ${variants[variant]} ${sizes[size]}`;
-  const inlineStyle = variant === "primary" ? bubbleStyle : undefined;
-
-  if (disabled) {
-    return (
-      <span className={className} style={inlineStyle}>
-        {children}
-      </span>
-    );
-  }
+  const className = `inline-flex items-center justify-center gap-2 rounded-full transition-all hover:scale-105 text-white font-bold ${SIZES[size]}`;
 
   if (external) {
     return (
@@ -58,18 +37,18 @@ export default function CTAButton({
         target="_blank"
         rel="noopener noreferrer"
         className={className}
-        style={inlineStyle}
+        style={{ background: "var(--accent)" }}
       >
         {children}
-        <IconExternalLink className="w-4 h-4" stroke={2} />
+        {icon ?? <IconExternalLink className="w-4 h-4" stroke={2} />}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={className} style={inlineStyle}>
+    <Link href={href} className={className} style={{ background: "var(--accent)" }}>
       {children}
-      <IconArrowRight className="w-4 h-4" stroke={2} />
+      {icon ?? <IconArrowRight className="w-4 h-4" stroke={2} />}
     </Link>
   );
 }

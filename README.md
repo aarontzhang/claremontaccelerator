@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Claremont Accelerator
 
-## Getting Started
+Marketing site for the [Claremont Accelerator](https://www.claremontaccelerator.com), a
+student startup program at the Claremont Colleges.
 
-First, run the development server:
+Next.js 16 (App Router) · React 19 · Tailwind CSS v4 · TypeScript. Statically generated —
+no database, no auth, no API routes. Startup content lives in markdown under `content/`.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Production build (prerenders every page) |
+| `npm run start` | Serve a production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | `tsc --noEmit` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding a startup
 
-## Learn More
+1. Create `content/startups/cohort-N/<slug>.md`:
 
-To learn more about Next.js, take a look at the following resources:
+```markdown
+---
+name: Company Name
+tagline: One-line description
+cohort: N
+logo: /startups/logos/<slug>.webp
+website: https://...
+founders: Name|https://linkedin.com/in/...|/startups/founders/name.webp, Second Founder
+status: active
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Description paragraphs here.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Add the slug to `SLUG_ORDER` in `src/lib/startups.ts` under that cohort. **A markdown file
+   not listed there is never rendered** — the loader iterates `SLUG_ORDER`, not the directory.
+3. Drop the logo in `public/startups/logos/` and founder headshots in
+   `public/startups/founders/`.
 
-## Deploy on Vercel
+Optional frontmatter: `logoBg` (any CSS color, for logos that need a specific plate),
+`logoScale` (percentage, to shrink a logo that reads too large), `backers` (comma-separated,
+e.g. `YC`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## The jobs / internship feature
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Job postings are authored in a `## Jobs` section at the end of a startup's markdown file and
+are **gated behind a single switch**: `JOBS_LIVE` in `src/lib/flags.ts`.
+
+While `JOBS_LIVE` is `false`, `loadAllStartups()` returns every startup with `jobs: []`, so no
+job text reaches the build output at all — `/intern` shows the portfolio snapshot and detail
+pages read "No open roles right now." Set it to `true` and rebuild to publish everything at once
+— that also promotes "Intern at a startup" to the homepage hero's primary button (hiding
+"Join us") and switches the navbar pill from the mailing-list signup to `/intern`.
+
+Job format — blank-line-separated blocks, each a header line then description paragraphs then
+`- trait` bullets:
+
+```markdown
+## Jobs
+
+Software Engineer | Internship | Remote | https://apply-url.com | 2
+One paragraph about the role.
+Another paragraph.
+- An ideal-candidate trait
+- Another trait
+```
+
+The trailing `| 2` is `spots` — how many people the role is hiring. Optional, defaults to `1`,
+and shows as an "N OPEN SPOTS" pill next to the role title.
+
+## Short links
+
+`/l/<slug>` redirects via `links.json` at the **repo root** (not `public/`). It's imported at
+build time, so adding a link requires a redeploy.
+
+## Docs
+
+`CLAUDE.md` holds the detailed architecture, design-system and gotcha notes.

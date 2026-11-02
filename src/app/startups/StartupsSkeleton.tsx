@@ -9,14 +9,19 @@
  * An animating opacity on an ancestor creates a backdrop root and would kill
  * backdrop-filter on the .glass tiles below it.
  */
+import { COHORT_ORDER } from "@/lib/startups";
+
 export default function StartupsSkeleton() {
+  // "All" plus one pill per cohort — derived so adding a cohort cannot desync
+  // this placeholder from the real filter bar.
+  const pillCount = COHORT_ORDER.length + 1;
   return (
     <div>
       {/* Filter bar */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="glass glass-flat h-[42px] w-full max-w-sm rounded-lg" />
         <div className="flex gap-2 flex-wrap">
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: pillCount }).map((_, i) => (
             <div key={i} className="glass glass-flat h-[38px] w-[88px] rounded-lg" />
           ))}
         </div>

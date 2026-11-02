@@ -2,18 +2,14 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight, IconBolt, IconBulb } from "@tabler/icons-react";
+import { STUDIO_APPLICATION_URL } from "@/lib/links";
+import { MENTOR_COUNT, ACCELERATOR_FUNDING, STUDIO_FUNDING } from "@/lib/program";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "Found a CA Startup",
 };
 
-// FOUNDER_APPLICATION_URL is an intentionally unreferenced placeholder — kept
-// for when the main-program application flow moves in-site.
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const FOUNDER_APPLICATION_URL = "https://docs.google.com/forms/d/1ODnyqt-Y0f1UXhx-2BRLloTDYEwGQIL-UJDZOqmDgA4/edit";
-/* eslint-enable @typescript-eslint/no-unused-vars */
-
-const STUDIO_APPLICATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeg2lSHEbIUKTTvpywkVSm-A_GKXojY0z3jSTLk5ASCzPBt1w/viewform";
 
 type Outcome = {
   name: string;
@@ -46,7 +42,7 @@ const outcomes: Outcome[] = [
   {
     name: "Pheratech",
     slug: "pheratech",
-    logo: "/startups/logos/pheratech.png",
+    logo: "/startups/logos/pheratech.webp",
     tagline: "Swarm intelligence for autonomous multi-robot systems.",
     cohort: "Cohort 2",
     story: "Raised from 1517, Afore Capital, among others",
@@ -68,29 +64,14 @@ export default function Apply() {
     <div className="relative min-h-screen bg-black flat-cards">
       <div className="relative z-10">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[79px] border-b border-white/[0.13]">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/acceleratormeeting-11.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)' }} />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]">
-            Found a CA Startup
-          </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 mb-8 max-w-xl mx-auto">
-            Get non-dilutive funding, mentorship from 40+ VCs and founders, and paid interns to build alongside you.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        image="/acceleratormeeting-11.webp"
+        title="Found a CA Startup"
+        subtitle={`Get non-dilutive funding, mentorship from ${MENTOR_COUNT} VCs and founders, and paid interns to build alongside you.`}
+        paddingTop={79}
+        tightTitle
+        spacedSubtitle
+      />
 
       {/* Program Sections */}
       <section className="py-16">
@@ -111,7 +92,7 @@ export default function Apply() {
                 </div>
                 <div>
                   <h3 className="font-black text-2xl text-white">Claremont Accelerator</h3>
-                  <p className="text-[#a5b4fc] font-medium">Main Program</p>
+                  <p className="text-[var(--accent-soft)] font-medium">Main Program</p>
                 </div>
               </div>
 
@@ -119,8 +100,8 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">What You Get</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• Up to <span className="text-white font-medium">$15,000</span> in non-dilutive funding</li>
-                    <li>• Mentorship from 40+ VCs and founders</li>
+                    <li>• Up to <span className="text-white font-medium">{ACCELERATOR_FUNDING}</span> in non-dilutive funding</li>
+                    <li>• Mentorship from {MENTOR_COUNT} VCs and founders</li>
                     <li>• Paid interns matched to your startup</li>
                     <li>• Demo Day presentation to investors</li>
                   </ul>
@@ -141,7 +122,7 @@ export default function Apply() {
                 <Link
                   href="/found/cohort"
                   className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                  style={{ background: "#0165fc" }}
+                  style={{ background: "var(--accent)" }}
                 >
                   Apply here
                 </Link>
@@ -158,7 +139,7 @@ export default function Apply() {
                 </div>
                 <div>
                   <h3 className="font-black text-2xl text-white">CA Studio</h3>
-                  <p className="text-[#a5b4fc] font-medium">Pre-Accelerator Program</p>
+                  <p className="text-[var(--accent-soft)] font-medium">Pre-Accelerator Program</p>
                 </div>
               </div>
 
@@ -166,7 +147,7 @@ export default function Apply() {
                 <div>
                   <h4 className="text-white font-bold mb-3">What You Get</h4>
                   <ul className="text-[var(--muted-light)] space-y-2">
-                    <li>• Up to <span className="text-white font-medium">$1,000</span> in funding</li>
+                    <li>• Up to <span className="text-white font-medium">{STUDIO_FUNDING}</span> in funding</li>
                     <li>• Semester-long structured program</li>
                     <li>• Workshops and mentorship sessions</li>
                     <li>• Automatic final-round interview for main program</li>
@@ -189,7 +170,7 @@ export default function Apply() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                  style={{ background: "#0165fc" }}
+                  style={{ background: "var(--accent)" }}
                 >
                   Apply here
                 </a>
@@ -205,7 +186,7 @@ export default function Apply() {
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-14">
-              <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-[#3385fd] font-semibold mb-4">
+              <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--accent-light)] font-semibold mb-4">
                 Outcomes
               </p>
               <h2 className="font-black text-4xl md:text-5xl text-white mb-4">
@@ -241,7 +222,7 @@ export default function Apply() {
                     )}
                     <div className="min-w-0">
                       <p className="font-black text-xl text-white leading-tight">{o.name}</p>
-                      <p className="text-[#3385fd] text-xs font-semibold uppercase tracking-wider mt-1">
+                      <p className="text-[var(--accent-light)] text-xs font-semibold uppercase tracking-wider mt-1">
                         {o.cohort}
                       </p>
                     </div>
@@ -273,7 +254,7 @@ export default function Apply() {
             <div className="text-center mt-10">
               <Link
                 href="/startups"
-                className="inline-flex items-center gap-1.5 text-[#3385fd] hover:text-white text-sm font-semibold transition-colors"
+                className="inline-flex items-center gap-1.5 text-[var(--accent-light)] hover:text-white text-sm font-semibold transition-colors"
               >
                 Browse the full portfolio
                 <IconArrowRight className="w-4 h-4" stroke={2} />

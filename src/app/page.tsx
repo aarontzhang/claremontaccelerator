@@ -2,6 +2,10 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight } from "@tabler/icons-react";
+import { STUDIO_APPLICATION_URL } from "@/lib/links";
+import { loadAllStartups } from "@/lib/startups";
+import { JOBS_LIVE, INTERN_CTA_LABEL, INTERN_CTA_HREF } from "@/lib/flags";
+import { MENTOR_COUNT, ACCELERATOR_FUNDING, STUDIO_FUNDING, MISSION } from "@/lib/program";
 
 const startups = [
   { name: "Sokil", logo: "/logos/Sokil.webp", size: "large" },
@@ -12,13 +16,25 @@ const startups = [
   { name: "Damus", logo: "/logos/Damus.webp", size: "normal" },
 ];
 
-const stats = [
-  { value: "18", label: "Startups Supported" },
-  { value: "$40,000,000+", label: "Combined Enterprise Value" },
-  { value: "100+", label: "Mentors & VCs" },
-];
+// The solid blue hero button. Shared so whichever CTA is primary looks identical.
+const HERO_PRIMARY_CLASS =
+  "sheen group inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5";
+const HERO_PRIMARY_STYLE = {
+  boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.32), 0 12px 32px -8px rgba(1,101,252,0.7)",
+};
+
+// Derived at build time so the portfolio count can never drift from content/
+// again (it read "18" while 22 startups were live).
+function buildStats(startupCount: number) {
+  return [
+    { value: `${startupCount}`, label: "Startups Supported" },
+    { value: "$40,000,000+", label: "Combined Enterprise Value" },
+    { value: MENTOR_COUNT, label: "Mentors & VCs" },
+  ];
+}
 
 export default function Home() {
+  const stats = buildStats(loadAllStartups().length);
   return (
     <div className="relative min-h-screen bg-black flat-cards">
       {/* pt here nudges every section down together; the navbar is a sibling
@@ -68,7 +84,7 @@ export default function Home() {
               <div className="flex items-center justify-center gap-5 md:contents">
                 {/* YC — square mark, full color */}
                 <div className="relative w-5 h-5 md:w-7 md:h-7 opacity-90">
-                  <Image src="/logos/partners/yc.png" alt="Y Combinator" fill className="object-contain" />
+                  <Image src="/logos/partners/yc.png" alt="Y Combinator" fill sizes="28px" className="object-contain" />
                 </div>
                 {/* Entrepreneurs First — stacked wordmark, full color, height matched to YC mark */}
                 <Image
@@ -98,38 +114,46 @@ export default function Home() {
                 />
                 {/* Afore — horizontal wordmark, full color */}
                 <div className="relative w-11 h-3.5 md:w-20 md:h-6 opacity-90">
-                  <Image src="/logos/partners/afore.png" alt="Afore Capital" fill className="object-contain" />
+                  <Image src="/logos/partners/afore.png" alt="Afore Capital" fill sizes="80px" className="object-contain" />
                 </div>
                 {/* 1517 — horizontal wordmark, full color red */}
                 <div className="relative w-8 h-3.5 md:w-14 md:h-6 opacity-90">
-                  <Image src="/logos/partners/1517.png" alt="1517 Fund" fill className="object-contain" />
+                  <Image src="/logos/partners/1517.png" alt="1517 Fund" fill sizes="56px" className="object-contain" />
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Once JOBS_LIVE is on there IS something to apply to, so the
+              internship link becomes the primary button and the mailing-list
+              style "Join us" holding CTA drops away. */}
           <div className="animate-fade-up opacity-0 animation-delay-300 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#programs"
-              className="sheen group inline-flex items-center gap-2 rounded-full bg-[#0165fc] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
-              style={{
-                boxShadow:
-                  "inset 0 1px 0 0 rgba(255,255,255,0.32), 0 12px 32px -8px rgba(1,101,252,0.7)",
-              }}
-            >
-              Join us
-              <IconArrowRight
-                className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
-                stroke={2.2}
-              />
-            </a>
+            {JOBS_LIVE ? (
+              <Link href={INTERN_CTA_HREF} className={HERO_PRIMARY_CLASS} style={HERO_PRIMARY_STYLE}>
+                {INTERN_CTA_LABEL}
+                <IconArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                  stroke={2.2}
+                />
+              </Link>
+            ) : (
+              <>
+                <a href="#programs" className={HERO_PRIMARY_CLASS} style={HERO_PRIMARY_STYLE}>
+                  Join us
+                  <IconArrowRight
+                    className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                    stroke={2.2}
+                  />
+                </a>
 
-            <Link
-              href="/intern"
-              className="glass glass-hover inline-flex items-center rounded-full px-7 py-3.5 text-[15px] font-medium text-white/85"
-            >
-              Intern at a startup
-            </Link>
+                <Link
+                  href={INTERN_CTA_HREF}
+                  className="glass glass-hover inline-flex items-center rounded-full px-7 py-3.5 text-[15px] font-medium text-white/85"
+                >
+                  {INTERN_CTA_LABEL}
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -162,7 +186,7 @@ export default function Home() {
                 Who We Are
               </h2>
               <p className="text-[var(--muted-light)] text-lg max-w-2xl mx-auto">
-                Claremont Accelerator is the only school-sponsored startup accelerator supporting the five Claremont Colleges. We help student-founders start and scale their startups by providing them with mentorship, manpower, and money.
+                Claremont Accelerator is the only school-sponsored startup accelerator supporting the five Claremont Colleges. We help student-founders start and scale their startups by providing them with {MISSION}.
               </p>
 
               {/* The 5Cs */}
@@ -173,7 +197,7 @@ export default function Home() {
                   desktop so children rejoin the single flex-wrap row unchanged. */}
               <div className="mt-10 flex flex-col gap-5 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-10">
                 <div className="flex items-center justify-center gap-6 md:contents">
-                  <Image src="/logos/schools/cmc.png" alt="Claremont McKenna College" width={2490} height={2489} className="h-10 md:h-16 w-auto object-contain" />
+                  <Image src="/logos/schools/cmc.png" alt="Claremont McKenna College" width={512} height={512} className="h-10 md:h-16 w-auto object-contain" />
                   <Image src="/logos/schools/pitzer.png" alt="Pitzer College" width={479} height={405} className="h-10 md:h-16 w-auto object-contain" />
                   <Image src="/logos/schools/harvey_mudd.png" alt="Harvey Mudd College" width={281} height={180} className="h-10 md:h-16 w-auto object-contain" />
                 </div>
@@ -192,7 +216,7 @@ export default function Home() {
             <ScrollReveal delay={0}>
               <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">Claremont Accelerator</h3>
-                <p className="text-[#3385fd] text-sm font-medium mb-3">Main Program</p>
+                <p className="text-[var(--accent-light)] text-sm font-medium mb-3">Main Program</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -200,7 +224,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span>Up to <span className="text-white font-medium">$15K</span> in funding</span>
+                    <span>Up to <span className="text-white font-medium">{ACCELERATOR_FUNDING}</span> in funding</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -215,7 +239,7 @@ export default function Home() {
                   <Link
                     href="/found/cohort"
                     className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                    style={{ background: "#0165fc" }}
+                    style={{ background: "var(--accent)" }}
                   >
                     Apply
                   </Link>
@@ -227,7 +251,7 @@ export default function Home() {
             <ScrollReveal delay={100}>
               <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">CA Studio</h3>
-                <p className="text-[#3385fd] text-sm font-medium mb-3">Pre-Accelerator</p>
+                <p className="text-[var(--accent-light)] text-sm font-medium mb-3">Pre-Accelerator</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -235,7 +259,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
-                    <span>Up to <span className="text-white font-medium">$1K</span> in funding</span>
+                    <span>Up to <span className="text-white font-medium">{STUDIO_FUNDING}</span> in funding</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -248,11 +272,11 @@ export default function Home() {
                 </ul>
                 <div className="mt-auto pt-6">
                   <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeg2lSHEbIUKTTvpywkVSm-A_GKXojY0z3jSTLk5ASCzPBt1w/viewform"
+                    href={STUDIO_APPLICATION_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                    style={{ background: "#0165fc" }}
+                    style={{ background: "var(--accent)" }}
                   >
                     Apply
                   </a>
@@ -264,7 +288,7 @@ export default function Home() {
             <ScrollReveal delay={200}>
               <div className="glass glass-hover rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="font-black text-xl text-white mb-2">Intern Program</h3>
-                <p className="text-[#3385fd] text-sm font-medium mb-3">Work at a Startup</p>
+                <p className="text-[var(--accent-light)] text-sm font-medium mb-3">Work at a Startup</p>
                 <ul className="text-[var(--muted)] text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-white">•</span>
@@ -287,7 +311,7 @@ export default function Home() {
                   <Link
                     href="/intern"
                     className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                    style={{ background: "#0165fc" }}
+                    style={{ background: "var(--accent)" }}
                   >
                     Learn more
                   </Link>

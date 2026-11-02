@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { IconArrowLeft, IconMail } from "@tabler/icons-react";
+import { FOUNDER_CONTACT_EMAIL } from "@/lib/links";
 
 export const metadata = {
   title: "Apply — Claremont Accelerator",
 };
 
-const CONTACT_EMAIL = "cwitzansky29@cmc.edu";
-const REPLY_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+const REPLY_MAILTO = `mailto:${FOUNDER_CONTACT_EMAIL}?subject=${encodeURIComponent(
   "I'm interested in being a CA founder"
 )}`;
 
@@ -17,7 +17,7 @@ export default function CohortApply() {
         <div className="max-w-6xl mx-auto px-6">
           <Link
             href="/found"
-            className="inline-flex items-center gap-1.5 text-[#3385fd] hover:text-white text-sm font-semibold transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-[var(--accent-light)] hover:text-white text-sm font-semibold transition-colors mb-8"
           >
             <IconArrowLeft className="w-4 h-4" stroke={2} />
             Back to Found a CA Startup
@@ -41,13 +41,13 @@ export default function CohortApply() {
                 So you want to be a founder?
               </h1>
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm" style={{ background: "#0165fc" }}>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-sm" style={{ background: "var(--accent)" }}>
                   CW
                 </div>
                 <div className="min-w-0 text-sm">
                   <p className="text-white font-semibold">
                     Chase Witzansky
-                    <span className="text-white/45 font-normal ml-1.5">&lt;{CONTACT_EMAIL}&gt;</span>
+                    <span className="text-white/45 font-normal ml-1.5">&lt;{FOUNDER_CONTACT_EMAIL}&gt;</span>
                   </p>
                   <p className="text-white/45">To: Future 5C founders</p>
                 </div>
@@ -96,7 +96,7 @@ export default function CohortApply() {
 
               <p className="font-bold">
                 If you&rsquo;re thinking about building now, please{" "}
-                <a href={REPLY_MAILTO} className="underline decoration-1 underline-offset-2 hover:text-[#0165fc]">
+                <a href={REPLY_MAILTO} className="underline decoration-1 underline-offset-2 hover:text-[var(--accent)]">
                   email me ASAP
                 </a>{" "}
                 with your name, graduation year, and a brief overview of what you&rsquo;re
@@ -140,7 +140,7 @@ export default function CohortApply() {
             <a
               href={REPLY_MAILTO}
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-              style={{ background: "#0165fc" }}
+              style={{ background: "var(--accent)" }}
             >
               <IconMail className="w-4 h-4" stroke={2} />
               Reply to Chase

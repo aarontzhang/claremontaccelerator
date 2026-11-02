@@ -4,8 +4,9 @@ tagline: An agent testing platform for MCP tools
 cohort: 3
 logo: /startups/logos/preman.png
 website: https://www.preman.live
-founders: Alspencer Omondi, Ethan Sandoval
+founders: Alspencer Omondi|https://www.linkedin.com/in/alspencer-omondi-9672aa23b/, Ethan Sandoval
 status: active
+backers: a16z
 ---
 
 Preman (formerly Opentest, then Openflow) is a testing platform for how AI agents interact with your product. As agents choose tools, chain actions, and take paths your team never wrote a test for, Preman helps catch workflow failures before they reach production — simulating agent traffic against your MCP servers from the terminal.

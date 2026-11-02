@@ -1,9 +1,9 @@
 import ScrollReveal from "@/components/ScrollReveal";
-import Image from "next/image";
 import Link from "next/link";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
-
-const MENTOR_FORM_URL = "mailto:claremontaccelerator@gmail.com?subject=Mentor%20Interest";
+import { MENTOR_FORM_URL } from "@/lib/links";
+import PageHero from "@/components/PageHero";
+import CTAButton from "@/components/CTAButton";
 
 const whatYouDo = [
   {
@@ -29,48 +29,27 @@ const whatYouBring = [
 
 export default function Mentor() {
   return (
-    <div className="min-h-screen flat-cards">
+    <div className="relative min-h-screen bg-black flat-cards">
       {/* Hero */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[131px] border-b border-white/[0.13]">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/acceleratormeeting-11.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)",
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4">
-            Become a Mentor
-          </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 mb-8 max-w-xl mx-auto">
-            Share your experience with the next generation of student founders. Your time is the most valuable thing you can give.
-          </p>
-          <div className="animate-fade-up opacity-0 animation-delay-200">
-            <a
-              href={MENTOR_FORM_URL}
-              className="inline-flex items-center justify-center gap-2 font-bold rounded-full transition-all hover:scale-105 px-8 py-4 text-lg text-white"
-              style={{ background: "#0165fc" }}
-            >
-              Get Involved
-              <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
-            </a>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image="/acceleratormeeting-11.webp"
+        title="Become a Mentor"
+        subtitle="Share your experience with the next generation of student founders. Your time is the most valuable thing you can give."
+        paddingTop={79}
+        spacedSubtitle
+      >
+        <CTAButton
+          href={MENTOR_FORM_URL}
+          external
+          size="large"
+          icon={<IconArrowNarrowRight className="w-4 h-4" stroke={2} />}
+        >
+          Get Involved
+        </CTAButton>
+      </PageHero>
 
       {/* What you'll do */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16 bg-white/[0.02]">
         <div className="max-w-5xl mx-auto px-6">
           <ScrollReveal>
             <h2 className="font-black text-2xl md:text-3xl text-white mb-12 text-center">
@@ -101,7 +80,7 @@ export default function Mentor() {
             <ul className="space-y-4">
               {whatYouBring.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1 w-2 h-2 rounded-full bg-[#0165fc] flex-shrink-0" />
+                  <span className="mt-1 w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0" />
                   <span className="text-[var(--muted-light)] text-lg leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -111,21 +90,21 @@ export default function Mentor() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16 bg-white/[0.02]">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="font-black text-2xl md:text-3xl text-white mb-4">Ready to give back?</h2>
             <p className="text-[var(--muted)] text-lg mb-8">
               Reach out and we&apos;ll connect you with a cohort that fits your background.
             </p>
-            <a
+            <CTAButton
               href={MENTOR_FORM_URL}
-              className="inline-flex items-center justify-center gap-2 font-bold rounded-full transition-all hover:scale-105 px-8 py-4 text-lg text-white"
-              style={{ background: "#0165fc" }}
+              external
+              size="large"
+              icon={<IconArrowNarrowRight className="w-4 h-4" stroke={2} />}
             >
               Get Involved
-              <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
-            </a>
+            </CTAButton>
             <p className="mt-6 text-[var(--muted)] text-sm">
               Prefer to support financially?{" "}
               <Link href="/support" className="text-white underline underline-offset-2 hover:text-white/80 transition-colors">

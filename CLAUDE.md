@@ -49,23 +49,36 @@ src/
     Navbar.tsx              # Full-width flush bar; glass fades in scroll-scrubbed
     Footer.tsx
     CTAButton.tsx
-    PageAtmosphere.tsx      # Blooms + grain background — currently unmounted (pages use flat bg-black)
+    PageHero.tsx            # Shared photo hero for /found, /intern, /team, /support, /mentor
+    StatusBadge.tsx         # Active/Inactive pill (portfolio grid + startup detail)
+    StartupLogoTile.tsx     # Logo tile w/ logoBg + logoScale + initial fallback (3 sizes)
+    BackerPills.tsx         # `backers:` pills, with a logo when BACKER_LOGOS has one
+    JobAccordion.tsx        # One posting, expandable to description + traits ("card"/"row")
+    Pill.tsx                # The small uppercase chip — cohort/status/backers/open-spots
     ScrollReveal.tsx
-    StartupLogo.tsx
     TeamMember.tsx
   lib/
-    startups.ts             # loadAllStartups() — reads markdown, parses frontmatter
+    startups.ts             # loadAllStartups() (memoised, server-only — imports fs)
+    flags.ts                # JOBS_LIVE + intern CTA label/href (fs-free: the NAVBAR reads it)
+    format.ts               # jobMeta()/initials() — fs-free so CLIENT components can import
+    backers.ts              # BACKER_LOGOS map (fs-free, same reason)
+    links.ts                # every site-wide external URL + contact address
+    program.ts              # MENTOR_COUNT, funding figures, MISSION sentence
 
 content/
   startups/
     cohort-1/ … cohort-5/  # One .md file per startup
 
 public/
-  logos/                    # Startup logos (webp/png)
+  logos/                    # Homepage MARQUEE logos only — transparent cutouts (see step 4)
   logos/partners/           # Partner/exit logos shown in the homepage hero "Backed by" row
   logos/schools/            # The 5C college logos shown under "Who We Are" on the homepage
-  team/                     # Team member photos
-  links.json                # Short-link map for /l/[slug]
+  startups/logos/           # Per-startup logos referenced by content/**.md `logo:`
+  startups/founders/        # Founder headshots referenced by `founders:` (~200x200 webp)
+  team/                     # Team member photos (webp, <=600px long edge)
+  acceleratormeeting-*.webp # Sub-page hero photos used by PageHero
+(repo root)
+  links.json                # Short-link map for /l/[slug] — at the ROOT, not in public/
 ```
 
 ## Adding a Startup
@@ -83,6 +96,7 @@ website: https://...
 founders: Founder One|https://linkedin.com/in/founder-one|/startups/founders/founder-one.webp, Founder Two
 status: active
 cohort: N
+backers: YC
 ---
 
 Description paragraphs here.
@@ -106,8 +120,19 @@ Job Title | Full-time | Location | https://apply-url.com
    background the cohort default doesn't give it. `logoScale` is a percentage (default `100`) of
    the tile the logo image renders at, still centered — use it to shrink a logo that reads too
    large/cramped in the fixed-size tile. Both are read in `startups.ts` (`Startup.logoBg`,
-   `Startup.logoScale`) and consumed identically in `StartupsClient.tsx` and `[slug]/page.tsx` —
-   update both if you touch this.
+   `Startup.logoScale`) and rendered in **one** place: `src/components/StartupLogoTile.tsx`
+   (sizes `sm` 48px / `md` 56px / `lg` 80px). This used to be three hand-copied blocks in
+   `StartupsClient.tsx`, `[slug]/page.tsx` and `intern/page.tsx` that had drifted — each used a
+   different cohort fallback color and the `/intern` copy ignored `logoBg`/`logoScale` entirely.
+   Change the tile here, not at the call sites.
+
+   Note `cohort:` in the frontmatter is **never read** — `startups.ts` derives the cohort from
+   the directory name. It is kept in every file for human readability, but a value that
+   disagrees with its directory is silently ignored, not an error.
+
+   `COHORT_ORDER` and `LATEST_COHORT` are **derived** from `SLUG_ORDER`'s keys, so adding a
+   cohort means adding one `SLUG_ORDER` entry and nothing else. (They used to be three separate
+   hand-maintained constants.)
 
 2. Add the slug to `SLUG_ORDER` in `src/lib/startups.ts` under the correct cohort key. Note the
    slug is the filename/URL, not necessarily the current `name` — e.g. Cohort 3's `openflow.md`
@@ -138,7 +163,142 @@ Job Title | Full-time | Location | https://apply-url.com
 
 The `/startups/[slug]` route uses `generateStaticParams()` to pre-render one page per startup at build time.
 
-The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" section aggregated from every startup's `## Jobs` block, and falls back to a portfolio snapshot grid when no jobs exist yet. The snapshot is hardcoded to show only: `kandor-ai`, `flash-biometrics`, `openflow`, `lintel`.
+The `/intern` route also calls `loadAllStartups()`: it renders an "Open roles" section aggregated
+from every startup's `## Jobs` block, and falls back to a portfolio snapshot grid when no jobs
+exist. That snapshot is a curated four-slug list, `SNAPSHOT_SLUGS` in `intern/page.tsx`
+(`kandor-ai`, `flash-biometrics`, `openflow`, `lintel`) — the grid is `lg:grid-cols-4`, so keep
+it at four. Note it is **one to two cohorts behind**: every Cohort 5 startup is `active` and
+none appear.
+
+### `loadAllStartups()` is memoised — keep it that way
+
+A module-level `cache` holds the parsed result. Content is immutable for the life of the
+process, and the function is called once per static page plus once in each of
+`generateStaticParams`/`generateMetadata` — 48 calls in a full build. Without the memo that was
+~1,000 `readFileSync` and ~2,000 `existsSync` calls for 23 files; with it, 2 parses (one per
+build worker process that touches it).
+
+Use `getStartupBySlug(slug)` rather than `loadAllStartups().find(...)`, and `allStartupSlugs()`
+in `generateStaticParams` so it doesn't parse every file just to read back the keys.
+
+### Server-only vs client-safe modules — IMPORTANT
+
+`src/lib/startups.ts` imports `fs`/`path`. `StartupsClient.tsx` is a **client component**, so
+value-importing anything from `startups.ts` anywhere in its subtree drags the whole server-only
+module into the browser bundle and the build fails with `Module not found: Can't resolve 'fs'`.
+
+- Importing **types** (`import type { Startup }`) is fine — they erase at compile time.
+- Pure helpers that client components need live in `src/lib/format.ts` (`jobMeta`, `initials`)
+  and `src/lib/backers.ts` (`BACKER_LOGOS`), both deliberately free of `fs`. Add new shared
+  helpers there, not to `startups.ts`.
+
+### The jobs / internship feature is behind a switch
+
+`JOBS_LIVE` in **`src/lib/flags.ts`** (re-exported from `startups.ts` for convenience). While
+`false`, `loadAllStartups()` returns every startup with `jobs: []`.
+
+It lives in `flags.ts` rather than `startups.ts` because `Navbar.tsx` is a **client component**
+and reads the flag — importing it from `startups.ts` would pull `fs` into the browser bundle and
+fail the build. Keep `flags.ts` free of server-only imports.
+
+Flipping it to `true` changes three things at once:
+1. Job postings render on `/startups/[slug]` and `/intern`, plus the portfolio jobs badges.
+2. The **homepage hero** promotes "Intern at a startup" to the primary (solid blue) button and
+   **drops "Join us"** entirely — once there is something to apply to, the holding CTA is noise.
+   Both branches share `HERO_PRIMARY_CLASS`/`HERO_PRIMARY_STYLE` in `page.tsx` so the promoted
+   button is visually identical to the one it replaces.
+3. The **navbar pill** (both desktop and mobile copies) switches from the external
+   "Join our mailing list!" `<a>` to an internal `<Link>` to `/intern`. Both share
+   `PILL_CLASS`/`PILL_STYLE` in `Navbar.tsx`.
+4. `/intern`'s **"Get real experience"** section (the 3-card "why intern" pitch) is hidden —
+   it only earns its space while there is nothing to apply to. Note this one is gated on
+   `totalOpenRoles === 0`, not `JOBS_LIVE` directly, matching the `Open roles` /
+   `Where you could intern` branching already on that page: if the flag is on but a cycle has
+   no postings yet, the pitch correctly reappears.
+
+The CTA label and href are `INTERN_CTA_LABEL` / `INTERN_CTA_HREF` in `flags.ts` — change them
+there, not at the four call sites.
+
+Gating happens at the **data layer, not in the JSX**, on purpose: a UI-level flag would still
+serialise every job description into the RSC payload, where it is readable in page source before
+the roles are announced. With the data zeroed, no job text reaches the build output at all.
+
+The off state needs no special handling because it is exactly what the site already rendered
+before any job data existed: no job badges on `/startups`, `/intern` shows the portfolio
+snapshot, and detail pages read "No open roles right now." Flip to `true`, rebuild, and
+everything lights up at once.
+
+Job authoring format — blank-line-separated blocks, each a `title | type | location | url`
+header, then description paragraphs (one per line), then `- trait` bullets:
+
+```markdown
+## Jobs
+
+Software Engineer | Internship | Remote | https://apply-url.com | 2
+A paragraph about the role.
+Another paragraph.
+- An ideal-candidate trait
+```
+
+The 5th pipe field is **`spots`** — how many people the role is hiring. It is optional and
+defaults to `1`, rendering an "N OPEN SPOT(S)" pill beside the role title in `JobAccordion`.
+Non-numeric or `< 1` values fall back to 1. Because `location` is usually blank you will often
+write `Title | Internship | | url | 2` with the empty third field.
+
+Postings render through **`src/components/JobAccordion.tsx`** on both `/startups/[slug]` and
+`/intern` — a `<details>` whose summary is title / type·location / Apply, expanding to the
+description paragraphs and an "Ideal Candidate Traits" list. Two variants: `card` (self-contained
+bordered tile, the default, used on the detail page) and `row` (no border or fill of its own, so
+it sits inside `/intern`'s parent `divide-y` list, with slightly larger type). `/intern` used to
+render flat rows with no description at all; don't re-add a second copy there.
+
+Startup lists on `/intern` are sorted **reverse-alphabetically by `name`** (Z→A) — applied once
+to `activeStartups`, so both the hiring list and the fallback snapshot inherit it. Note it sorts
+on `name`, not slug, so Preman (slug `openflow`) sorts under P. The `.filter()` before it returns
+a fresh array, so the `.sort()` never mutates the memoised result inside `loadAllStartups()`.
+
+`parseJobs` splits on blank lines (`/\n\s*\n/`), **not** single newlines. An earlier
+line-based version turned each prose paragraph and each `- trait` bullet into its own bogus job
+whose `title` was the whole paragraph and whose `url` was empty. If you change this parser,
+re-check that a multi-paragraph posting still yields exactly one job.
+
+All six postings share one apply URL — `https://forms.gle/E3ov8Um1dS3oCfdu5`, the respondent-
+facing short link (it 302s to the same form with `?usp=send_form`). An earlier revision used that
+form's `?usp=publish-editor` URL, which is the editor's post-publish artifact and not shareable;
+don't reintroduce it. Remaining known gap: every `location` field is empty, so `jobMeta()` renders
+just the type ("Internship").
+
+Each posting also renders an **"Apply for this role"** button at the bottom of its expanded
+dropdown, in addition to the compact Apply link in the summary row — on a long posting the
+summary link has scrolled out of reach by the time you have read the description. Both are
+guarded on `job.url`.
+
+### Previewing the jobs feature
+
+`jobs-live-test` is a long-lived branch off `main` whose **only** difference is
+`JOBS_LIVE = true` in `src/lib/flags.ts`. It exists so the feature can be reviewed on a Vercel
+preview deploy while production stays in its pre-launch state. When `main` moves, rebase or
+re-cut the branch rather than letting it accumulate unrelated changes — the whole point is that
+the diff stays one line.
+
+### Pills
+
+`src/components/Pill.tsx` is the small uppercase chip used for cohort labels, the Active/Inactive
+status badge, `backers:` tags, the jobs-count badge and the per-role "N open spots" label — six
+hand-copied class strings before it was extracted. Tones: `accent` (blue), `muted` (grey
+outline), `success` (green). Note the `border-[#0165fc]/40` inside it keeps a raw hex on purpose:
+Tailwind's `/40` opacity modifier can't be applied to a `var()` color.
+
+### `backers:` frontmatter
+
+Comma-separated (e.g. `backers: YC`). Rendered as pills by
+`src/components/BackerPills.tsx` on both the portfolio card and the detail page. A backer with
+an entry in `BACKER_LOGOS` (`src/lib/backers.ts`) gets its logo; everything else renders as a
+text pill. Currently set on `peer` (YC) and `openflow` (a16z).
+
+Note `peer.md` has `website: https://example.com` — a placeholder. Both startup views guard with
+`!startup.website.includes("example.com")`, so the link is suppressed until there is a real URL.
+That sentinel is load-bearing, not dead code.
 
 ### /startups render split
 
@@ -157,9 +317,10 @@ The two program cards on `/found` intentionally use different CTA states right n
 - **Claremont Accelerator (main program)** — "Apply here" links to `/found/cohort`, a
   standalone page styled as a mail-client window showing Chase's cohort-recruitment email
   (subject, sender, body). It's a static mockup, not a real form — the reply button is a
-  `mailto:` to `cwitzansky29@cmc.edu` with the subject pre-filled. `FOUNDER_APPLICATION_URL`
-  in `found/page.tsx` (the real Google Form) stays commented out until there's an actual
-  in-site application flow.
+  `mailto:` to `cwitzansky29@cmc.edu` with the subject pre-filled. The real Google Form now
+  lives in `src/lib/links.ts` as `FOUNDER_APPLICATION_URL_EDIT_ONLY` — deliberately named that
+  way because it is an owner-only `/edit` link and is NOT safe to link publicly; it needs its
+  `viewform` equivalent first. It is referenced nowhere.
 - **CA Studio** — applications are open. "Apply here" is a plain `<a>` (external, `target="_blank"`)
   to `STUDIO_APPLICATION_URL` in `found/page.tsx`, the live Studio Google Form viewform link.
   The old disabled `Applications Closed` span + mailing-list signup CTA has been removed.
@@ -179,8 +340,11 @@ of list length:
   bottom CTA ("Learn More & Apply"), which has been deleted.
 
 Funding figures are phrased as "Up to $X" (not a range) on both the homepage cards and the
-`/found` cards, e.g. "Up to $15K in funding" (Accelerator) and "Up to $1K in funding" (Studio).
-CA Studio's team-eligibility copy reads "Teams of 2 and solo participants welcome" (was
+`/found` cards, and the numbers come from `ACCELERATOR_FUNDING` / `STUDIO_FUNDING` in
+`src/lib/program.ts` — they used to be literals and had drifted into three spellings
+("$15K" / "$15,000" / "up to $15k"). `MENTOR_COUNT` ("100+") and the `MISSION` sentence live
+there for the same reason: the homepage said "100+" mentors while `/found` said "40+".
+CA Studio's team-eligibility copy reads "Teams and solo participants welcome" (was
 "Individual-level (not teams)" / "Individual founders (not teams)") — Studio now accepts small
 teams, not just solo founders.
 
@@ -241,7 +405,6 @@ Dark theme only. Key CSS variables (defined in `globals.css`):
 |---|---|
 | `--background` | Page background (near-black) |
 | `--surface` | Card backgrounds |
-| `--surface-elevated` | Slightly lighter surface |
 | `--border` | Subtle borders |
 | `--muted` | Dim text |
 | `--muted-light` | Secondary body text |
@@ -249,9 +412,14 @@ Dark theme only. Key CSS variables (defined in `globals.css`):
 
 Blue tones used directly as hex: `#0165fc` (solid), `#3385fd` (hover/highlight), `#0165fc/40` (border opacity).
 
-Note: the `--surface` / `--surface-elevated` / `--border` tokens are legacy. Redesigned
-pages use the glass system below instead; `--border` (`#262626`) in particular reads muddy
-against glass — prefer `white/[0.07]` for dividers and `white/15` for chips.
+Note: `--surface`, `--surface-elevated` and `--border` have been **removed**. They were the
+last pre-redesign holdouts and read muddy against glass. Use `white/[0.02]` for a faint section
+band, `white/[0.07]` for dividers/card borders, and `white/15` for chips.
+
+`--accent-soft` (`#a5b4fc`) is the periwinkle used for program-card eyebrows. Brand colors are
+referenced as `var(--accent)` / `var(--accent-light)` rather than raw hex, **except** where a
+Tailwind opacity modifier is involved (`border-[#0165fc]/40`) — those stay hex, because the
+`/40` shorthand relies on it.
 
 ## Glass Design System
 
@@ -265,7 +433,6 @@ Cards, inputs, and secondary buttons use a frosted-glass material defined in `gl
 | `.glass-nav` | Navbar-only override (denser tint, `brightness()` knock-down) |
 | `.flat-cards` | Page-wrapper opt-in: recolors any descendant `.glass` to a flat, uniform frost — kills the top-lit gradient body, `::before` dome, and specular top edge. On every page **except `/team`** (which keeps the graded glass). The navbar is unaffected because it renders in `layout.tsx`, outside these wrappers. |
 | `.sheen` | Specular sweep across a button on hover |
-| `.bloom` / `.grain-layer` | Used by `PageAtmosphere` (currently unmounted — see below) |
 
 **Glass needs a ground.** `backdrop-filter` has nothing to blur, but a solid fill is fine —
 it blurs to that flat color. Pages now use pure black and no atmosphere layer:
@@ -276,9 +443,17 @@ it blurs to that flat color. Pages now use pure black and no atmosphere layer:
 </div>
 ```
 
-`PageAtmosphere` (blooms + grain) is no longer mounted on any page — it was removed in favor of
-flat black backgrounds. The component still exists if you want to bring the texture back.
-Sections inside must NOT have opaque fills (`bg-[var(--surface)]` etc.) or the ground is hidden.
+`PageAtmosphere` (blooms + grain) and its CSS (`.bloom`, `.grain-layer`, `@keyframes
+bloom-drift`) have been **deleted** — it was unmounted on every page, so both the component and
+~30 lines of CSS were dead. Recover from git history if the texture is ever wanted back.
+Sections inside must NOT have opaque fills or the ground is hidden — `/mentor` and `/support`
+were violating this with `bg-[var(--surface)]` and now use `bg-white/[0.02]`.
+
+There is currently **no `prefers-reduced-motion` guard**. The old one only disabled `.bloom`
+(dead), so removing it changed nothing — but `animate-fade-up`, the logo marquee and `.sheen`
+all still animate unguarded. Note that a naive guard would make content INVISIBLE: elements
+carry `animate-fade-up opacity-0` and rely on the animation to reach `opacity: 1`, so any
+`animation: none` rule must also force `opacity: 1`.
 
 ### Gotchas
 
@@ -337,11 +512,14 @@ width/radius animation. (It used to be a floating pill that docked on scroll; th
 
 ## Short Links
 
-`/l/[slug]` reads `public/links.json` and redirects. Add new short links there.
+`/l/[slug]` reads **`links.json` at the repo root** (NOT `public/` — it is a build-time
+`import`, so adding a link needs a redeploy). `next.config.ts` keeps one legacy `/mailme`
+redirect that now forwards to `/l/mailme`; add all new vanity URLs to `links.json` only.
 
 ## Cohort 5
 
 Cohort 5's first four startups are live: `whistle-labs`, `chalk`, `immify-ai`, `hedgehawk-industries`.
+Cohort 4 has five entries (`peer` was added alongside the jobs work), so the portfolio is 23.
 The "Cohort N is coming soon" empty state in `StartupsClient.tsx` only renders when a cohort filter
 has zero matches, so it's dormant now but still there for whenever `SLUG_ORDER[5]` outgrows the
 cohort again (or a future cohort starts empty).
@@ -355,7 +533,14 @@ Cohort 1` — via `[0, ...[...allCohorts].sort((a, b) => b - a)]` in `StartupsCl
 Sub-pages (e.g. `/team`, `/intern`, `/found`) share a hero pattern for visual consistency:
 
 - Section: `relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[...] border-b border-white/[0.13]` — `pt`, not `mt`, so the full-bleed `absolute inset-0` background image starts at the top of the viewport and only the text clears the navbar.
-- `pt` values are **per page and hand-tuned** (the text is `flex items-center`-centered, so shrinking `pt` mostly nudges the block up rather than closing a fixed gap). Current values after the flush-navbar switch: `/found` & `/intern` `pt-[79px]`, `/team` `pt-[64px]`, `/startups` `pt-[151px]`. `/mentor` & `/support` still carry the old `pt-[131px]` — not yet retuned.
+- The hero is now **one component**: `src/components/PageHero.tsx` (`image`, `title`,
+  `subtitle`, `paddingTop`, `tightTitle`, `spacedSubtitle`, optional `children` for a CTA).
+  It replaced five hand-copied blocks with byte-identical scrim/`h1`/`p` class strings.
+- `paddingTop` stays a **per-page prop**, not a constant (the text is `items-center`-centered,
+  so shrinking it nudges the block up rather than closing a fixed gap). Current values:
+  `/found`, `/intern`, `/mentor`, `/support` `79`, `/team` `64`. `/startups` has its own
+  non-PageHero header at `pt-[151px]`. `/mentor` and `/support` were retuned from the old
+  pre-flush-navbar `131px` to match their siblings.
 - Content wrapper: `max-w-4xl mx-auto px-6 py-16 text-center`
 - Overlay gradient: `radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)`
 - h1: `font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]`
@@ -402,9 +587,28 @@ require('sharp')(src).resize({ width: 1600, withoutEnlargement: true })
   .webp({ quality: 82, alphaQuality: 90 }).toFile(out)
 ```
 
-Known remaining weight (not yet optimized): `/team` photos (1.6–1.8 MB each). Also
-`layout.tsx` loads the Aileron heading font from `fonts.cdnfonts.com` via a render-blocking
-`<link>` — worth self-hosting with `next/font/local`.
+`sharp` is now a declared devDependency (it was only present transitively via `next`).
+
+Both long-standing weight problems are fixed:
+- `/team` photos were 5.3 MB total (one 1.8 MB JPEG, one 1.7 MB photo stored as PNG). Now webp
+  at <=600px long edge, **217 KB total**. They render via `fill` + `object-cover` in a square
+  container, so they are resized WITHOUT pre-cropping — CSS still does the cropping, keeping
+  the original framing.
+- Aileron is **self-hosted** via `next/font/local` (`src/app/fonts/Aileron-{Bold,Black}.woff`,
+  exposed as `--font-aileron`). It used to load from `fonts.cdnfonts.com` through a
+  hand-written render-blocking `<link>`, putting a third-party round-trip in front of every
+  heading on every route. Only 700 and 900 are shipped — every `h1`–`h6` in `src/` carries an
+  explicit `font-bold` or `font-black`, so no other weight is reachable. Note the navbar
+  wordmark is a `<span>`, so it sets `font-family` inline and is NOT covered by the `h1`–`h6`
+  rule — update both together.
+
+`src/app/icon.png` is served raw by Next's file convention (NOT through the image optimizer),
+so its byte size ships to every visitor — it was a 4000x4000 / 558 KB PNG, now 512x512 / 7 KB.
+Keep it small.
+
+All images go through `next/image`; there are no raw `<img>` tags and no
+`@next/next/no-img-element` suppressions left. Every `fill` image sets `sizes` — without it
+Next assumes `100vw` and picks a viewport-width variant for a 28px logo.
 
 Superseded originals get deleted outright once their replacement is live and confirmed working
 — e.g. `logos/partners/ef_v4.png`, `zfellows.svg`, `a16z.png`, `1517.svg`, `afore.webp` were

@@ -3,6 +3,10 @@
 import { useState, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { Startup } from "@/lib/startups";
+import StatusBadge from "@/components/StatusBadge";
+import StartupLogoTile from "@/components/StartupLogoTile";
+import BackerPills from "@/components/BackerPills";
+import Pill from "@/components/Pill";
 import { IconExternalLink, IconSearch } from "@tabler/icons-react";
 
 interface Props {
@@ -11,32 +15,10 @@ interface Props {
   allCohorts: number[];
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const active = status === "active";
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest rounded px-2 py-0.5 border ${
-        active
-          ? "text-emerald-400 border-emerald-500/40"
-          : "text-[var(--muted)] border-white/15"
-      }`}
-    >
-      <span
-        className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-          active ? "bg-emerald-400" : "bg-[var(--muted)]"
-        }`}
-      />
-      {active ? "Active" : "Inactive"}
-    </span>
-  );
-}
-
 // Only rendered when count > 0 — StartupCard omits the badge entirely at zero.
 function JobCount({ count }: { count: number }) {
   return (
-    <span className="text-[10px] font-bold uppercase tracking-widest rounded px-2 py-0.5 self-start border text-[#3385fd] border-[#0165fc]/40">
-      {count === 1 ? "1 job" : `${count} jobs`}
-    </span>
+    <Pill className="self-start">{count === 1 ? "1 job" : `${count} jobs`}</Pill>
   );
 }
 
@@ -46,31 +28,11 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
       onClick={onClick}
       className="glass glass-flat glass-hover group text-left w-full rounded-xl p-5 flex flex-col gap-3"
     >
-      {/* Logo */}
-      <div
-        className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${
-          startup.logoBg ? "" : startup.cohort >= 4 ? "bg-white" : "bg-white/[0.07]"
-        }`}
-        style={startup.logoBg ? { backgroundColor: startup.logoBg } : undefined}
-      >
-        {startup.logoExists ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={startup.logo}
-            alt={startup.name}
-            className="object-contain p-0.5 rounded-md"
-            style={{ width: `${startup.logoScale}%`, height: `${startup.logoScale}%` }}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-white font-black text-lg">{startup.name.charAt(0)}</span>
-          </div>
-        )}
-      </div>
+      <StartupLogoTile startup={startup} size="sm" className="relative z-10" />
 
       <div className="relative z-10 flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
-          <h2 className="font-black text-base leading-tight text-white group-hover:text-[#3385fd] transition-colors">
+          <h2 className="font-black text-base leading-tight text-white group-hover:text-[var(--accent-light)] transition-colors">
             {startup.name}
           </h2>
           {startup.website && !startup.website.includes("example.com") && (
@@ -94,10 +56,9 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
       </div>
 
       <div className="relative z-10 flex items-center gap-2 flex-wrap">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] border border-white/15 rounded px-2 py-0.5">
-          Cohort {startup.cohort}
-        </span>
+        <Pill tone="muted">Cohort {startup.cohort}</Pill>
         <StatusBadge status={startup.status} />
+        <BackerPills backers={startup.backers} />
         {startup.jobs.length > 0 && <JobCount count={startup.jobs.length} />}
       </div>
     </button>
@@ -176,7 +137,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
                 onClick={() => handleSetCohort(c)}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                   activeCohort === c
-                    ? "bg-[#0165fc] text-white"
+                    ? "bg-[var(--accent)] text-white"
                     : "glass glass-flat text-white/60 hover:text-white"
                 }`}
                 style={
@@ -212,7 +173,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
               {activeCohort === latestCohort && !query ? (
                 <div>
                   <p className="text-white font-black text-2xl mb-2">Cohort {latestCohort} is coming soon.</p>
-                  <p className="text-[var(--muted)]">Check back in August 2026.</p>
+                  <p className="text-[var(--muted)]">Check back soon for the next cohort.</p>
                 </div>
               ) : (
                 <p className="text-[var(--muted)]">No startups match your search.</p>

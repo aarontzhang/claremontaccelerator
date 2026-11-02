@@ -30,14 +30,14 @@ export default function ScrollReveal({
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    // Captured so cleanup unobserves the same node the effect observed,
+    // rather than whatever ref.current points at by teardown time.
+    const node = ref.current;
+    if (node) observer.observe(node);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      if (node) observer.unobserve(node);
+      observer.disconnect();
     };
   }, []);
 

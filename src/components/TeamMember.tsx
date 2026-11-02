@@ -43,6 +43,7 @@ export default function TeamMember({
             src={image}
             alt={name}
             fill
+            sizes="(min-width: 1280px) 220px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
             className={`object-cover group-hover:scale-105 transition-transform duration-300 ${muted ? "grayscale" : ""}`}
             onError={() => setImageError(true)}
           />
@@ -59,7 +60,7 @@ export default function TeamMember({
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${name} on LinkedIn`}
-              className="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 rounded bg-[#0165fc]/70 text-white hover:bg-[#0165fc] transition-colors duration-200"
+              className="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 rounded bg-[#0165fc]/70 text-white hover:bg-[var(--accent)] transition-colors duration-200"
             >
               <IconBrandLinkedinFilled className="w-3.5 h-3.5" />
             </a>
@@ -83,7 +84,7 @@ export default function TeamMember({
             />
           )}
         </h3>
-        <p className={`text-sm font-medium ${muted ? "text-[var(--muted)]" : "text-[#a5b4fc]"}`}>{role}</p>
+        <p className={`text-sm font-medium ${muted ? "text-[var(--muted)]" : "text-[var(--accent-soft)]"}`}>{role}</p>
         <p className="text-[var(--muted)] text-xs">{school}</p>
       </div>
     </div>

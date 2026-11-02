@@ -5,6 +5,15 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import { SUBSTACK_URL, MAILING_LIST_URL } from "@/lib/links";
+import { JOBS_LIVE, INTERN_CTA_LABEL, INTERN_CTA_HREF } from "@/lib/flags";
+
+// The accent pill, shared by the desktop and mobile menus. While JOBS_LIVE is
+// off it is the mailing-list signup (nothing to apply to yet); once on, it
+// becomes the internship application.
+const PILL_CLASS =
+  "inline-flex items-center rounded-full px-4 py-2 text-[15px] font-semibold text-white transition-transform hover:scale-105";
+const PILL_STYLE = { background: "var(--accent)" };
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -13,9 +22,6 @@ const navLinks = [
   { href: "/found", label: "Founders" },
   { href: "/intern", label: "Interns" },
 ];
-
-const SUBSTACK_URL = "https://claremontaccelerator.substack.com/";
-const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
 
 const FADE_END = 80; // px of scroll over which the frost fades fully in
 
@@ -128,7 +134,7 @@ export default function Navbar() {
                 // viewport (14px @ 320px wide, reaching the original 21px by ~400px)
                 // and never wraps to a second line.
                 className="whitespace-nowrap text-[clamp(14px,8.75vw-14px,21px)] md:text-[21px] font-black tracking-tight text-white"
-                style={{ fontFamily: 'Aileron, Arial, sans-serif' }}
+                style={{ fontFamily: "var(--font-aileron), Arial, sans-serif" }}
               >
                 Claremont Accelerator
               </span>
@@ -168,15 +174,21 @@ export default function Navbar() {
                 </a>
               </li>
               <li>
-                <a
-                  href={MAILING_LIST_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full px-4 py-2 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                  style={{ background: "#0165fc" }}
-                >
-                  Join our mailing list!
-                </a>
+                {JOBS_LIVE ? (
+                  <Link href={INTERN_CTA_HREF} className={PILL_CLASS} style={PILL_STYLE}>
+                    {INTERN_CTA_LABEL}
+                  </Link>
+                ) : (
+                  <a
+                    href={MAILING_LIST_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={PILL_CLASS}
+                    style={PILL_STYLE}
+                  >
+                    Join our mailing list!
+                  </a>
+                )}
               </li>
             </ul>
 
@@ -206,7 +218,7 @@ export default function Navbar() {
                         href={link.href}
                         onClick={() => setIsOpen(false)}
                         className={`block tracking-tight py-1.5 ${
-                          isActive ? "text-[#3385fd]" : "text-white"
+                          isActive ? "text-[var(--accent-light)]" : "text-white"
                         }`}
                       >
                         {link.label}
@@ -226,16 +238,27 @@ export default function Navbar() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href={MAILING_LIST_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsOpen(false)}
-                    className="inline-flex items-center rounded-full px-4 py-2 text-[15px] font-semibold text-white mt-1"
-                    style={{ background: "#0165fc" }}
-                  >
-                    Join our mailing list!
-                  </a>
+                  {JOBS_LIVE ? (
+                    <Link
+                      href={INTERN_CTA_HREF}
+                      onClick={() => setIsOpen(false)}
+                      className={`${PILL_CLASS} mt-1`}
+                      style={PILL_STYLE}
+                    >
+                      {INTERN_CTA_LABEL}
+                    </Link>
+                  ) : (
+                    <a
+                      href={MAILING_LIST_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsOpen(false)}
+                      className={`${PILL_CLASS} mt-1`}
+                      style={PILL_STYLE}
+                    >
+                      Join our mailing list!
+                    </a>
+                  )}
                 </li>
               </ul>
             </div>

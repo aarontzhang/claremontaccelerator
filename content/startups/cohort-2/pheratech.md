@@ -2,7 +2,7 @@
 name: Pheratech
 tagline: Swarm intelligence for autonomous multi-robot systems
 cohort: 2
-logo: /startups/logos/pheratech.png
+logo: /startups/logos/pheratech.webp
 logoBg: #ffffff
 logoScale: 80
 website: https://www.pheratech.com/

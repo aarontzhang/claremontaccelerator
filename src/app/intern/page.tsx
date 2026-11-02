@@ -1,12 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
 import { loadAllStartups } from "@/lib/startups";
+import StartupLogoTile from "@/components/StartupLogoTile";
+import JobAccordion from "@/components/JobAccordion";
+import { MAILING_LIST_URL } from "@/lib/links";
+import PageHero from "@/components/PageHero";
 import {
   IconArrowNarrowRight,
   IconChevronDown,
   IconCurrencyDollar,
-  IconExternalLink,
   IconShieldCheck,
   IconUsers,
 } from "@tabler/icons-react";
@@ -17,11 +19,18 @@ export const metadata = {
     "Get paid to build alongside student founders. Real ownership, real users, real equity in your resume.",
 };
 
-const MAILING_LIST_URL = "https://forms.gle/G4489e8ERFvpuY7V9";
+// Hand-picked portfolio companies for the snapshot grid shown while no roles
+// are posted. Curated (not derived) so the grid stays four recognisable names;
+// the layout below is `lg:grid-cols-4`, so keep this at four entries.
+const SNAPSHOT_SLUGS = ["kandor-ai", "flash-biometrics", "openflow", "lintel"];
 
 export default function InternPage() {
-  const startups = loadAllStartups().filter((s) => s.status !== "acquired");
-  const activeStartups = startups.filter((s) => s.status === "active");
+  // Reverse alphabetical (Z->A) for both startup lists on this page. `.filter`
+  // already returns a fresh array, so sorting it never mutates the memoised
+  // result inside loadAllStartups().
+  const activeStartups = loadAllStartups()
+    .filter((s) => s.status === "active")
+    .sort((a, b) => b.name.localeCompare(a.name));
   const startupsWithJobs = activeStartups.filter((s) => s.jobs.length > 0);
   const totalOpenRoles = startupsWithJobs.reduce((n, s) => n + s.jobs.length, 0);
 
@@ -29,84 +38,70 @@ export default function InternPage() {
     <div className="relative min-h-screen bg-black flat-cards">
       <div className="relative z-10">
       {/* Hero */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[79px] border-b border-white/[0.13]">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/acceleratormeeting-18.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)",
-            }}
-          />
-        </div>
+      <PageHero
+        image="/acceleratormeeting-18.webp"
+        title="Intern at a CA Startup"
+        subtitle="Ship real product to real users at a 5C-founded startup — during the semester, over breaks, or full-time."
+        paddingTop={79}
+        tightTitle
+      />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4 leading-[1.05]">
-            Intern at a CA Startup
-          </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 max-w-xl mx-auto">
-            Ship real product to real users at a 5C-founded startup — during the
-            semester, over breaks, or full-time.
-          </p>
-        </div>
-      </section>
+      {/* The "why intern" pitch only earns its space while there are no roles
+          to apply to. Once postings are live this is noise above the thing the
+          visitor came for, so the page leads with Open roles instead.
+          Keyed off the real role count (not JOBS_LIVE directly) to match the
+          rest of this page, so it still shows if the flag is on but a cycle
+          has nothing posted yet. */}
+      {totalOpenRoles === 0 && (
+        <section className="py-20">
+          <div className="max-w-6xl mx-auto px-6">
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <h2 className="font-black text-4xl md:text-5xl text-white mb-4">
+                  Get real experience
+                </h2>
+                <p className="text-[var(--muted-light)] text-lg max-w-2xl mx-auto">
+                  Startup interns gain valuable experience that&apos;s highly
+                  applicable for consulting/tech recruiting, or for any other path
+                  you plan to pursue.
+                </p>
+              </div>
+            </ScrollReveal>
 
-      {/* Why intern */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center mb-14">
-              <h2 className="font-black text-4xl md:text-5xl text-white mb-4">
-                Get real experience
-              </h2>
-              <p className="text-[var(--muted-light)] text-lg max-w-2xl mx-auto">
-                Startup interns gain valuable experience that&apos;s highly
-                applicable for consulting/tech recruiting, or for any other path
-                you plan to pursue.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Get real experience",
-                body: "Own features end-to-end, talk to users, and ship work that goes live the same week. The kind of story you can actually tell in an interview.",
-                Icon: IconShieldCheck,
-              },
-              {
-                title: "Network with ambitious people",
-                body: "Work alongside 5C founders backed by YC, a16z, Afore, 1517, EF, and Z Fellows. The intros compound long after the role ends.",
-                Icon: IconUsers,
-              },
-              {
-                title: "Earn money",
-                body: "All roles are paid.",
-                Icon: IconCurrencyDollar,
-              },
-            ].map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 60}>
-                <div className="glass glass-hover h-full rounded-2xl p-6">
-                  <div className="w-11 h-11 rounded-lg bg-white flex items-center justify-center mb-4">
-                    <item.Icon className="w-5 h-5 text-slate-700" stroke={2} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Get real experience",
+                  body: "Own features end-to-end, talk to users, and ship work that goes live the same week. The kind of story you can actually tell in an interview.",
+                  Icon: IconShieldCheck,
+                },
+                {
+                  title: "Network with ambitious people",
+                  body: "Work alongside 5C founders backed by YC, a16z, Afore, 1517, EF, and Z Fellows. The intros compound long after the role ends.",
+                  Icon: IconUsers,
+                },
+                {
+                  title: "Earn money",
+                  body: "All roles are paid.",
+                  Icon: IconCurrencyDollar,
+                },
+              ].map((item, i) => (
+                <ScrollReveal key={item.title} delay={i * 60}>
+                  <div className="glass glass-hover h-full rounded-2xl p-6">
+                    <div className="w-11 h-11 rounded-lg bg-white flex items-center justify-center mb-4">
+                      <item.Icon className="w-5 h-5 text-slate-700" stroke={2} />
+                    </div>
+                    <h3 className="font-bold text-lg text-white mb-2">{item.title}</h3>
+                    <p className="text-[var(--muted-light)] text-sm leading-relaxed">
+                      {item.body}
+                    </p>
                   </div>
-                  <h3 className="font-bold text-lg text-white mb-2">{item.title}</h3>
-                  <p className="text-[var(--muted-light)] text-sm leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Open roles / hiring startups */}
       <section id="roles" className="py-20 border-y border-white/[0.07]">
@@ -130,14 +125,14 @@ export default function InternPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-transform hover:scale-105"
-                    style={{ background: "#0165fc" }}
+                    style={{ background: "var(--accent)" }}
                   >
                     Get notified when applications open
                   </a>
                 )}
                 <Link
                   href="/startups"
-                  className="text-[#3385fd] hover:text-white text-sm font-semibold flex items-center gap-1 transition-colors"
+                  className="text-[var(--accent-light)] hover:text-white text-sm font-semibold flex items-center gap-1 transition-colors"
                 >
                   Browse the full portfolio
                   <IconArrowNarrowRight className="w-4 h-4" stroke={2} />
@@ -152,27 +147,11 @@ export default function InternPage() {
                 <ScrollReveal key={s.slug}>
                   <div className="glass rounded-2xl overflow-hidden">
                     <div className="relative z-10 flex items-center gap-4 p-6 border-b border-white/[0.07]">
-                      {s.logoExists ? (
-                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 p-2">
-                          <Image
-                            src={s.logo}
-                            alt={s.name}
-                            width={48}
-                            height={48}
-                            className="object-contain w-full h-full"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-black text-lg">
-                            {s.name.charAt(0)}
-                          </span>
-                        </div>
-                      )}
+                      <StartupLogoTile startup={s} size="md" />
                       <div className="flex-1 min-w-0">
                         <Link
                           href={`/startups/${s.slug}`}
-                          className="font-black text-xl text-white hover:text-[#3385fd] transition-colors"
+                          className="font-black text-xl text-white hover:text-[var(--accent-light)] transition-colors"
                         >
                           {s.name}
                         </Link>
@@ -181,22 +160,8 @@ export default function InternPage() {
                     </div>
                     <ul className="relative z-10 divide-y divide-white/[0.07]">
                       {s.jobs.map((job, idx) => (
-                        <li key={idx} className="flex items-center justify-between gap-4 p-5 hover:bg-white/[0.04] transition-colors">
-                          <div className="min-w-0">
-                            <p className="text-white font-semibold">{job.title}</p>
-                            <p className="text-[var(--muted)] text-sm mt-0.5">
-                              {[job.type, job.location].filter(Boolean).join(" · ")}
-                            </p>
-                          </div>
-                          <a
-                            href={job.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#3385fd] hover:text-white transition-colors flex-shrink-0"
-                          >
-                            Apply
-                            <IconExternalLink className="w-4 h-4" stroke={2} />
-                          </a>
+                        <li key={idx}>
+                          <JobAccordion job={job} variant="row" />
                         </li>
                       ))}
                     </ul>
@@ -206,25 +171,13 @@ export default function InternPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {activeStartups.filter((s) => ["kandor-ai", "flash-biometrics", "openflow", "lintel"].includes(s.slug)).map((s, i) => (
+              {activeStartups.filter((s) => SNAPSHOT_SLUGS.includes(s.slug)).map((s, i) => (
                 <ScrollReveal key={s.slug} delay={i * 30}>
                   <Link
                     href={`/startups/${s.slug}`}
                     className="glass glass-flat glass-hover group block h-full rounded-xl p-5"
                   >
-                    <div className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden mb-4 ${s.cohort >= 4 ? "bg-white" : "bg-white/5"}`}>
-                      {s.logoExists ? (
-                        <Image
-                          src={s.logo}
-                          alt={s.name}
-                          width={48}
-                          height={48}
-                          className="w-full h-full object-contain p-0.5 rounded-md"
-                        />
-                      ) : (
-                        <span className="text-white font-black text-lg">{s.name.charAt(0)}</span>
-                      )}
-                    </div>
+                    <StartupLogoTile startup={s} size="sm" className="relative z-10 mb-4" />
                     <p className="text-white font-semibold text-sm mb-1">{s.name}</p>
                     <p className="text-[var(--muted)] text-xs leading-snug line-clamp-2">
                       {s.tagline}
@@ -269,7 +222,7 @@ export default function InternPage() {
                 a: (
                   <>
                     Head over to{" "}
-                    <Link href="/found" className="text-[#3385fd] hover:text-white underline">
+                    <Link href="/found" className="text-[var(--accent-light)] hover:text-white underline">
                       the founder track
                     </Link>{" "}
                     — same community, different door.

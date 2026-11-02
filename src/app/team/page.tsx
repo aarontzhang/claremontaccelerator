@@ -1,6 +1,6 @@
 import TeamMember from "@/components/TeamMember";
 import ScrollReveal from "@/components/ScrollReveal";
-import Image from "next/image";
+import PageHero from "@/components/PageHero";
 
 const team = [
   {
@@ -14,42 +14,42 @@ const team = [
     name: "Melanie Haro-Cortes",
     role: "Co-President",
     school: "CMC '28",
-    image: "/team/melanie.jpg",
+    image: "/team/melanie.webp",
     linkedin: "https://linkedin.com/in/melanie-haro-cortes",
   },
   {
     name: "Maélie Abt",
     role: "CA Studio Co-Director",
     school: "Pomona '29",
-    image: "/team/Maelie.JPG",
+    image: "/team/maelie.webp",
     linkedin: "https://linkedin.com/in/maelie-abt",
   },
   {
     name: "Ethan Vicknair",
     role: "CA Studio Co-Director",
     school: "Pomona '28",
-    image: "/team/ethan.jpg",
+    image: "/team/ethan.webp",
     linkedin: "https://www.linkedin.com/in/ethan-vicknair-111614268/",
   },
   {
     name: "Daniel Lo",
     role: "Head of Growth",
     school: "CMC '29",
-    image: "/team/daniel.jpg",
+    image: "/team/daniel.webp",
     linkedin: "https://linkedin.com/in/daniel-lo-a137532a7",
   },
   {
     name: "Stanley Lo",
     role: "Member-at-large",
     school: "CMC '27",
-    image: "/team/stanley.jpeg",
+    image: "/team/stanley.webp",
     linkedin: "https://linkedin.com/in/stanleylo4",
   },
   {
     name: "Michelle Lu",
     role: "Operations",
     school: "HMC '29",
-    image: "/team/michelle.jpg",
+    image: "/team/michelle.webp",
     linkedin: "https://www.linkedin.com/in/michelle-lu8/",
   },
 ];
@@ -59,7 +59,7 @@ const exOfficio = [
     name: "Felix Peng",
     role: "Former Co-President",
     school: "HMC '28",
-    image: "/team/felix.png",
+    image: "/team/felix.webp",
     showYC: true,
   },
   {
@@ -73,14 +73,14 @@ const exOfficio = [
     name: "Aaron Zhang",
     role: "Former Vice President",
     school: "CMC '28",
-    image: "/team/aaron.jpg",
+    image: "/team/aaron.webp",
     showYC: true,
   },
   {
     name: "Joseph Santhosh",
     role: "Former Operations",
     school: "CMC '29",
-    image: "/team/joseph.jpg",
+    image: "/team/joseph.webp",
     showSIF: true,
   },
 ];
@@ -90,27 +90,12 @@ export default function WhoWeAre() {
     <div className="relative min-h-screen bg-black">
       <div className="relative z-10">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-[64px] border-b border-white/[0.13]">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/acceleratormeeting-12.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.3) 100%)' }} />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
-          <h1 className="animate-fade-up opacity-0 font-black text-5xl md:text-6xl lg:text-7xl text-white mb-4">
-            Meet the Team
-          </h1>
-          <p className="animate-fade-up opacity-0 animation-delay-100 text-lg text-white/80 max-w-xl mx-auto">
-            Students across the 5Cs building the future of entrepreneurship.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        image="/acceleratormeeting-12.webp"
+        title="Meet the Team"
+        subtitle="Students across the 5Cs building the future of entrepreneurship."
+        paddingTop={64}
+      />
 
       {/* Team Grid */}
       <section className="py-16">
