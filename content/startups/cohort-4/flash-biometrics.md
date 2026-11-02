@@ -2,7 +2,9 @@
 name: Flash Biometrics
 tagline: Lightning-fast, privacy-first facial recognition
 cohort: 4
-logo: /startups/logos/flash-biometrics.png
+logo: /startups/logos/flash-biometrics.webp
+logoBg: #ffffff
+logoScale: 85
 website: https://flashbiometrics.com/
 founders:
 status: active

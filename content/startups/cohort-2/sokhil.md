@@ -3,6 +3,8 @@ name: Sokil
 tagline: UAV-based demining technology for war-affected zones
 cohort: 2
 logo: /startups/logos/sokhil.webp
+logoBg: #fcfcfc
+logoScale: 85
 website: https://sokil.io/
 founders: Ivan Dudiak, Xander Fries
 status: active

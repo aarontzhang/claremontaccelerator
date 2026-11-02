@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Startup } from "@/lib/startups";
-import { initials } from "@/lib/format";
+import { initials, isDarkHex } from "@/lib/format";
 
 // The logo tile used by the portfolio grid, the startup detail page and the
 // /intern snapshot. Previously three hand-rolled copies that each used a
@@ -27,12 +27,15 @@ export default function StartupLogoTile({
   // Cohort 4+ logos are full-colour marks that need a white plate; earlier
   // cohorts sit on a faint translucent one. `logoBg` overrides both.
   const fallbackBg = startup.cohort >= 4 ? "bg-white" : "bg-white/[0.07]";
+  // A dark logoBg needs a hairline to stay visible against the page's own
+  // black ground.
+  const needsBorder = !!startup.logoBg && isDarkHex(startup.logoBg);
 
   return (
     <div
       className={`${s.box} flex items-center justify-center flex-shrink-0 overflow-hidden ${
         startup.logoBg ? "" : fallbackBg
-      } ${className}`}
+      } ${needsBorder ? "border border-white" : ""} ${className}`}
       style={startup.logoBg ? { backgroundColor: startup.logoBg } : undefined}
     >
       {startup.logoExists ? (

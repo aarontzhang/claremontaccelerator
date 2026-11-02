@@ -43,9 +43,9 @@ export interface Startup {
 // WHICH startups render — a .md file not listed here is never discovered, and
 // COHORT_ORDER / LATEST_COHORT are derived from these keys.
 export const SLUG_ORDER: Record<number, string[]> = {
-  1: ["teacher-ai", "glamup", "arthub", "stratos-vanguard"],
+  1: ["glamup", "arthub"],
   2: ["atrade", "stag", "pheratech", "musicdb", "exploravist", "sokhil"],
-  3: ["toxsight", "cashbff", "openflow", "openbill"],
+  3: ["toxsight", "cashbff", "openflow"],
   4: ["lintel", "vorpal", "flash-biometrics", "kandor-ai", "peer"],
   5: ["whistle-labs", "chalk", "immify-ai", "hedgehawk-industries"],
 };

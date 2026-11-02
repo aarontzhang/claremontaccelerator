@@ -2,7 +2,9 @@
 name: CashBFF
 tagline: Your AI money coach that lives where you already talk
 cohort: 3
-logo:
+logo: /startups/logos/cashbff.webp
+logoBg: #ffffff
+logoScale: 85
 website: https://cashbff.com
 founders: Daksh Khanna
 status: inactive

@@ -6,7 +6,8 @@ logo: /startups/logos/damus.webp
 logoBg: #ffffff
 website: https://www.usedamus.com/
 founders:
-status: inactive
+status: active
+backers: AFORE
 ---
 
 Damus (formerly Stag, also known as Credit OS) is an AI-powered platform designed for hedge fund treasury management. It consolidates data from multiple prime brokers, automates cash allocation, and forecasts trading costs — reducing the need for dedicated operations staff while delivering meaningful financing savings.

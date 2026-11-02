@@ -3,6 +3,8 @@ name: GlamUp
 tagline: Your personalized AI beauty consultant for the ultimate glow up
 cohort: 1
 logo: /startups/logos/glamup.webp
+logoBg: #ec635e
+logoScale: 90
 website: https://www.glamup.ai
 founders: Nicole Cheung
 status: inactive

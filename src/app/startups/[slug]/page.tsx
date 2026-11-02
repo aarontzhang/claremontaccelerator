@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getStartupBySlug, allStartupSlugs } from "@/lib/startups";
+import { getStartupBySlug, allStartupSlugs, LATEST_COHORT } from "@/lib/startups";
 import { initials } from "@/lib/format";
 import type { Job } from "@/lib/startups";
 import StatusBadge from "@/components/StatusBadge";
@@ -58,9 +58,24 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
         <div className="flex items-start gap-5 mb-8">
           <StartupLogoTile startup={startup} size="lg" />
           <div className="flex-1 min-w-0">
-            <h1 className="font-black text-4xl md:text-5xl text-white mb-3">{startup.name}</h1>
+            <h1 className="font-black text-4xl md:text-5xl text-white mb-3">
+              {startup.website && !startup.website.includes("example.com") ? (
+                <a
+                  href={startup.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[var(--accent-light)] transition-colors"
+                >
+                  {startup.name}
+                </a>
+              ) : (
+                startup.name
+              )}
+            </h1>
             <div className="flex items-center gap-2 flex-wrap">
-              <Pill>Cohort {startup.cohort}</Pill>
+              <Pill tone={startup.cohort === LATEST_COHORT ? "current" : "accent"}>
+                Cohort {startup.cohort}
+              </Pill>
               <StatusBadge status={startup.status} />
               <BackerPills backers={startup.backers} />
             </div>

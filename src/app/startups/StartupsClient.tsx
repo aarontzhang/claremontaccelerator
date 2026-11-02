@@ -22,7 +22,15 @@ function JobCount({ count }: { count: number }) {
   );
 }
 
-function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => void }) {
+function StartupCard({
+  startup,
+  onClick,
+  latestCohort,
+}: {
+  startup: Startup;
+  onClick: () => void;
+  latestCohort: number;
+}) {
   return (
     <button
       onClick={onClick}
@@ -56,7 +64,9 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
       </div>
 
       <div className="relative z-10 flex items-center gap-2 flex-wrap">
-        <Pill tone="muted">Cohort {startup.cohort}</Pill>
+        <Pill tone={startup.cohort === latestCohort ? "current" : "muted"}>
+          Cohort {startup.cohort}
+        </Pill>
         <StatusBadge status={startup.status} />
         <BackerPills backers={startup.backers} />
         {startup.jobs.length > 0 && <JobCount count={startup.jobs.length} />}
@@ -105,7 +115,10 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
       const bActive = b.status === "active" ? 0 : 1;
       if (aActive !== bActive) return aActive - bActive;
       if (b.cohort !== a.cohort) return b.cohort - a.cohort;
-      return a.name.localeCompare(b.name);
+      const aBacked = a.backers.length > 0 ? 0 : 1;
+      const bBacked = b.backers.length > 0 ? 0 : 1;
+      if (aBacked !== bBacked) return aBacked - bBacked;
+      return b.name.localeCompare(a.name);
     });
   }, [activeCohort, query, startups]);
 
@@ -166,6 +179,7 @@ export default function StartupsClient({ startups, latestCohort, allCohorts }: P
               key={startup.slug}
               startup={startup}
               onClick={() => router.push(`/startups/${startup.slug}`)}
+              latestCohort={latestCohort}
             />
           ))}
           {filtered.length === 0 && (

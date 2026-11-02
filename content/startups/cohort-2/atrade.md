@@ -2,7 +2,8 @@
 name: ATrade
 tagline: Peer-to-peer e-commerce built for Nigeria
 cohort: 2
-logo:
+logo: /startups/logos/atrade.webp
+logoBg: #ffffff
 website:
 founders:
 status: inactive

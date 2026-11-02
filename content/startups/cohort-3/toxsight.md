@@ -2,7 +2,8 @@
 name: Toxsight
 tagline: Real-time imaging systems for chemical toxicity assessment
 cohort: 3
-logo:
+logo: /startups/logos/toxsight.webp
+logoBg: #dedede
 website:
 founders: Kevin Xia
 status: inactive

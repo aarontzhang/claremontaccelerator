@@ -6,8 +6,9 @@ logo: /startups/logos/pheratech.webp
 logoBg: #ffffff
 logoScale: 80
 website: https://www.pheratech.com/
-founders: Michael Huynh, Kimberly Sablon, Kevin Daley
+founders: Michael Huynh||/startups/founders/michael-huynh.webp
 status: active
+backers: AFORE
 ---
 
 Pheratech Systems builds the protocols and reasoning systems that allow specialized robots to collaborate autonomously — enabling complex multi-robot missions without centralized control. The approach is inspired by the emergent behavior of social insects like ants and bees.

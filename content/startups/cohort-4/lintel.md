@@ -6,6 +6,7 @@ logo: /startups/logos/lintel.svg
 website: https://www.uselintel.com/
 founders:
 status: active
+backers: AFORE
 ---
 
 Lintel is an AI document intelligence platform built for the construction industry. It automatically cross-references every page of construction documents against every other page to identify contradictions, scope gaps, and code compliance issues.

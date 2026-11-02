@@ -4,7 +4,7 @@ tagline: Reimagining operations for specialty medical clinics
 cohort: 4
 logo: /startups/logos/kandor-ai.png
 website: https://kandorlabs.com/
-founders: Cyrus Naficy|https://www.linkedin.com/in/cyrus-naficy-06b9151bb/, Devansh Taliyan|https://www.linkedin.com/in/devansh-taliyan/
+founders: Cyrus Naficy|https://www.linkedin.com/in/cyrus-naficy-06b9151bb/|/startups/founders/cyrus-naficy.webp, Devansh Taliyan|https://www.linkedin.com/in/devansh-taliyan/|/startups/founders/devansh-taliyan.webp
 status: active
 backers: YC
 ---

@@ -3,6 +3,8 @@ name: ArtHub
 tagline: GitHub for creatives — artist communities built without AI scraping
 cohort: 1
 logo: /startups/logos/arthub.webp
+logoBg: #ffffff
+logoScale: 85
 website: https://www.claremontaccelerator.com/
 founders: Ian Baime
 status: inactive
