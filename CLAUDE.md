@@ -77,6 +77,8 @@ public/
 name: Company Name
 tagline: One-line description
 logo: /startups/logos/filename.webp
+logoBg: #ffffff
+logoScale: 80
 website: https://...
 founders: Founder One|https://linkedin.com/in/founder-one|/startups/founders/founder-one.webp, Founder Two
 status: active
@@ -97,12 +99,33 @@ Job Title | Full-time | Location | https://apply-url.com
    glyph; when `linkedin` is set the **whole pill** is an `<a>` to their profile (not just the
    glyph), so there's a `Pill = founder.linkedin ? "a" : "div"` branch there.
 
-2. Add the slug to `SLUG_ORDER` in `src/lib/startups.ts` under the correct cohort key.
+   `logoBg` and `logoScale` are both optional per-startup overrides for the logo tile on the
+   `/startups` grid card and the `/startups/[slug]` header. Without `logoBg`, the tile falls back
+   to the cohort-based default (`bg-white` for cohort ≥ 4, a translucent dark plate otherwise) —
+   set it (any CSS color, e.g. `#ffffff` or `#242120`) when a specific startup's logo needs a
+   background the cohort default doesn't give it. `logoScale` is a percentage (default `100`) of
+   the tile the logo image renders at, still centered — use it to shrink a logo that reads too
+   large/cramped in the fixed-size tile. Both are read in `startups.ts` (`Startup.logoBg`,
+   `Startup.logoScale`) and consumed identically in `StartupsClient.tsx` and `[slug]/page.tsx` —
+   update both if you touch this.
+
+2. Add the slug to `SLUG_ORDER` in `src/lib/startups.ts` under the correct cohort key. Note the
+   slug is the filename/URL, not necessarily the current `name` — e.g. Cohort 3's `openflow.md`
+   has `name: Preman` (the company renamed Opentest → Openflow → Preman) and Cohort 2's `stag.md`
+   has `name: Damus` (renamed from Stag), but the files and `SLUG_ORDER` entries are still
+   `openflow` / `stag`, so `/startups/openflow` and `/startups/stag` keep working. Only rename a
+   slug (and its file) deliberately, since it changes the live URL.
 3. Drop the startup logo in `public/startups/logos/` and any founder headshots in
    `public/startups/founders/` (resize headshots to ~200×200 webp, e.g. via `sharp`
    `.resize({ width: 200, height: 200, fit: "cover" })`). Note `public/logos/` (no `startups/`
    prefix) is a different, older directory used only for the homepage partner/school logos — don't
    confuse the two.
+4. If the startup also appears in the homepage's scrolling logo marquee (`startups` array in
+   `src/app/page.tsx`, logos in `public/logos/`), that image needs to be a **transparent-background
+   cutout** — the marquee applies `brightness-0 invert` to turn every opaque pixel white, so a
+   logo with a baked-in solid background renders as a plain white box instead of a silhouette mark.
+   This is a separate asset from `public/startups/logos/`, which (via `logoBg`) is fine with either
+   a transparent or opaque source.
 
 ## Startup Data Flow
 
@@ -395,3 +418,20 @@ audit, and are not meant to be kept around after their processed output is live.
 
 The homepage has no photo hero; it nudges all sections down together with `pt-[35px]` on its
 `relative z-10` content wrapper.
+
+### Removing a logo's background
+
+For a source logo with a solid (often white) background that needs to become a transparent
+cutout (e.g. for the homepage marquee, see **Adding a Startup** step 4): don't chroma-key by
+color distance across the whole image — if the artwork itself has white/near-white interior
+details (strokes, highlights), a distance-based key erases those along with the real background.
+Instead flood-fill transparency starting from the four image edges/corners inward, stopping at
+non-background-colored pixels, so only the background pixels *connected to the border* become
+transparent and any white/light pixels fully enclosed by the artwork survive. Then compute the
+bounding box of the surviving (non-transparent) pixels directly and `.extract()` to it — `sharp`'s
+built-in `.trim()` was unreliable on these flood-filled buffers (returned unflipped/untrimmed
+output in testing), so prefer manual bbox + `.extract()` over `.trim()`. If a source background is
+textured/noisy (not a flat color) rather than being removed, it can instead be flattened to a flat
+color by the same flood-fill mask (paint the filled region a solid RGB instead of alpha 0) — use
+`.webp({ lossless: true })` rather than the default lossy quality setting if the destination needs
+to match an exact RGB value, since lossy compression can shift it by a value or two.

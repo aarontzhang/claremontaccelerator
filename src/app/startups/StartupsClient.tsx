@@ -47,10 +47,20 @@ function StartupCard({ startup, onClick }: { startup: Startup; onClick: () => vo
       className="glass glass-flat glass-hover group text-left w-full rounded-xl p-5 flex flex-col gap-3"
     >
       {/* Logo */}
-      <div className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${startup.cohort >= 4 ? "bg-white" : "bg-white/[0.07]"}`}>
+      <div
+        className={`relative z-10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden ${
+          startup.logoBg ? "" : startup.cohort >= 4 ? "bg-white" : "bg-white/[0.07]"
+        }`}
+        style={startup.logoBg ? { backgroundColor: startup.logoBg } : undefined}
+      >
         {startup.logoExists ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-0.5 rounded-md" />
+          <img
+            src={startup.logo}
+            alt={startup.name}
+            className="object-contain p-0.5 rounded-md"
+            style={{ width: `${startup.logoScale}%`, height: `${startup.logoScale}%` }}
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <span className="text-white font-black text-lg">{startup.name.charAt(0)}</span>

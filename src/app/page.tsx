@@ -9,7 +9,7 @@ const startups = [
   { name: "ArtHub", logo: "/logos/Arthub.webp", size: "normal" },
   { name: "GlamUp", logo: "/logos/Glam+up.webp", size: "large" },
   { name: "Pheratech", logo: "/logos/Pheratech.png", size: "normal" },
-  { name: "Stag", logo: "/logos/Stag.png", size: "normal" },
+  { name: "Damus", logo: "/logos/Damus.webp", size: "normal" },
 ];
 
 const stats = [

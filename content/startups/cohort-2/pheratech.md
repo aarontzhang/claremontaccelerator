@@ -3,6 +3,8 @@ name: Pheratech
 tagline: Swarm intelligence for autonomous multi-robot systems
 cohort: 2
 logo: /startups/logos/pheratech.png
+logoBg: #ffffff
+logoScale: 80
 website: https://www.pheratech.com/
 founders: Michael Huynh, Kimberly Sablon, Kevin Daley
 status: active

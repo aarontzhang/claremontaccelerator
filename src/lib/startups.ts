@@ -25,6 +25,8 @@ export interface Startup {
   cohort: number;
   logo: string;
   logoExists: boolean;
+  logoBg: string;
+  logoScale: number;
   website: string;
   founders: Founder[];
   status: string;
@@ -102,6 +104,7 @@ export function loadAllStartups(): Startup[] {
       const logo = data.logo?.trim() ?? "";
       const logoExists =
         !!logo && fs.existsSync(path.join(process.cwd(), "public", logo.replace(/^\//, "")));
+      const logoScaleRaw = data.logoScale ? parseInt(data.logoScale, 10) : NaN;
 
       results.push({
         slug,
@@ -110,6 +113,8 @@ export function loadAllStartups(): Startup[] {
         cohort,
         logo,
         logoExists,
+        logoBg: data.logoBg?.trim() ?? "",
+        logoScale: Number.isFinite(logoScaleRaw) ? logoScaleRaw : 100,
         website: data.website?.trim() ?? "",
         founders: data.founders ? parseFounders(data.founders) : [],
         status: data.status?.trim() ?? "",

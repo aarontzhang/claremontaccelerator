@@ -68,12 +68,18 @@ export default async function StartupPage({ params }: { params: Promise<{ slug: 
         <div className="flex items-start gap-5 mb-8">
           <div
             className={`w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden ${
-              startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"
+              startup.logoBg ? "" : startup.cohort >= 4 ? "bg-white" : "bg-[var(--surface-elevated)]"
             }`}
+            style={startup.logoBg ? { backgroundColor: startup.logoBg } : undefined}
           >
             {startup.logoExists ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={startup.logo} alt={startup.name} className="w-full h-full object-contain p-2" />
+              <img
+                src={startup.logo}
+                alt={startup.name}
+                className="object-contain p-2"
+                style={{ width: `${startup.logoScale}%`, height: `${startup.logoScale}%` }}
+              />
             ) : (
               <span className="text-white font-black text-3xl">{startup.name.charAt(0)}</span>
             )}

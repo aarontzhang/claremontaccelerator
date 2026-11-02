@@ -3,6 +3,7 @@ name: ExploraVist
 tagline: Affordable AI wearable that describes the world for the blind
 cohort: 2
 logo: /startups/logos/exploravist.webp
+logoBg: #ffffff
 website: https://exploravist.net/
 founders: Ket Hollingsworth, Dominick Quaye, Bilal Abraham
 status: active

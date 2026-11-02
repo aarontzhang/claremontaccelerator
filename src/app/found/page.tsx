@@ -57,7 +57,7 @@ const outcomes: Outcome[] = [
     name: "Preman",
     slug: "openflow",
     logo: "/startups/logos/preman.png",
-    tagline: "Turn your API endpoints into MCP tools (formerly Openflow).",
+    tagline: "An agent testing platform for MCP tools (formerly Openflow).",
     cohort: "Cohort 3",
     story: "Accepted into a16z Speedrun SR007",
   },

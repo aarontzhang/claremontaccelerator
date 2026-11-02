@@ -2,7 +2,9 @@
 name: Vorpal
 tagline: Intelligence platform for private markets
 cohort: 4
-logo:
+logo: /startups/logos/vorpal.webp
+logoBg: #242120
+logoScale: 80
 website: https://www.tonydpappas.substack.com
 founders:
 status: active
