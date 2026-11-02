@@ -210,11 +210,12 @@ Flipping it to `true` changes three things at once:
 3. The **navbar pill** (both desktop and mobile copies) switches from the external
    "Join our mailing list!" `<a>` to an internal `<Link>` to `/intern`. Both share
    `PILL_CLASS`/`PILL_STYLE` in `Navbar.tsx`.
-4. `/intern`'s **"Get real experience"** section (the 3-card "why intern" pitch) is hidden —
-   it only earns its space while there is nothing to apply to. Note this one is gated on
-   `totalOpenRoles === 0`, not `JOBS_LIVE` directly, matching the `Open roles` /
-   `Where you could intern` branching already on that page: if the flag is on but a cycle has
-   no postings yet, the pitch correctly reappears.
+4. Two `/intern` sections are hidden: the **"Get real experience"** 3-card pitch and the
+   **"Ready to build with a startup?"** final CTA. Both only earn their space while there is
+   nothing to apply to — the latter's copy ("Applications open each cycle. In the meantime...")
+   is explicitly holding-state language. Note both are gated on `totalOpenRoles === 0`, not
+   `JOBS_LIVE` directly, matching the `Open roles` / `Where you could intern` branching already
+   on that page: if the flag is on but a cycle has no postings yet, both correctly reappear.
 
 The CTA label and href are `INTERN_CTA_LABEL` / `INTERN_CTA_HREF` in `flags.ts` — change them
 there, not at the four call sites.

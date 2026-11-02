@@ -249,27 +249,32 @@ export default function InternPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="font-black text-4xl md:text-5xl text-white mb-4 leading-tight">
-              Ready to build with a startup?
-            </h2>
-            <p className="text-[var(--muted-light)] text-lg mb-8 max-w-xl mx-auto">
-              Applications open each cycle. In the meantime, get to know the
-              startups you could be building at.
-            </p>
-            <Link
-              href="/startups"
-              className="inline-flex items-center gap-2 text-white text-lg font-semibold border-b border-white/30 hover:border-white pb-1 transition-colors"
-            >
-              Browse the portfolio
-              <IconArrowNarrowRight className="w-5 h-5" stroke={2} />
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Final CTA — its copy ("Applications open each cycle. In the meantime...")
+          is holding-state language, so it goes away once roles are actually
+          posted. Same `totalOpenRoles` gate as the "why intern" pitch above. */}
+      {totalOpenRoles === 0 && (
+        <section className="py-24">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <ScrollReveal>
+              <h2 className="font-black text-4xl md:text-5xl text-white mb-4 leading-tight">
+                Ready to build with a startup?
+              </h2>
+              <p className="text-[var(--muted-light)] text-lg mb-8 max-w-xl mx-auto">
+                Applications open each cycle. In the meantime, get to know the
+                startups you could be building at.
+              </p>
+              <Link
+                href="/startups"
+                className="inline-flex items-center gap-2 text-white text-lg font-semibold border-b border-white/30 hover:border-white pb-1 transition-colors"
+              >
+                Browse the portfolio
+                <IconArrowNarrowRight className="w-5 h-5" stroke={2} />
+              </Link>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
       </div>
     </div>
   );
