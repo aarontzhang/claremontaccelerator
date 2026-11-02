@@ -17,10 +17,10 @@ const PILL_STYLE = { background: "var(--accent)" };
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/team", label: "Team" },
   { href: "/startups", label: "Portfolio" },
   { href: "/found", label: "Founders" },
   { href: "/intern", label: "Interns" },
+  { href: "/team", label: "Team" },
 ];
 
 const FADE_END = 80; // px of scroll over which the frost fades fully in
