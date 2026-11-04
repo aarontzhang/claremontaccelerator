@@ -16,7 +16,7 @@
  *   3. The navbar pill switches from "Join our mailing list!" to the internship
  *      application
  */
-export const JOBS_LIVE = false;
+export const JOBS_LIVE = true;
 
 /** Label + destination for the navbar pill and promoted homepage CTA. */
 export const INTERN_CTA_LABEL = "Intern at a startup";
