@@ -9,6 +9,7 @@ Marketing site for the Claremont Accelerator, a student startup program at the C
 - **Tailwind CSS v4** — no config file; configured via `@theme inline` in `globals.css`
 - **TypeScript 5** — path alias `@/*` maps to `./src/*`
 - **@tabler/icons-react** — the site's icon set
+- **@vercel/analytics** — Web Analytics, `<Analytics />` mounted in `src/app/layout.tsx`
 - No database, no auth, no API routes
 
 ## Commands
@@ -516,6 +517,14 @@ width/radius animation. (It used to be a floating pill that docked on scroll; th
 `/l/[slug]` reads **`links.json` at the repo root** (NOT `public/` — it is a build-time
 `import`, so adding a link needs a redeploy). `next.config.ts` keeps one legacy `/mailme`
 redirect that now forwards to `/l/mailme`; add all new vanity URLs to `links.json` only.
+
+## Analytics
+
+Vercel Web Analytics is wired in via `@vercel/analytics` — `<Analytics />` (from
+`@vercel/analytics/next`) is mounted once in the root layout (`src/app/layout.tsx`), inside
+`<body>` after `Footer`, so it covers every route. It only reports data once Web Analytics is
+enabled for the project in the Vercel dashboard (Analytics tab → Enable) and the site is
+deployed — there's no further code-side config.
 
 ## Cohort 5
 
