@@ -19,14 +19,14 @@ const team = [
   },
   {
     name: "Maélie Abt",
-    role: "CA Studio Co-Director",
+    role: "VP of CA Studio",
     school: "Pomona '29",
     image: "/team/maelie.webp",
     linkedin: "https://linkedin.com/in/maelie-abt",
   },
   {
     name: "Ethan Vicknair",
-    role: "CA Studio Co-Director",
+    role: "VP of CA Studio",
     school: "Pomona '28",
     image: "/team/ethan.webp",
     linkedin: "https://www.linkedin.com/in/ethan-vicknair-111614268/",
