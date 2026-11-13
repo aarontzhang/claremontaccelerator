@@ -120,6 +120,14 @@ export default function Home() {
                 <div className="relative w-8 h-3.5 md:w-14 md:h-6 opacity-90">
                   <Image src="/logos/partners/1517.png" alt="1517 Fund" fill sizes="56px" className="object-contain" />
                 </div>
+                {/* Jackson Square Ventures — wordmark, full color, height matched to YC mark */}
+                <Image
+                  src="/logos/partners/jsv.png"
+                  alt="Jackson Square Ventures"
+                  width={160}
+                  height={72}
+                  className="h-3.5 md:h-6 w-auto object-contain opacity-90"
+                />
               </div>
             </div>
           </div>

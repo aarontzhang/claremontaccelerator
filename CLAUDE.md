@@ -355,8 +355,8 @@ teams, not just solo founders.
 All partner marks in the hero's `CA founders backed by` row are shown **full color, at rest,
 with no hover effect** (dimming/opacity-shift on hover has been removed site-wide from this
 row). Files live in `public/logos/partners/`: `yc.png`, `ef.png`, `speedrun.png` (a16z
-Speedrun), `zfellows.png`, `afore.png`, `1517.png`. The a16z mark itself has been removed from
-the row entirely.
+Speedrun), `zfellows.png`, `afore.png`, `1517.png`, `jsv.png` (Jackson Square Ventures). The
+a16z mark itself has been removed from the row entirely.
 
 Sizing: YC is the reference — a square `w-7 h-7` `fill` image. The wordmarks (EF, Speedrun,
 Z Fellows) use intrinsic `width`/`height` matching the real PNG dimensions plus `className="h-6
@@ -365,7 +365,7 @@ aspect ratio — do not hardcode a fixed width for these, it'll distort or lette
 Afore and 1517 still use the older `relative` + `fill` wrapper-div pattern at `w-20 h-6` /
 `w-14 h-6`. Below `md` every mark shrinks further (e.g. `h-3.5` for the wordmarks) on top of this.
 
-**Below `md`, the six marks render as two explicit flex rows of three** (`flex flex-col gap-4`
+**Below `md`, the seven marks render as two explicit flex rows (3 + 4)** (`flex flex-col gap-4`
 wrapping two `flex items-center justify-center gap-5` rows), not the same `flex-wrap` used at
 `md`+. Two things broke with plain `flex-wrap` at phone widths: (1) wrap point depends on
 cumulative width, so row count isn't guaranteed — a 3-column CSS grid was tried first to force a

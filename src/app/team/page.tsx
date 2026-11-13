@@ -40,7 +40,7 @@ const team = [
   },
   {
     name: "Stanley Lo",
-    role: "Member-at-large",
+    role: "Operations",
     school: "CMC '27",
     image: "/team/stanley.webp",
     linkedin: "https://linkedin.com/in/stanleylo4",
